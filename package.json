@@ -1,7 +1,0 @@
-{
-  "name": "morit-qingbaochu-site",
-  "private": true,
-  "scripts": {
-    "build": "mkdir -p dist && cp index.html dist/index.html && cp -R assets dist/"
-  }
-}
