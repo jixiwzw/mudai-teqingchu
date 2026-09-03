@@ -1670,6 +1670,25 @@
   .game-frame{pointer-events:auto !important;}
   .game-wrap > iframe.game-frame{position:absolute;inset:0;width:100%;height:100%;border:0;z-index:1;}
   .game-wrap > iframe.game-frame ~ iframe.game-frame{display:none !important;}
+
+  /* ===== coord cloud photos + lightbox (v28) ===== */
+  .cg-img img.ccov,.cx-hero img.ccov{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+    object-position:center;opacity:0;transition:opacity .55s ease;z-index:1;cursor:zoom-in;pointer-events:none;}
+  .cg-img img.ccov.ok,.cx-hero img.ccov.ok{opacity:1;pointer-events:auto;}
+  .cg-img img.ccov.fail,.cx-hero img.ccov.fail{display:none;}
+  .cx-hero.noimg span{position:relative;z-index:2;}
+  .slot{background:#060b10;}
+  .slot img{width:100%;height:100%;object-fit:cover;display:none;cursor:zoom-in;}
+  .slot.on img{display:block;}
+  .slot-grid{min-height:70px;}
+  .slot-empty{grid-column:1/-1;text-align:center;padding:26px 0;font-family:var(--mono);font-size:11px;
+    letter-spacing:.3em;color:rgba(125,139,153,.72);border:1px dashed rgba(47,211,255,.16);background:rgba(47,211,255,.03);}
+  .lx{position:fixed;inset:0;z-index:50000;background:rgba(1,3,6,.965);display:flex;flex-direction:column;
+    align-items:center;justify-content:center;gap:18px;cursor:zoom-out;animation:lxIn .22s ease;padding:24px;}
+  .lx img{max-width:92vw;max-height:80vh;object-fit:contain;box-shadow:0 0 70px rgba(47,211,255,.14);}
+  .lx .lx-cap{font-family:var(--sans);color:#cfe6f4;font-size:15px;letter-spacing:.06em;text-align:center;}
+  .lx .lx-hint{font-family:var(--mono);font-size:10px;letter-spacing:.3em;color:rgba(125,139,153,.6);}
+  @keyframes lxIn{from{opacity:0}to{opacity:1}}
 </style>
 </head>
 <body data-page-node-id="t1Z7rwIKurlKGXbu6jqRUy">
@@ -5854,27 +5873,50 @@ function restartAll(){
   })();
 
   /* ============ COLLECTION COORDS (文明采集坐标 · 分日分组) ============ */
-  var coordDays=[
+  
+  var INTEL_COS="https://mrtq-1474571196.cos.ap-shanghai.myqcloud.com/%E2%80%8Cimage/";
+  function coordZoom(src,cap){
+    var o=document.createElement("div"); o.className="lx";
+    o.innerHTML='<img src="'+src+'" alt=""><span class="lx-cap">'+(cap||"")+'</span><span class="lx-hint">点击任意处关闭</span>';
+    var rm=function(){ if(o.parentNode) document.body.removeChild(o); document.removeEventListener("keydown",kd); };
+    var kd=function(e){ if(e.key==="Escape") rm(); };
+    o.onclick=rm;
+    document.addEventListener("keydown",kd);
+    document.body.appendChild(o);
+  }
+  function cSlotOk(img){
+    var s=img.closest(".slot"); if(s) s.classList.add("on");
+    var grid=img.closest(".slot-grid");
+    if(grid){ var emp=grid.parentNode.querySelector(".slot-empty"); if(emp) emp.style.display="none"; }
+  }
+  function cSlotErr(img){
+    var box=img.parentNode; if(box) box.remove();
+    var grid=img.closest(".slot-grid");
+    if(grid){ setTimeout(function(){
+      if(!grid.querySelector(".slot img")){ var emp=grid.parentNode.querySelector(".slot-empty"); if(emp) emp.style.display="block"; }
+    },60); }
+  }
+var coordDays=[
     {d:"D-01",en:"ANCHOR DAY",date:"2026.09.03 周四",place:"太原锚区",coords:[
-      {n:"黑悟空遇见山西展",en:"DIGITAL SHADOW",code:"SX-05",img:"hero_bg.png",
+      {n:"黑悟空遇见山西展",en:"DIGITAL SHADOW",code:"SX-05",ph:"hwk",img:"hero_bg.png",
        x:"官方授权的跨界数字艺术展：以山西千年古建为内核，用数字光影打通虚实次元。本时代正尝试以 0 与 1 为古建续命——这是回收名单上被首批观测的“数字火种”形态。"},
-      {n:"满江红影视基地",en:"SONG-STYLE BACKLOT",code:"SX-04",img:"Ancient_Chinese_multistory_woo_2026-08-28T11-40-27.png",
+      {n:"满江红影视基地",en:"SONG-STYLE BACKLOT",code:"SX-04",ph:"mjh",img:"Ancient_Chinese_multistory_woo_2026-08-28T11-40-27.png",
        x:"宋制五进院落，还原官署与军营形制。梁架如何咬合、院落如何退让——这座为影像而造的仿宋实体，恰好封存了本时代对宋营造法的理解与再造。"},
-      {n:"古县城夜景",en:"MING LANE NIGHT",code:"SX-06",img:"Night_scene_of_a_traditional_C_2026-08-28T11-41-21.png",
+      {n:"古县城夜景",en:"MING LANE NIGHT",code:"SX-06",ph:"gxc",img:"Night_scene_of_a_traditional_C_2026-08-28T11-41-21.png",
        x:"入夜后的凤凰城街巷。灯火密度、市井声场与人群流向，是判定 2026 年“生活温度”的原生样本，也是潜入者校准身份行为模式的参照场。"}
     ]},
     {d:"D-02",en:"ANALYSIS DAY",date:"2026.09.04 周五",place:"太原锚区",coords:[
-      {n:"晋祠博物馆",en:"JINCI COMPLEX",code:"SX-03",img:"intel_jinci.png",sl:1,
+      {n:"晋祠博物馆",en:"JINCI COMPLEX",code:"SX-03",ph:"jc",img:"intel_jinci.png",sl:1,
        x:"古建、雕塑、碑刻、园林四类载体同址共存——晋阳千年文明在此压成一册。单点信息密度居全名单之首，为本次行动高保真采集颗粒度最高的坐标。"},
-      {n:"恒星之夜",en:"STARRY NIGHT",code:"FIELD · 02",img:"",blank:1,
+      {n:"恒星之夜",en:"STARRY NIGHT",code:"FIELD · 02",ph:"hxzy",img:"",blank:1,
        x:""}
     ]},
     {d:"D-03",en:"DEEP SURVEY",date:"2026.09.05 周六",place:"隰县 → 洪洞 → 平遥",coords:[
-      {n:"隰县 · 小西天",en:"XIAOXITIAN HALL",code:"SX-01",img:"intel_xiaoxitian.png",sl:2,
+      {n:"隰县 · 小西天",en:"XIAOXITIAN HALL",code:"SX-01",ph:"xxt",img:"intel_xiaoxitian.png",sl:2,
        x:"明代悬塑孤本：洞窟内造像层叠繁复，线条细腻灵动。此类塑造工艺在星元 2323 年已完全失传，中央档案库无任何有效备份——本次为唯一一次采集机会。"},
-      {n:"洪洞 · 广胜寺",en:"GUANGSHENG TEMPLE",code:"SX-02",img:"intel_guangsheng.png",sl:2,
+      {n:"洪洞 · 广胜寺",en:"GUANGSHENG TEMPLE",code:"SX-02",ph:"gss",img:"intel_guangsheng.png",sl:2,
        x:"千年古刹，飞虹塔、古建、壁画三大瑰宝同址。琉璃塔身的釉料配方与烧制工艺，被列为最高回收优先级。"},
-      {n:"《又见平遥》",en:"WALKING THEATRE",code:"SX-07",img:"intel_pingyao.png",
+      {n:"《又见平遥》",en:"WALKING THEATRE",code:"SX-07",ph:"yjpy",img:"intel_pingyao.png",
        x:"行走式记忆剧场：观众在建筑内部穿行完成叙事。以“空间即叙事”的结构范式，记录本时代罕见的沉浸叙事实验体。"}
     ]}
   ];
@@ -5890,14 +5932,14 @@ function restartAll(){
         '<span class="cg-n">坐标 × '+dg.coords.length+'</span></div>'+
         '<div class="cg-grid'+(two?' two':'')+'">');
       dg.coords.forEach(function(c,ci){
-        var cover = c.blank
-          ? '<div class="cg-img noimg"><span>STARRY NIGHT</span></div>'
-          : '<div class="cg-img" style="background-image:url(\'assets/'+c.img+'\')"></div>';
+        var cover = '<div class="cg-img'+(c.blank?' noimg':'')+'"'+(c.blank?'':' style="background-image:url(\'assets/'+c.img+'\')"')+'>'+
+          (c.blank?'<span>STARRY NIGHT</span>':'')+
+          '<img class="ccov" src="'+INTEL_COS+c.ph+'/0.jpg" alt="'+c.n+' · 封面" loading="lazy" onclick="event.stopPropagation();coordZoom(this.src,this.alt)" onload="this.classList.add(\'ok\')" onerror="this.classList.add(\'fail\')"></div>';
         H.push('<div class="cg-card reveal" onclick="openCoord('+gi+','+ci+')">'+
           cover+'<div class="cg-grad"></div>'+
           '<span class="cg-code">'+c.code+'</span>'+
           '<div class="cg-meta"><h4>'+c.n+'</h4><span class="cg-en">'+c.en+'</span></div>'+
-          '<div class="cg-foot"><span>查看坐标 →</span><span>5 SLOTS</span></div></div>');
+          '<div class="cg-foot"><span>查看坐标 →</span><span>10 SLOTS</span></div></div>');
       });
       H.push('</div></div>');
     });
@@ -5906,12 +5948,13 @@ function restartAll(){
   function openCoord(gi,ci){
     var dg=coordDays[gi], c=dg.coords[ci];
     var intro = c.x ? '<div class="cx-intro"><div class="mhead" style="margin:0 0 14px;">COORD FILE <i>·</i> 坐标档案</div><p>'+c.x+'</p></div>' : '';
-    var cover = c.blank
-      ? '<div class="cx-hero noimg"><span class="cx-h1">STARRY NIGHT</span><span class="cx-h2">环境补给 · 集体记忆点位</span></div>'
-      : '<div class="cx-hero" style="background-image:url(\'assets/'+c.img+'\')"></div>';
-    var slots="";
-    for(var i=1;i<=5;i++){
-      slots+='<div class="slot"><b>＋</b><span>待回传 '+('0'+i)+'</span></div>';
+    var cover = '<div class="cx-hero'+(c.blank?' noimg':'')+'"'+(c.blank?'':' style="background-image:url(\'assets/'+c.img+'\')"')+'>'+
+      (c.blank?'<span class="cx-h1">STARRY NIGHT</span><span class="cx-h2">环境补给 · 集体记忆点位</span>':'')+
+      '<img class="ccov" src="'+INTEL_COS+c.ph+'/0.jpg" alt="'+c.n+' · 封面" loading="lazy" onclick="coordZoom(this.src,this.alt)" onload="this.classList.add(\'ok\')" onerror="this.classList.add(\'fail\')"></div>';
+    var slots=[];
+    for(var i=1;i<=10;i++){
+      var nn=('0'+i).slice(-2);
+      slots.push('<div class="slot"><img loading="lazy" src="'+INTEL_COS+c.ph+'/'+i+'.jpg" alt="'+c.n+' · '+nn+'" onclick="coordZoom(this.src,this.alt)" onload="cSlotOk(this)" onerror="cSlotErr(this)"></div>');
     }
     dpageOpen(
       '<div class="dp-tag">COLLECTION COORD · 文明采集坐标</div>'+
@@ -5921,10 +5964,10 @@ function restartAll(){
       cover+
       '<div class="dp-dash"><span>所属时序 <b>'+dg.d+' · '+dg.en+'</b></span>'+
         '<span>高保真档位 <b>'+(c.sl? 'S 级 · 孤本优先' : '常规档')+'</b></span>'+
-        '<span>影像槽位 <b>× 5</b></span></div>'+
+        '<span>影像槽位 <b>× 10</b></span></div>'+
       intro+
-      '<div class="mhead" style="margin:6px 0 14px;">IMAGE SLOTS <i>·</i> 影像槽位 × 5</div>'+
-      '<div class="slot-grid">'+slots+'</div>'
+      '<div class="mhead" style="margin:6px 0 14px;">IMAGE SLOTS <i>·</i> 影像槽位 × 10</div>'+
+      '<div class="slot-grid">'+slots.join('')+'<div class="slot-empty">影像待回传 · 暂无照片</div></div>'
     );
   }
   buildCoords();
