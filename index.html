@@ -1673,20 +1673,31 @@
 
   /* ===== coord cloud photos + lightbox (v28) ===== */
   .cg-img img.ccov,.cx-hero img.ccov{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
-    object-position:center;opacity:0;transition:opacity .55s ease;z-index:1;cursor:zoom-in;pointer-events:none;}
-  .cg-img img.ccov.ok,.cx-hero img.ccov.ok{opacity:1;pointer-events:auto;}
+    object-position:center;opacity:0;transform:scale(1.04);z-index:1;cursor:zoom-in;pointer-events:none;
+    transition:opacity .7s ease,transform 1.1s cubic-bezier(.2,.8,.2,1);}
+  .cg-img img.ccov.ok,.cx-hero img.ccov.ok{opacity:1;transform:scale(1);pointer-events:auto;}
   .cg-img img.ccov.fail,.cx-hero img.ccov.fail{display:none;}
   .cx-hero.noimg span{position:relative;z-index:2;}
   .slot{background:#060b10;}
-  .slot img{width:100%;height:100%;object-fit:cover;display:none;cursor:zoom-in;}
-  .slot.on img{display:block;}
+  .slot img{width:100%;height:100%;object-fit:cover;display:none;cursor:zoom-in;transition:transform .6s cubic-bezier(.2,.8,.2,1);}
+  .slot.on img{display:block;animation:slotIn .6s cubic-bezier(.2,.8,.2,1) both;}
+  .slot.on:nth-child(2n) img{animation-delay:.06s;}
+  .slot.on:nth-child(3n) img{animation-delay:.12s;}
+  .slot.on:hover img{transform:scale(1.07);}
+  .slot.on{animation:slotBoxIn .5s ease both;}
+  @keyframes slotIn{from{opacity:0;transform:scale(1.08)}to{opacity:1;transform:scale(1)}}
+  @keyframes slotBoxIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
   .slot-grid{min-height:70px;}
   .slot-empty{grid-column:1/-1;text-align:center;padding:26px 0;font-family:var(--mono);font-size:11px;
     letter-spacing:.3em;color:rgba(125,139,153,.72);border:1px dashed rgba(47,211,255,.16);background:rgba(47,211,255,.03);}
   .lx{position:fixed;inset:0;z-index:50000;background:rgba(1,3,6,.965);display:flex;flex-direction:column;
     align-items:center;justify-content:center;gap:18px;cursor:zoom-out;animation:lxIn .22s ease;padding:24px;}
-  .lx img{max-width:92vw;max-height:80vh;object-fit:contain;box-shadow:0 0 70px rgba(47,211,255,.14);}
-  .lx .lx-cap{font-family:var(--sans);color:#cfe6f4;font-size:15px;letter-spacing:.06em;text-align:center;}
+  .lx img{max-width:92vw;max-height:80vh;object-fit:contain;box-shadow:0 0 70px rgba(47,211,255,.14);
+    animation:lxImgIn .45s cubic-bezier(.2,.85,.25,1) both;}
+  @keyframes lxImgIn{from{opacity:0;transform:scale(.9) translateY(14px)}to{opacity:1;transform:none}}
+  .lx .lx-cap{font-family:var(--sans);color:#cfe6f4;font-size:15px;letter-spacing:.06em;text-align:center;
+    animation:lxCapIn .5s .12s ease both;}
+  @keyframes lxCapIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
   .lx .lx-hint{font-family:var(--mono);font-size:10px;letter-spacing:.3em;color:rgba(125,139,153,.6);}
   @keyframes lxIn{from{opacity:0}to{opacity:1}}
 </style>
@@ -5896,6 +5907,47 @@ function restartAll(){
       if(!grid.querySelector(".slot img")){ var emp=grid.parentNode.querySelector(".slot-empty"); if(emp) emp.style.display="block"; }
     },60); }
   }
+var _ccIO = (typeof IntersectionObserver!=="undefined")
+    ? new IntersectionObserver(function(es){
+        es.forEach(function(en){
+          if(!en.isIntersecting) return;
+          var im=en.target, d=im.getAttribute("data-src");
+          if(d){ im.removeAttribute("data-src"); im.src=d; }
+          _ccIO.unobserve(im);
+        });
+      },{rootMargin:"240px"})
+    : null;
+  function ccObserve(scope){
+    var imgs=(scope||document).querySelectorAll("img.ccov[data-src]");
+    for(var i=0;i<imgs.length;i++){
+      if(_ccIO) _ccIO.observe(imgs[i]);
+      else { var d=imgs[i].getAttribute("data-src"); if(d){ imgs[i].removeAttribute("data-src"); imgs[i].src=d; } }
+    }
+  }
+  function ccLoad(scope,stagger){
+    var imgs=(scope||document).querySelectorAll("img.ccov[data-src]");
+    for(var i=0;i<imgs.length;i++){
+      (function(im,k){
+        setTimeout(function(){
+          var d=im.getAttribute("data-src");
+          if(d){ im.removeAttribute("data-src"); im.src=d; }
+        }, k*(stagger||0));
+      })(imgs[i],i);
+    }
+  }
+  function cSlotTidy(hard){
+    var grids=document.querySelectorAll(".slot-grid");
+    for(var g=0;g<grids.length;g++){
+      var grid=grids[g], imgs=grid.querySelectorAll(".slot img");
+      for(var i=imgs.length-1;i>=0;i--){
+        var im=imgs[i];
+        var failed = im.complete ? (im.naturalWidth===0) : !!hard;
+        if(failed){ var box=im.parentNode; if(box) box.remove(); }
+      }
+      var emp=grid.parentNode.querySelector(".slot-empty");
+      if(emp) emp.style.display = grid.querySelector(".slot img") ? "none" : "block";
+    }
+  }
 var coordDays=[
     {d:"D-01",en:"ANCHOR DAY",date:"2026.09.03 周四",place:"太原锚区",coords:[
       {n:"黑悟空遇见山西展",en:"DIGITAL SHADOW",code:"SX-05",ph:"hwk",img:"hero_bg.png",
@@ -5934,7 +5986,7 @@ var coordDays=[
       dg.coords.forEach(function(c,ci){
         var cover = '<div class="cg-img'+(c.blank?' noimg':'')+'"'+(c.blank?'':' style="background-image:url(\'assets/'+c.img+'\')"')+'>'+
           (c.blank?'<span>STARRY NIGHT</span>':'')+
-          '<img class="ccov" src="'+INTEL_COS+c.ph+'/0.jpg" alt="'+c.n+' · 封面" loading="lazy" onclick="event.stopPropagation();coordZoom(this.src,this.alt)" onload="this.classList.add(\'ok\')" onerror="this.classList.add(\'fail\')"></div>';
+          '<img class="ccov" data-src="'+INTEL_COS+c.ph+'/0.jpg" alt="'+c.n+' · 封面" onclick="event.stopPropagation();coordZoom(this.src,this.alt)" onload="this.classList.add(\'ok\')" onerror="this.classList.add(\'fail\')"></div>';
         H.push('<div class="cg-card reveal" onclick="openCoord('+gi+','+ci+')">'+
           cover+'<div class="cg-grad"></div>'+
           '<span class="cg-code">'+c.code+'</span>'+
@@ -5944,17 +5996,18 @@ var coordDays=[
       H.push('</div></div>');
     });
     box.innerHTML=H.join('');
+    ccObserve(box);
   }
   function openCoord(gi,ci){
     var dg=coordDays[gi], c=dg.coords[ci];
     var intro = c.x ? '<div class="cx-intro"><div class="mhead" style="margin:0 0 14px;">COORD FILE <i>·</i> 坐标档案</div><p>'+c.x+'</p></div>' : '';
     var cover = '<div class="cx-hero'+(c.blank?' noimg':'')+'"'+(c.blank?'':' style="background-image:url(\'assets/'+c.img+'\')"')+'>'+
       (c.blank?'<span class="cx-h1">STARRY NIGHT</span><span class="cx-h2">环境补给 · 集体记忆点位</span>':'')+
-      '<img class="ccov" src="'+INTEL_COS+c.ph+'/0.jpg" alt="'+c.n+' · 封面" loading="lazy" onclick="coordZoom(this.src,this.alt)" onload="this.classList.add(\'ok\')" onerror="this.classList.add(\'fail\')"></div>';
+      '<img class="ccov" data-src="'+INTEL_COS+c.ph+'/0.jpg" alt="'+c.n+' · 封面" onclick="coordZoom(this.src,this.alt)" onload="this.classList.add(\'ok\')" onerror="this.classList.add(\'fail\')"></div>';
     var slots=[];
     for(var i=1;i<=10;i++){
       var nn=('0'+i).slice(-2);
-      slots.push('<div class="slot"><img loading="lazy" src="'+INTEL_COS+c.ph+'/'+i+'.jpg" alt="'+c.n+' · '+nn+'" onclick="coordZoom(this.src,this.alt)" onload="cSlotOk(this)" onerror="cSlotErr(this)"></div>');
+      slots.push('<div class="slot"><img src="'+INTEL_COS+c.ph+'/'+i+'.jpg" alt="'+c.n+' · '+nn+'" onclick="coordZoom(this.src,this.alt)" onload="cSlotOk(this)" onerror="cSlotErr(this)"></div>');
     }
     dpageOpen(
       '<div class="dp-tag">COLLECTION COORD · 文明采集坐标</div>'+
@@ -5969,8 +6022,24 @@ var coordDays=[
       '<div class="mhead" style="margin:6px 0 14px;">IMAGE SLOTS <i>·</i> 影像槽位 × 10</div>'+
       '<div class="slot-grid">'+slots.join('')+'<div class="slot-empty">影像待回传 · 暂无照片</div></div>'
     );
+    var cxBody=document.getElementById("dpageBody");
+    if(cxBody){ ccLoad(cxBody,0); ccObserve(cxBody); }
+    setTimeout(function(){ cSlotTidy(false); },15000);
+    setTimeout(function(){ cSlotTidy(true); },45000);
   }
   buildCoords();
+  /* 视图切换/滚动时补触发封面加载（IntersectionObserver 在 display:none 容器里不会回调） */
+  (function(){
+    if(typeof ccObserve!=="function") return;
+    var _go=window.go;
+    if(typeof _go==="function"){
+      window.go=function(id){ _go(id); setTimeout(function(){ ccLoad(document,140); ccObserve(document); },220); };
+    }
+    var t=null;
+    window.addEventListener("scroll",function(){ clearTimeout(t); t=setTimeout(function(){ ccObserve(document); },180); },true);
+    window.addEventListener("resize",function(){ ccObserve(document); });
+    setTimeout(function(){ ccObserve(document); },2500);
+  })();
 
   /* ============ COUNTDOWN ============ */
   var target=new Date("2026-09-06T14:00:00+08:00").getTime();
