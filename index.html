@@ -1692,11 +1692,19 @@
     letter-spacing:.3em;color:rgba(125,139,153,.72);border:1px dashed rgba(47,211,255,.16);background:rgba(47,211,255,.03);}
   .lx{position:fixed;inset:0;z-index:50000;background:rgba(1,3,6,.965);display:flex;flex-direction:column;
     align-items:center;justify-content:center;gap:18px;cursor:zoom-out;animation:lxIn .22s ease;padding:24px;}
-  .lx img{max-width:92vw;max-height:80vh;object-fit:contain;box-shadow:0 0 70px rgba(47,211,255,.14);
-    animation:lxImgIn .45s cubic-bezier(.2,.85,.25,1) both;}
-  @keyframes lxImgIn{from{opacity:0;transform:scale(.9) translateY(14px)}to{opacity:1;transform:none}}
-  .lx .lx-cap{font-family:var(--sans);color:#cfe6f4;font-size:15px;letter-spacing:.06em;text-align:center;
-    animation:lxCapIn .5s .12s ease both;}
+  .lx img{max-width:92vw;max-height:80vh;object-fit:contain;box-shadow:0 0 70px rgba(47,211,255,.14);}
+  .lx img.an{animation:lxImgIn .42s cubic-bezier(.2,.85,.25,1) both;}
+  @keyframes lxImgIn{from{opacity:0;transform:scale(.92) translateY(10px)}to{opacity:1;transform:none}}
+  .lx .lx-btn{position:absolute;top:50%;transform:translateY(-50%);width:56px;height:76px;display:flex;
+    align-items:center;justify-content:center;font-size:38px;line-height:1;color:rgba(207,230,244,.85);
+    background:rgba(255,255,255,.03);border:1px solid rgba(47,211,255,.2);cursor:pointer;
+    user-select:none;transition:.25s;z-index:2;}
+  .lx .lx-btn:hover{background:rgba(47,211,255,.16);color:#fff;border-color:rgba(47,211,255,.6);}
+  .lx .lx-btn.prev{left:20px;}
+  .lx .lx-btn.next{right:20px;}
+  .lx .lx-cap{font-family:var(--sans);color:#cfe6f4;font-size:15px;letter-spacing:.06em;text-align:center;}
+  .lx .lx-cap.an{animation:lxCapIn .4s ease both;}
+  .lx .lx-hint{letter-spacing:.22em;}
   @keyframes lxCapIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
   .lx .lx-hint{font-family:var(--mono);font-size:10px;letter-spacing:.3em;color:rgba(125,139,153,.6);}
   @keyframes lxIn{from{opacity:0}to{opacity:1}}
@@ -5791,10 +5799,10 @@ function restartAll(){
      rows:[
        ["14:00 – 15:00","锚点落地 · 身份激活","行动员分批抵达太原锚区，自行前往安全屋完成落脚登记。伪装身份于此刻起全面生效。"],
        ["15:00 – 15:15","整队 · 出发","安全屋集结完毕，全员前往首个采集点。"],
-       ["15:15 – 16:15","SX-05 数字光影节点 · 采集","“黑神话：悟空 · 遇见山西”数字艺术场域。观测本时代如何以数字手段封存古建，采集虚实叠加样本。"],
-       ["16:15 – 16:30","地面机动","转场至 SX-04 宋制建筑复原体。"],
-       ["16:30 – 18:00","SX-04 宋制五进院落 · 勘察","实地采集宋代官署与军营形制的复原样本，记录梁架、院落进深与营造逻辑。"],
-       ["18:00 –","SX-06 明制街巷 · 夜间自由勘察","古县城夜巡：市井声场、灯火密度、人群行为模式采集。自行补给后返回安全屋。"]
+       ["15:15 – 16:15","SX-01 数字光影节点 · 采集","“黑神话：悟空 · 遇见山西”数字艺术场域。观测本时代如何以数字手段封存古建，采集虚实叠加样本。"],
+       ["16:15 – 16:30","地面机动","转场至 SX-02 宋制建筑复原体。"],
+       ["16:30 – 18:00","SX-02 宋制五进院落 · 勘察","实地采集宋代官署与军营形制的复原样本，记录梁架、院落进深与营造逻辑。"],
+       ["18:00 –","SX-03 明制街巷 · 夜间自由勘察","古县城夜巡：市井声场、灯火密度、人群行为模式采集。自行补给后返回安全屋。"]
      ]},
     {code:"D-02",title:"文明研判",en:"ANALYSIS DAY",date:"2026.09.04 周五",area:"锚区 · 太原",
      intro:"全员进入研判状态。上午于会议厅完成本时代内容生产逻辑的集中研判，下午转入晋祠——本次行动名单上密度最高的综合样本库之一。",
@@ -5803,25 +5811,25 @@ function restartAll(){
        ["09:00 – 09:15","前往研判厅","全员前往古县城研判厅。"],
        ["09:15 – 12:00","文明研判会议 · 第一场","聚焦传统文化载体、内容生产机制与文旅融合形态。由本时代的从业者输出一手认知，作为样本解释层的原始依据。"],
        ["12:00 – 13:30","自由补给 · 整备","—"],
-       ["13:30 – 14:30","地面机动","前往 SX-03 综合样本库。"],
-       ["14:30 – 17:30","SX-03 晋祠 · 高保真采集","古建、雕塑、碑刻、园林四类载体同址共存，是本次行动单点信息密度最高的采集目标。全科室同时展开作业。"],
+       ["13:30 – 14:30","地面机动","前往 SX-04 综合样本库。"],
+       ["14:30 – 17:30","SX-04 晋祠 · 高保真采集","古建、雕塑、碑刻、园林四类载体同址共存，是本次行动单点信息密度最高的采集目标。全科室同时展开作业。"],
        ["17:30 – 19:00","前往汾河补给点","—"],
        ["19:00 – 21:00","恒星之夜 · 集体补给","汾河畔草坪补给点。星光与晚风记入环境样本。全员手写实体信笺一封，作为“人的温度”这一类火种的原件——此类样本无法数字复原，必须实体回收。"],
        ["21:00 – 22:00","返回安全屋","—"]
      ]},
     {code:"D-03",title:"深度勘探",en:"DEEP SURVEY",date:"2026.09.05 周六",area:"锚区 · 隰县 → 洪洞 → 平遥",
-     intro:"本次行动的最高优先级日程。目标 SX-01 悬塑数据体与 SX-02 千年古刹，两者均为不可再生的孤本级文明载体。夜间转入行走式记忆剧场，采集叙事结构样本。",
+     intro:"本次行动的最高优先级日程。目标 SX-06 悬塑数据体与 SX-07 千年古刹，两者均为不可再生的孤本级文明载体。夜间转入行走式记忆剧场，采集叙事结构样本。",
      rows:[
        ["07:00 – 08:00","安全屋补给","携全部装备与行李，不再返回原安全屋。"],
        ["08:00 – 11:00","长距地面机动","穿越锚区腹地，前往隰县。"],
-       ["11:00 – 13:00","SX-01 小西天 · 孤本采集","明代悬塑。洞窟内造像层叠繁复，线条细腻灵动。此类彩塑的塑造工艺在星元 2323 年已完全失传，本处档案库无任何有效备份——本次为唯一采集机会。",1],
+       ["11:00 – 13:00","SX-06 小西天 · 孤本采集","明代悬塑。洞窟内造像层叠繁复，线条细腻灵动。此类彩塑的塑造工艺在星元 2323 年已完全失传，本处档案库无任何有效备份——本次为唯一采集机会。",1],
        ["13:00 – 14:00","补给","—"],
        ["14:00 – 16:00","地面机动","转场洪洞。"],
-       ["16:00 – 17:00","SX-02 广胜寺 · 三重载体采集","飞虹塔、古建、壁画三类瑰宝同址。琉璃塔身的釉料配方与烧制工艺列为最高回收优先级。",1],
+       ["16:00 – 17:00","SX-07 广胜寺 · 三重载体采集","飞虹塔、古建、壁画三类瑰宝同址。琉璃塔身的釉料配方与烧制工艺列为最高回收优先级。",1],
        ["17:00 – 18:40","前往平遥驻地","—"],
        ["18:40 – 20:30","驻地登记 · 自由补给","—"],
        ["20:30 – 21:00","集结 · 前往记忆剧场","自主报名。20:30 驻地大堂集合，统一出发。"],
-       ["21:00 – 22:30","SX-07 行走式记忆剧场 · 叙事样本采集","《又见平遥》。本时代罕见的沉浸式行走演艺形态，观众在建筑内部穿行完成叙事。采集重点为“空间即叙事”的结构范式。"],
+       ["21:00 – 22:30","SX-08 行走式记忆剧场 · 叙事样本采集","《又见平遥》。本时代罕见的沉浸式行走演艺形态，观众在建筑内部穿行完成叙事。采集重点为“空间即叙事”的结构范式。"],
        ["22:30 – 22:40","返回驻地","—"]
      ]},
     {code:"D-04",title:"火种封装",en:"SEAL & RETURN",date:"2026.09.06 周日",area:"锚区 · 平遥 → 太原",
@@ -5886,14 +5894,66 @@ function restartAll(){
   /* ============ COLLECTION COORDS (文明采集坐标 · 分日分组) ============ */
   
   var INTEL_COS="https://mrtq-1474571196.cos.ap-shanghai.myqcloud.com/%E2%80%8Cimage/";
-  function coordZoom(src,cap){
+  var _lx=null;
+  function lxScopeOf(el){
+    if(!el||!el.closest) return document;
+    return el.closest("#dpageBody")||el.closest(".cg-card")||document;
+  }
+  function lxCollect(el){
+    var root=lxScopeOf(el), got=[];
+    var cand=root.querySelectorAll("img.ccov.ok, .slot img");
+    for(var i=0;i<cand.length;i++){
+      var im=cand[i];
+      if(im.complete&&im.naturalWidth>0&&im.getAttribute("src")) got.push(im);
+    }
+    return got;
+  }
+  function lxOpen(list,idx){
+    if(!list||!list.length) return;
+    if(_lx){ try{ _lx.close(); }catch(e){} }
     var o=document.createElement("div"); o.className="lx";
-    o.innerHTML='<img src="'+src+'" alt=""><span class="lx-cap">'+(cap||"")+'</span><span class="lx-hint">点击任意处关闭</span>';
-    var rm=function(){ if(o.parentNode) document.body.removeChild(o); document.removeEventListener("keydown",kd); };
-    var kd=function(e){ if(e.key==="Escape") rm(); };
-    o.onclick=rm;
+    o.innerHTML='<img alt=""><span class="lx-cap"></span><span class="lx-hint"></span>'+
+      '<button class="lx-btn prev" title="上一张 (←)">‹</button><button class="lx-btn next" title="下一张 (→)">›</button>';
+    var cur=Math.max(0,Math.min(idx,list.length-1));
+    var imgEl=o.querySelector("img"), capEl=o.querySelector(".lx-cap"), hintEl=o.querySelector(".lx-hint");
+    function anim(el){ el.classList.remove("an"); void el.offsetWidth; el.classList.add("an"); }
+    function paint(){
+      var it=list[cur];
+      imgEl.src=it.getAttribute("src");
+      capEl.textContent=(it.getAttribute("alt")||"")+(list.length>1?("    ·   "+(cur+1)+" / "+list.length):"");
+      hintEl.textContent=list.length>1?"键盘 ← → 切换 · 点击或 Esc 关闭":"点击或 Esc 关闭";
+      anim(imgEl); anim(capEl);
+      o.querySelector(".lx-btn.prev").style.display=list.length>1?"":"none";
+      o.querySelector(".lx-btn.next").style.display=list.length>1?"":"none";
+    }
+    function step(d){ cur=(cur+d+list.length)%list.length; paint(); }
+    var kd=function(e){
+      if(e.key==="ArrowLeft"||e.key==="ArrowUp"){ e.preventDefault(); step(-1); }
+      else if(e.key==="ArrowRight"||e.key==="ArrowDown"){ e.preventDefault(); step(1); }
+      else if(e.key==="Escape"){ close(); }
+    };
+    function close(){
+      if(o.parentNode) document.body.removeChild(o);
+      document.removeEventListener("keydown",kd);
+      if(_lx&&_lx.o===o) _lx=null;
+    }
+    o.addEventListener("click",function(e){ if(e.target&&e.target.classList.contains("lx-btn")) return; close(); });
+    o.querySelector(".lx-btn.prev").addEventListener("click",function(e){ e.stopPropagation(); step(-1); });
+    o.querySelector(".lx-btn.next").addEventListener("click",function(e){ e.stopPropagation(); step(1); });
     document.addEventListener("keydown",kd);
     document.body.appendChild(o);
+    _lx={o:o,close:close};
+    paint();
+  }
+  function coordZoom(el){
+    if(!el||!el.getAttribute) return;
+    var src=el.getAttribute("src");
+    if(!src) return;
+    var list=lxCollect(el), idx=0;
+    for(var i=0;i<list.length;i++){
+      if(list[i].getAttribute("src")===src||list[i]===el){ idx=i; break; }
+    }
+    lxOpen(list,idx);
   }
   function cSlotOk(img){
     var s=img.closest(".slot"); if(s) s.classList.add("on");
@@ -5950,25 +6010,25 @@ var _ccIO = (typeof IntersectionObserver!=="undefined")
   }
 var coordDays=[
     {d:"D-01",en:"ANCHOR DAY",date:"2026.09.03 周四",place:"太原锚区",coords:[
-      {n:"黑悟空遇见山西展",en:"DIGITAL SHADOW",code:"SX-05",ph:"hwk",img:"hero_bg.png",
+      {n:"黑悟空遇见山西展",en:"DIGITAL SHADOW",code:"SX-01",ph:"hwk",img:"hero_bg.png",
        x:"官方授权的跨界数字艺术展：以山西千年古建为内核，用数字光影打通虚实次元。本时代正尝试以 0 与 1 为古建续命——这是回收名单上被首批观测的“数字火种”形态。"},
-      {n:"满江红影视基地",en:"SONG-STYLE BACKLOT",code:"SX-04",ph:"mjh",img:"Ancient_Chinese_multistory_woo_2026-08-28T11-40-27.png",
+      {n:"满江红影视基地",en:"SONG-STYLE BACKLOT",code:"SX-02",ph:"mjh",img:"Ancient_Chinese_multistory_woo_2026-08-28T11-40-27.png",
        x:"宋制五进院落，还原官署与军营形制。梁架如何咬合、院落如何退让——这座为影像而造的仿宋实体，恰好封存了本时代对宋营造法的理解与再造。"},
-      {n:"古县城夜景",en:"MING LANE NIGHT",code:"SX-06",ph:"gxc",img:"Night_scene_of_a_traditional_C_2026-08-28T11-41-21.png",
+      {n:"古县城夜景",en:"MING LANE NIGHT",code:"SX-03",ph:"gxc",img:"Night_scene_of_a_traditional_C_2026-08-28T11-41-21.png",
        x:"入夜后的凤凰城街巷。灯火密度、市井声场与人群流向，是判定 2026 年“生活温度”的原生样本，也是潜入者校准身份行为模式的参照场。"}
     ]},
     {d:"D-02",en:"ANALYSIS DAY",date:"2026.09.04 周五",place:"太原锚区",coords:[
-      {n:"晋祠博物馆",en:"JINCI COMPLEX",code:"SX-03",ph:"jc",img:"intel_jinci.png",sl:1,
+      {n:"晋祠博物馆",en:"JINCI COMPLEX",code:"SX-04",ph:"jc",img:"intel_jinci.png",sl:1,
        x:"古建、雕塑、碑刻、园林四类载体同址共存——晋阳千年文明在此压成一册。单点信息密度居全名单之首，为本次行动高保真采集颗粒度最高的坐标。"},
-      {n:"恒星之夜",en:"STARRY NIGHT",code:"FIELD · 02",ph:"hxzy",img:"",blank:1,
+      {n:"恒星之夜",en:"STARRY NIGHT",code:"SX-05",ph:"hxzy",img:"",blank:1,
        x:""}
     ]},
     {d:"D-03",en:"DEEP SURVEY",date:"2026.09.05 周六",place:"隰县 → 洪洞 → 平遥",coords:[
-      {n:"隰县 · 小西天",en:"XIAOXITIAN HALL",code:"SX-01",ph:"xxt",img:"intel_xiaoxitian.png",sl:2,
+      {n:"隰县 · 小西天",en:"XIAOXITIAN HALL",code:"SX-06",ph:"xxt",img:"intel_xiaoxitian.png",sl:2,
        x:"明代悬塑孤本：洞窟内造像层叠繁复，线条细腻灵动。此类塑造工艺在星元 2323 年已完全失传，中央档案库无任何有效备份——本次为唯一一次采集机会。"},
-      {n:"洪洞 · 广胜寺",en:"GUANGSHENG TEMPLE",code:"SX-02",ph:"gss",img:"intel_guangsheng.png",sl:2,
+      {n:"洪洞 · 广胜寺",en:"GUANGSHENG TEMPLE",code:"SX-07",ph:"gss",img:"intel_guangsheng.png",sl:2,
        x:"千年古刹，飞虹塔、古建、壁画三大瑰宝同址。琉璃塔身的釉料配方与烧制工艺，被列为最高回收优先级。"},
-      {n:"《又见平遥》",en:"WALKING THEATRE",code:"SX-07",ph:"yjpy",img:"intel_pingyao.png",
+      {n:"《又见平遥》",en:"WALKING THEATRE",code:"SX-08",ph:"yjpy",img:"intel_pingyao.png",
        x:"行走式记忆剧场：观众在建筑内部穿行完成叙事。以“空间即叙事”的结构范式，记录本时代罕见的沉浸叙事实验体。"}
     ]}
   ];
@@ -5986,7 +6046,7 @@ var coordDays=[
       dg.coords.forEach(function(c,ci){
         var cover = '<div class="cg-img'+(c.blank?' noimg':'')+'"'+(c.blank?'':' style="background-image:url(\'assets/'+c.img+'\')"')+'>'+
           (c.blank?'<span>STARRY NIGHT</span>':'')+
-          '<img class="ccov" data-src="'+INTEL_COS+c.ph+'/0.jpg" alt="'+c.n+' · 封面" onclick="event.stopPropagation();coordZoom(this.src,this.alt)" onload="this.classList.add(\'ok\')" onerror="this.classList.add(\'fail\')"></div>';
+          '<img class="ccov" data-src="'+INTEL_COS+c.ph+'/0.jpg" alt="'+c.n+' · 封面" onclick="event.stopPropagation();coordZoom(this)" onload="this.classList.add(\'ok\')" onerror="this.classList.add(\'fail\')"></div>';
         H.push('<div class="cg-card reveal" onclick="openCoord('+gi+','+ci+')">'+
           cover+'<div class="cg-grad"></div>'+
           '<span class="cg-code">'+c.code+'</span>'+
@@ -6003,11 +6063,11 @@ var coordDays=[
     var intro = c.x ? '<div class="cx-intro"><div class="mhead" style="margin:0 0 14px;">COORD FILE <i>·</i> 坐标档案</div><p>'+c.x+'</p></div>' : '';
     var cover = '<div class="cx-hero'+(c.blank?' noimg':'')+'"'+(c.blank?'':' style="background-image:url(\'assets/'+c.img+'\')"')+'>'+
       (c.blank?'<span class="cx-h1">STARRY NIGHT</span><span class="cx-h2">环境补给 · 集体记忆点位</span>':'')+
-      '<img class="ccov" data-src="'+INTEL_COS+c.ph+'/0.jpg" alt="'+c.n+' · 封面" onclick="coordZoom(this.src,this.alt)" onload="this.classList.add(\'ok\')" onerror="this.classList.add(\'fail\')"></div>';
+      '<img class="ccov" data-src="'+INTEL_COS+c.ph+'/0.jpg" alt="'+c.n+' · 封面" onclick="coordZoom(this)" onload="this.classList.add(\'ok\')" onerror="this.classList.add(\'fail\')"></div>';
     var slots=[];
     for(var i=1;i<=10;i++){
       var nn=('0'+i).slice(-2);
-      slots.push('<div class="slot"><img src="'+INTEL_COS+c.ph+'/'+i+'.jpg" alt="'+c.n+' · '+nn+'" onclick="coordZoom(this.src,this.alt)" onload="cSlotOk(this)" onerror="cSlotErr(this)"></div>');
+      slots.push('<div class="slot"><img src="'+INTEL_COS+c.ph+'/'+i+'.jpg" alt="'+c.n+' · '+nn+'" onclick="coordZoom(this)" onload="cSlotOk(this)" onerror="cSlotErr(this)"></div>');
     }
     dpageOpen(
       '<div class="dp-tag">COLLECTION COORD · 文明采集坐标</div>'+
@@ -6017,9 +6077,8 @@ var coordDays=[
       cover+
       '<div class="dp-dash"><span>所属时序 <b>'+dg.d+' · '+dg.en+'</b></span>'+
         '<span>高保真档位 <b>'+(c.sl? 'S 级 · 孤本优先' : '常规档')+'</b></span>'+
-        '<span>影像槽位 <b>× 10</b></span></div>'+
+        '</div>'+
       intro+
-      '<div class="mhead" style="margin:6px 0 14px;">IMAGE SLOTS <i>·</i> 影像槽位 × 10</div>'+
       '<div class="slot-grid">'+slots.join('')+'<div class="slot-empty">影像待回传 · 暂无照片</div></div>'
     );
     var cxBody=document.getElementById("dpageBody");
@@ -6084,7 +6143,7 @@ var coordDays=[
     {n:"王烨",r:"首席特派员",c:"#8be08b",t:"隰县段环境阈值确认，可放行主队。小西天洞窟内光线极弱，全队携带补光。"},
     {n:"妮妮",r:"影像记录科科长",c:"#ff9ec7",t:"高保真素材标准已下发：快门对准的是火种，不是风景。没有拍下来，就等于没有发生。"},
     {n:"钱心彦",r:"文化研判科科长",c:"#f4c86a",t:"梁架咬合与彩塑衣纹的语义层已入库。样本没有解释，就只是一堆碎片。"},
-    {n:"闪闪",r:"溯源勘探科科长",c:"#9adcff",t:"SX-01 悬塑年代谱系锁定：明代，孤本级，无有效备份。建议列最高回收优先级。"},
+    {n:"闪闪",r:"溯源勘探科科长",c:"#9adcff",t:"SX-06 悬塑年代谱系锁定：明代，孤本级，无有效备份。建议列最高回收优先级。"},
     {n:"高璇",r:"数字基建科科长",c:"#ffd3a5",t:"回传通道容量就绪。火种要有地方放——这条数据底座，全队都踩得稳。"},
     {n:"马佳慧",r:"首席工程师",c:"#a5f3cf",t:"装备高低温测试全部通过。设备扛得住 96 小时，剩下的交给你们。"},
     {n:"汪志伟",r:"系统保障科科长",c:"#8ab8ff",t:"链路全程在线，信号无盲区。任何一次抖动我都会补回来——链路不断，人就能回来。"},
