@@ -1817,7 +1817,7 @@
      V26 · B. 行动时序 · 滚动长卷 (SCROLL SCROLL-PAINTING)
      ============================================================ */
   .tlx{position:relative;margin:0 -60px;}
-  .tlx-stage{position:sticky;top:66px;height:calc(100vh - 66px);min-height:640px;overflow:hidden;
+  .tlx-stage{position:sticky;top:66px;height:calc(100vh - 66px);min-height:560px;overflow:hidden;
     display:flex;flex-direction:column;}
   .tlx-stage::before{content:'';position:absolute;inset:0;pointer-events:none;z-index:5;
     background:linear-gradient(90deg,rgba(3,5,8,.94) 0,rgba(3,5,8,0) 110px,
@@ -1825,10 +1825,11 @@
 
   .tlx-track{position:relative;flex:1;}
   .tlx-inner{position:absolute;left:0;top:0;height:100%;width:max-content;
-    display:flex;flex-direction:column;padding:26px 60px 0;will-change:transform;}
+    display:flex;flex-direction:column;justify-content:center;
+    padding:14px 60px 66px;will-change:transform;}
 
   /* --- 路线层 --- */
-  .tlx-route{position:relative;height:198px;flex-shrink:0;}
+  .tlx-route{position:relative;height:154px;flex-shrink:0;}
   .tlx-route svg{position:absolute;left:0;top:0;height:100%;overflow:visible;}
   .tr-base{fill:none;stroke:rgba(47,211,255,.16);stroke-width:1.5;stroke-dasharray:5 7;}
   .tr-live{fill:none;stroke:url(#trGrad);stroke-width:2.4;stroke-linecap:round;
@@ -1865,7 +1866,7 @@
     box-shadow:0 0 10px var(--ok);}
 
   /* --- 日卡层 --- */
-  .tlx-days{display:flex;gap:44px;align-items:stretch;flex:1;padding:30px 0 80px;}
+  .tlx-days{display:flex;gap:44px;align-items:flex-end;flex:0 0 auto;padding:24px 0 0;}
   .tday{position:relative;width:600px;flex-shrink:0;display:flex;flex-direction:column;
     background:linear-gradient(168deg,rgba(7,13,19,.9),rgba(4,8,12,.94));
     border:1px solid var(--line);cursor:pointer;
@@ -1878,8 +1879,8 @@
   .tday.tdon::before{opacity:1;}
   .tday:hover{border-color:rgba(255,122,28,.5);}
 
-  .td-top{display:flex;align-items:flex-start;justify-content:space-between;padding:24px 30px 16px;}
-  .td-code{font-family:var(--mono);font-size:56px;font-weight:700;line-height:.9;color:var(--cyan);
+  .td-top{display:flex;align-items:flex-start;justify-content:space-between;padding:18px 30px 12px;}
+  .td-code{font-family:var(--mono);font-size:50px;font-weight:700;line-height:.9;color:var(--cyan);
     letter-spacing:.01em;text-shadow:0 0 26px rgba(47,211,255,.45);transition:.55s;}
   .tday.tdon .td-code{color:#9fecff;text-shadow:0 0 34px rgba(47,211,255,.7);}
   .td-en{font-family:var(--mono);font-size:9.5px;letter-spacing:.28em;color:var(--muted);
@@ -1887,25 +1888,25 @@
   .td-en b{display:block;font-weight:400;color:rgba(126,232,255,.62);}
   .td-en em{display:block;font-style:normal;color:var(--amber-soft);}
 
-  .td-body{padding:0 30px 18px;border-top:1px dashed rgba(125,139,153,.18);}
-  .td-title{font-family:var(--display);font-size:30px;font-weight:900;letter-spacing:.14em;
-    color:var(--text);margin-top:18px;}
-  .td-meta{display:flex;gap:10px;align-items:center;margin-top:10px;font-family:var(--mono);
+  .td-body{padding:0 30px 14px;border-top:1px dashed rgba(125,139,153,.18);}
+  .td-title{font-family:var(--display);font-size:27px;font-weight:900;letter-spacing:.14em;
+    color:var(--text);margin-top:13px;}
+  .td-meta{display:flex;gap:10px;align-items:center;margin-top:8px;font-family:var(--mono);
     font-size:11px;color:var(--cyan-soft);letter-spacing:.05em;}
   .td-meta i{width:4px;height:4px;background:var(--amber);transform:rotate(45deg);flex-shrink:0;}
-  .td-intro{font-family:var(--sans);font-size:12.5px;line-height:1.9;color:var(--muted);margin-top:14px;
-    display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
-  .td-list{list-style:none;margin-top:16px;border-left:1px solid rgba(47,211,255,.16);padding-left:14px;}
+  .td-intro{font-family:var(--sans);font-size:12.5px;line-height:1.8;color:var(--muted);margin-top:11px;
+    display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+  .td-list{list-style:none;margin-top:12px;border-left:1px solid rgba(47,211,255,.16);padding-left:14px;}
   .td-list li{position:relative;display:flex;gap:11px;font-family:var(--sans);font-size:12.5px;
-    color:var(--muted);padding:5px 0;line-height:1.7;align-items:baseline;}
-  .td-list li::before{content:'';position:absolute;left:-18px;top:13px;width:5px;height:5px;
+    color:var(--muted);padding:3.5px 0;line-height:1.6;align-items:baseline;}
+  .td-list li::before{content:'';position:absolute;left:-18px;top:11px;width:5px;height:5px;
     background:var(--cyan);box-shadow:0 0 7px var(--cyan);}
   .td-list li .t{font-family:var(--mono);font-size:11px;color:var(--cyan);flex-shrink:0;}
   .td-list li.sl{color:var(--amber-soft);}
   .td-list li.sl::before{background:var(--amber);box-shadow:0 0 7px var(--amber);}
   .td-list li.sl .t{color:var(--amber-soft);}
   .td-foot{margin-top:auto;display:flex;justify-content:space-between;align-items:center;
-    padding:14px 30px 16px;border-top:1px solid rgba(47,211,255,.12);
+    padding:11px 30px 13px;border-top:1px solid rgba(47,211,255,.12);
     font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;color:var(--muted);}
   .td-foot .go{color:var(--cyan);transition:.3s;}
   .tday:hover .td-foot .go{color:var(--amber);}
@@ -2061,6 +2062,76 @@
 
   @media (prefers-reduced-motion:reduce){
     .ha-scan{display:none !important;}
+  }
+
+  
+  /* ============================================================
+     V28 · 长卷右下角的星宝（只做点缀，随当天换台词）
+     ============================================================ */
+  .tlx-hud{padding-right:148px;}
+  .tlx-note{max-width:360px;overflow:hidden;text-overflow:ellipsis;}
+  .tlx-xb{position:absolute;right:38px;bottom:14px;width:104px;z-index:7;pointer-events:none;}
+  .tlx-xb img{width:100%;display:block;
+    filter:brightness(1.22) saturate(1.12)
+           drop-shadow(0 5px 14px rgba(0,0,0,.55))
+           drop-shadow(0 0 20px rgba(255,180,90,.22));
+    animation:txbBob 3.8s ease-in-out infinite;}
+  @keyframes txbBob{0%,100%{transform:translateY(0) rotate(-1.6deg);}
+                    50%{transform:translateY(-7px) rotate(1.6deg);}}
+  .txb-bub{position:absolute;right:calc(100% + 14px);bottom:62px;
+    width:max-content;max-width:290px;padding:9px 14px;
+    background:rgba(6,12,18,.94);border:1px solid rgba(47,211,255,.42);
+    font-family:var(--sans);font-size:12px;line-height:1.65;color:#dff3ff;
+    box-shadow:0 12px 34px rgba(0,0,0,.6);
+    opacity:0;transform:translateY(7px);transition:opacity .4s ease,transform .4s ease;}
+  .txb-bub.on{opacity:1;transform:translateY(0);}
+  .txb-bub::after{content:'';position:absolute;right:-6px;bottom:13px;width:10px;height:10px;
+    background:rgba(6,12,18,.94);border-right:1px solid rgba(47,211,255,.42);
+    border-bottom:1px solid rgba(47,211,255,.42);transform:rotate(-45deg);}
+
+  /* ============================================================
+     V28 · 矮屏适配：日卡整体压扁上移，保证整张卡都在屏幕里
+     ============================================================ */
+  @media (max-height:900px){
+    .tlx-route{height:138px;}
+    .tlx-days{gap:38px;padding:20px 0 0;}
+    .tday{width:572px;}
+    .td-top{padding:16px 28px 11px;}
+    .td-code{font-size:44px;}
+    .td-body{padding:0 28px 12px;}
+    .td-title{font-size:24px;margin-top:11px;}
+    .td-intro{font-size:12px;margin-top:9px;line-height:1.75;}
+    .tlx-xb{width:94px;}
+  }
+  @media (max-height:820px){
+    .tlx-route{height:120px;}
+    .tnode .ring{width:30px;height:30px;}
+    .tnode .cty{font-size:13px;margin-top:8px;}
+    .tnode .tag{margin-top:3px;}
+    .tlx-days{gap:34px;padding:16px 0 0;}
+    .tday{width:548px;}
+    .td-top{padding:14px 26px 10px;}
+    .td-code{font-size:39px;}
+    .td-en{font-size:9px;line-height:1.8;}
+    .td-body{padding:0 26px 10px;}
+    .td-title{font-size:22px;margin-top:9px;}
+    .td-intro{font-size:11.5px;margin-top:8px;line-height:1.7;}
+    .td-list{margin-top:10px;}
+    .td-list li{font-size:12px;padding:3px 0;}
+    .td-list li::before{top:10px;}
+    .td-foot{padding:9px 26px 11px;}
+    .tlx-xb{width:86px;}
+    .txb-bub{font-size:11.5px;}
+  }
+  @media (max-height:740px){
+    .tlx-route{height:104px;}
+    .tday{width:520px;}
+    .td-code{font-size:33px;}
+    .td-title{font-size:20px;margin-top:8px;}
+    .td-intro{-webkit-line-clamp:1;}
+    .td-list li{padding:2.5px 0;}
+    .td-list li:nth-child(n+6){display:none;}
+    .tlx-xb{width:76px;}
   }
 
   </style>
@@ -2502,6 +2573,10 @@
           <div class="tlx-pips" id="tlxPips"></div>
           <div class="tlx-line"><i id="tlxBar"></i></div>
           <div class="tlx-note hint" id="tlxNote">下滑 · 展开四日长卷</div>
+        </div>
+        <div class="tlx-xb" id="tlxXb" aria-hidden="true">
+          <div class="txb-bub" id="tlxXbBub">下滑 · 我带你走完这四天</div>
+          <img src="assets/xingbao.webp" alt="">
         </div>
       </div>
     </div>
@@ -6560,8 +6635,22 @@ function restartAll(){
     {d:2,sub: .31, cty:"平遥",tag:"D-03 · 记忆剧场",dy: 12},
     {d:3,sub:0,    cty:"太原",tag:"D-04 · 返航",    dy: -6}
   ];
-  var TLX={built:false,shift:0,stageW:0,trackW:0,len:0,pathW:0,pad:0,
+  var TLX={built:false,shift:0,stageW:0,trackW:0,len:0,pathW:0,pad:0,rh:154,
            lastP:-1,lit:0,raf:0,nodes:null,nodeX:null,live:null,glow:null};
+  /* 星宝在长卷里按当天说话 */
+  var TLX_XB={"D-01":"落点太原！先把伪装身份激活，再谈别的～",
+              "D-02":"晋祠是单点密度最高的一站，相机别停。",
+              "D-03":"小西天的悬塑……星宝也好想亲眼看看。",
+              "D-04":"14:00 锚点闭合，别贪，准时回来。"};
+  var _xbT=null,_xbCur="";
+  function tlxXbSay(txt){
+    var b=document.getElementById("tlxXbBub");
+    if(!b||txt===_xbCur) return;
+    _xbCur=txt;
+    clearTimeout(_xbT);
+    b.classList.remove("on");
+    _xbT=setTimeout(function(){ b.textContent=txt; b.classList.add("on"); },170);
+  }
 
   function tlxBuild(){
     var box=document.getElementById("tlxDays");
@@ -6615,19 +6704,21 @@ function restartAll(){
     var panels=box.querySelectorAll(".tday");
     if(!panels.length) return;
     var PAD=box.offsetLeft;             /* .tlx-inner 的左内边距 */
-    var W=box.scrollWidth, CY=92, pts=[], NH=[];
-    TLX.pad=PAD;
+    /* 路线带高度交给 CSS（短屏会被 media query 压矮），JS 只读不写 */
+    var RH=(svg.parentNode&&svg.parentNode.clientHeight)||154;
+    var W=box.scrollWidth, CY=Math.round(RH*0.46), SC=RH/198, pts=[], NH=[];
+    TLX.pad=PAD; TLX.rh=RH;
     ROUTE.forEach(function(n){
       var p=panels[n.d]; if(!p) return;
       var cx=p.offsetLeft-PAD+p.offsetWidth/2+n.sub*p.offsetWidth;
-      var cy=CY+n.dy;
+      var cy=CY+n.dy*SC;
       pts.push({x:cx,y:cy});
       NH.push('<div class="tnode" style="left:'+cx.toFixed(1)+'px;top:'+cy.toFixed(1)+'px">'+
         '<div class="ring"><span class="dot"></span></div>'+
         '<div class="cty">'+n.cty+'</div><div class="tag">'+n.tag+'</div></div>');
     });
-    svg.style.width=W+"px"; svg.style.height="198px";
-    svg.setAttribute("viewBox","0 0 "+W+" 198");
+    svg.style.width=W+"px"; svg.style.height=RH+"px";
+    svg.setAttribute("viewBox","0 0 "+W+" "+RH);
     var d=tlxSmooth(pts);
     var base=svg.querySelector(".tr-base"),
         glow=svg.querySelector(".tr-glow"),
@@ -6654,9 +6745,9 @@ function restartAll(){
     var trackW=inner.offsetWidth||stageW;
     TLX.stageW=stageW; TLX.trackW=trackW;
     TLX.shift=Math.max(0,trackW-stageW);
-    var stageH=Math.max(640,window.innerHeight-66);
+    var stageH=Math.max(560,window.innerHeight-66);
     wrap.style.height=(stageH+TLX.shift+160)+"px";
-    TLX.lastP=-1; TLX.lit=0;
+    TLX.lastP=-1; TLX.lit=0; _xbCur="";
     tlxTick(true);
   }
 
@@ -6667,7 +6758,7 @@ function restartAll(){
         inner=document.getElementById("tlxInner"),
         box=document.getElementById("tlxDays");
     if(!wrap||!inner||!box) return;
-    var stageH=Math.max(640,window.innerHeight-66);
+    var stageH=Math.max(560,window.innerHeight-66);
     var total=wrap.offsetHeight-stageH;
     if(total<1) total=1;
     var r=wrap.getBoundingClientRect();
@@ -6721,6 +6812,8 @@ function restartAll(){
     }
     var bar=document.getElementById("tlxBar");
     if(bar) bar.style.width=(p*100).toFixed(2)+"%";
+    tlxXbSay(p>.985 ? "火种已入库 · 全员安全返航。"
+                    : (TLX_XB[curCode]||"下滑 · 我带你走完这四天"));
     var note=document.getElementById("tlxNote");
     if(note){
       if(p>.985){ note.className="tlx-note"; note.innerHTML="时空锚点闭合 · <b>本次采集行动归档</b>"; }
@@ -7198,13 +7291,16 @@ var coordDays=[
 
 
   /* ============ RADAR SECTOR INDEX (方案E · v4 安全异形剪影+外框/拖尾/探照灯) ============ */
+  /* 顺序 = 盘面位置：i=0 右 / 1 右下 / 2 左下 / 3 左 / 4 左上(第一排左) / 5 右上(第一排右)。
+     从第一排左侧起顺时针读，正好是 01 任务简报 → 06 行动铁律。
+     sh(剪影) / no(编号) 绑在模块上，换位置不会串。 */
   var radarMods=[
-    {id:"briefing",  n:"任务简报",     en:"MISSION BRIEFING",   img:"hero_bg.webp",          tip:"行动源起 · 文明火种回收计划总述"},
-    {id:"personnel", n:"在编人员",     en:"PERSONNEL",          img:"base.webp",             tip:"在编特工档案 · 三部门工牌"},
-    {id:"map",       n:"行动时序",     en:"TIMELINE",           img:"map.webp",              tip:"D-01 → D-04 · 96 小时行动时序"},
-    {id:"intel",     n:"文明采集坐标", en:"COLLECTION COORDS",  img:"intel_xiaoxitian.webp", tip:"8 处坐标 · 分日采集图鉴"},
-    {id:"media",     n:"影像档案",     en:"MEDIA ARCHIVE",      img:"intel_gucheng.webp",    tip:"三组影像档案 · 交互记忆载体"},
-    {id:"logistics", n:"行动铁律",     en:"IRON LAWS",          img:"intel_jinci.webp",      tip:"伪装守则 · 铁律 · 安全屋接驳"}
+    {id:"map",       no:"03", sh:2, n:"行动时序",     en:"TIMELINE",           img:"map.webp",              tip:"D-01 → D-04 · 96 小时行动时序"},
+    {id:"intel",     no:"04", sh:3, n:"文明采集坐标", en:"COLLECTION COORDS",  img:"intel_xiaoxitian.webp", tip:"8 处坐标 · 分日采集图鉴"},
+    {id:"media",     no:"05", sh:4, n:"影像档案",     en:"MEDIA ARCHIVE",      img:"intel_gucheng.webp",    tip:"三组影像档案 · 交互记忆载体"},
+    {id:"logistics", no:"06", sh:5, n:"行动铁律",     en:"IRON LAWS",          img:"intel_jinci.webp",      tip:"伪装守则 · 铁律 · 安全屋接驳"},
+    {id:"briefing",  no:"01", sh:0, n:"任务简报",     en:"MISSION BRIEFING",   img:"hero_bg.webp",          tip:"行动源起 · 文明火种回收计划总述"},
+    {id:"personnel", no:"02", sh:1, n:"在编人员",     en:"PERSONNEL",          img:"base.webp",             tip:"在编特工档案 · 三部门工牌"}
   ];
   /* 安全剪影：底部或内容区保持足够宽度，文字永不触边 */
   var rnShapes=[
@@ -7362,14 +7458,14 @@ var coordDays=[
       var R=(rx*ry)/Math.sqrt(Math.pow(ry*Math.cos(angles[i]),2)+Math.pow(rx*Math.sin(angles[i]),2));
       var cxp=cx+Math.cos(angles[i])*R, cyp=cy+Math.sin(angles[i])*R;
       var CW=238, CH=186, MG=5, FW=CW+2*MG, FH=CH+2*MG;
-      var pts=rnShapes[i], pstr="";
+      var pts=rnShapes[m.sh], pstr="";
       pts.forEach(function(pt){ pstr+=((pt[0]*CW)+MG).toFixed(1)+","+((pt[1]*CH)+MG).toFixed(1)+" "; });
-      var col=rnPalette[i];
-      cards+='<div class="radar-node s'+i+'" style="left:'+(cxp-CW/2).toFixed(1)+'px;top:'+(cyp-CH/2).toFixed(1)+'px;width:'+CW+'px" onclick="go(\''+m.id+'\')">'+
+      var col=rnPalette[m.sh];
+      cards+='<div class="radar-node s'+m.sh+'" style="left:'+(cxp-CW/2).toFixed(1)+'px;top:'+(cyp-CH/2).toFixed(1)+'px;width:'+CW+'px" onclick="go(\''+m.id+'\')">'+
         '<svg class="rn-frame" viewBox="0 0 '+FW+' '+FH+'" preserveAspectRatio="none">'+
           '<polygon class="rn-fpoly" points="'+pstr.trim()+'" stroke="'+col+'" fill="'+col+'" fill-opacity=".04"/>'+
         '</svg>'+
-        '<span class="rn-idx">0'+(i+1)+'</span>'+
+        '<span class="rn-idx">'+m.no+'</span>'+
         '<div class="rn-panel">'+
           '<div class="rn-img" style="background-image:url(\'assets/'+m.img+'\')"></div>'+
           '<div class="rn-grad"></div>'+
