@@ -2009,7 +2009,7 @@
           我们守住了人，却没守住“人之所以为人”的那部分——梁架的斗拱怎么咬合、彩塑的衣纹怎么飘、一句唱腔的气口落在哪里，这些东西没有备份。它们随着地表一起烧掉了。
         </div>
         <div class="body-text">
-          末日特情处受命组建<span class="hl">「文明火种回收计划」</span>：以时空锚点技术溯回文明未损期，派遣行动员实地采集高保真文明样本，回传地下城中央档案库，作为重建的母版。
+          末日特情处受命组建<span class="hl">「文明火种回收计划」</span>：以时空锚点技术溯回文明未损期，派遣特工实地采集高保真文明样本，回传地下城中央档案库，作为重建的母版。
         </div>
         <div class="body-text">
           本次行动代号<span class="hl">「晋地溯源计划」</span>，落点公元 <span class="hl">2026</span> 年 9 月 3 日，目标锚区：<span class="hl">山西</span>。这里保有全球密度最高的木构遗存与彩塑造像，是回收计划名单上的第一顺位。
@@ -2061,7 +2061,7 @@
     <div class="page-head reveal">
       <div class="sec-tag"><span>02</span> // PERSONNEL</div>
       <div class="title-wrap"><span class="corner tl"></span><span class="corner br"></span><h2 class="cyber-title" data-text="在编人员" style="--ct:56px;">在编人员</h2></div>
-      <div class="sec-sub">本次计划的全部在编行动员。名单属机密，工牌仅在锚区内有效。点按工卡查看个人档案。</div>
+      <div class="sec-sub">本次计划的全部在编特工。名单属机密，工牌仅在锚区内有效。点按工卡查看个人档案。</div>
     </div>
     <div id="personGrid"></div>
     <div class="page-back reveal"><button class="btn-hud" onclick="goHome()">← 返回指挥中枢</button></div>
@@ -2193,7 +2193,7 @@
           <span class="rc-hint">全编制 · 强制遵守</span>
         </div>
         <div class="reg-row"><div class="rr-t"><span class="rr-no">01</span><b>不可暴露</b><i>NO EXPOSURE</i></div>
-          <p>行动员须以 2026 年常住民身份行动。任何关于时空来源、未来事件、本处编制的信息，不得以任何形式外泄。</p></div>
+          <p>特工须以 2026 年常住民身份行动。任何关于时空来源、未来事件、本处编制的信息，不得以任何形式外泄。</p></div>
         <div class="reg-row"><div class="rr-t"><span class="rr-no">02</span><b>不可干预</b><i>NO INTERFERENCE</i></div>
           <p>禁止改变锚区内既有事件走向。观察、记录、采集，不介入。</p></div>
         <div class="reg-row warn"><div class="rr-t"><span class="rr-no">03</span><b>不可滞留</b><i>NO STRANDING</i></div>
@@ -4791,7 +4791,7 @@ function fxFrame(dt){
 var BOOT=[
  {s:"STAGE 01 · 时空链路"},
  {c:"[LINK]",p:"星元2323 ⇄ 公元2026 锚点校验",r:"STABLE"},
- {c:"[AUTH]",p:"行动员权限 · 末日特情处",r:"GRANTED"},
+ {c:"[AUTH]",p:"特工权限 · 末日特情处",r:"GRANTED"},
  {s:"STAGE 02 · 数据库勘损"},
  {c:"[SCAN]",p:"地表文明数据库 完整度",r:"03.7%",k:"bd"},
  {c:"[WARN]",p:"主索引损毁 · 碎片已散逸至数据空域",r:"CRITICAL",k:"bd"},
@@ -5452,7 +5452,7 @@ function restartAll(){
     {s:"01 身份核验 / IDENTITY VERIFY"},
     {c:"BIO",p:"生物特征比对",r:"进行中",r2:"通过",d:1050},
     {c:"REG",p:"编制核验 · 末日特情处",r:"在编",d:620},
-    {c:"RNK",p:"行动员职级",r:"在编 · 特勤",d:620},
+    {c:"RNK",p:"特工职级",r:"在编 · 特勤",d:620},
     {c:"CLR",p:"权限等级",r:"Ω-CLASS",cls:"am",d:720},
     {s:"02 时空定位 / TEMPORAL LOCK"},
     {c:"NAV",p:"源时间线",r:"星元 2323",cls:"am",d:640},
@@ -5466,7 +5466,7 @@ function restartAll(){
     {c:"SEQ",p:"锚点相位同步",r:"完成",d:720},
     {s:"04 任务启动 / MISSION START"},
     {c:"WIN",p:"回收窗口 2026.09.06 14:00",cd:1,cls:"am",d:900},
-    {c:"SYS",p:"欢迎回到公元 2026 年，行动员",r:"任务启动",cls:"am",d:1000}
+    {c:"SYS",p:"欢迎回到公元 2026 年，特工",r:"任务启动",cls:"am",d:1000}
   ];
   var GLYPH="0123456789#%&@*<>/[]{}"+String.fromCharCode(92,61,43);
   var bi=0, bootDone=false, bootTimer=null,
@@ -5746,7 +5746,7 @@ function restartAll(){
   function openPerson(ui,pi){
     var u=units[ui], p=u.people[pi];
     dpageOpen(
-      '<div class="dp-tag">PERSONNEL DOSSIER · 行动员个人档案</div>'+
+      '<div class="dp-tag">PERSONNEL DOSSIER · 特工个人档案</div>'+
       '<div class="dp-head"><span class="dp-code-big">'+p.code+'</span>'+
         '<div class="dp-tt"><h3>'+p.n+'</h3><span class="dp-en">'+u.en+' · '+p.role+'</span></div>'+
         '<div class="dp-meta"><span>权限等级 <b>'+p.pr+'</b></span><i></i><span>代号 <b>'+p.call+'</b></span><i></i><span>'+u.t+'</span></div></div>'+
@@ -5797,7 +5797,7 @@ function restartAll(){
     {code:"D-01",title:"时空落点",en:"ANCHOR DROP",date:"2026.09.03 周四",area:"锚区 · 太原",
      intro:"行动组自星元 2323 年地下城出发，经时空锚点落入公元 2026 年 9 月 3 日太原。落点后首要任务为伪装身份激活、装备自检与首批数字文明样本采集。",
      rows:[
-       ["14:00 – 15:00","锚点落地 · 身份激活","行动员分批抵达太原锚区，自行前往安全屋完成落脚登记。伪装身份于此刻起全面生效。"],
+       ["14:00 – 15:00","锚点落地 · 身份激活","特工分批抵达太原锚区，自行前往安全屋完成落脚登记。伪装身份于此刻起全面生效。"],
        ["15:00 – 15:15","整队 · 出发","安全屋集结完毕，全员前往首个采集点。"],
        ["15:15 – 16:15","SX-01 数字光影节点 · 采集","“黑神话：悟空 · 遇见山西”数字艺术场域。观测本时代如何以数字手段封存古建，采集虚实叠加样本。"],
        ["16:15 – 16:30","地面机动","转场至 SX-02 宋制建筑复原体。"],
@@ -6325,7 +6325,7 @@ var coordDays=[
   /* ============ RADAR SECTOR INDEX (方案E · v4 安全异形剪影+外框/拖尾/探照灯) ============ */
   var radarMods=[
     {id:"briefing",  n:"任务简报",     en:"MISSION BRIEFING",   img:"hero_bg.png",          tip:"行动源起 · 文明火种回收计划总述"},
-    {id:"personnel", n:"在编人员",     en:"PERSONNEL",          img:"base.png",             tip:"在编行动员档案 · 三部门工牌"},
+    {id:"personnel", n:"在编人员",     en:"PERSONNEL",          img:"base.png",             tip:"在编特工档案 · 三部门工牌"},
     {id:"map",       n:"行动时序",     en:"TIMELINE",           img:"map.png",              tip:"D-01 → D-04 · 96 小时行动时序"},
     {id:"intel",     n:"文明采集坐标", en:"COLLECTION COORDS",  img:"intel_xiaoxitian.png", tip:"8 处坐标 · 分日采集图鉴"},
     {id:"media",     n:"影像档案",     en:"MEDIA ARCHIVE",      img:"intel_gucheng.png",    tip:"三组影像档案 · 交互记忆载体"},
