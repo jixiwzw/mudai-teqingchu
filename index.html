@@ -2024,7 +2024,7 @@
     overflow:hidden;pointer-events:none;
     -webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,0) 0,#000 92px,#000 calc(100% - 92px),rgba(0,0,0,0) 100%);
             mask-image:linear-gradient(180deg,rgba(0,0,0,0) 0,#000 92px,#000 calc(100% - 92px),rgba(0,0,0,0) 100%);}
-  .ha-lens{position:absolute;left:0;top:0;width:660px;height:660px;overflow:hidden;
+  .ha-lens{position:absolute;left:0;top:0;width:462px;height:462px;overflow:hidden;
     opacity:0;transition:opacity .5s ease;will-change:transform;
     -webkit-mask-image:radial-gradient(circle closest-side at 50% 50%,
       #000 0%,rgba(0,0,0,.97) 36%,rgba(0,0,0,.62) 60%,rgba(0,0,0,.2) 79%,rgba(0,0,0,0) 94%);
@@ -2035,19 +2035,37 @@
   .hl-img{position:absolute;left:0;top:0;will-change:transform;
     background:center/cover no-repeat url('assets/sector_bg.webp');
     filter:saturate(.84) contrast(1.05) brightness(1.06);}
+  .hl-img::after{content:'';position:absolute;inset:0;background:inherit;
+    -webkit-mask-image:var(--ha-sculpture);mask-image:var(--ha-sculpture);
+    transform-origin:50% 88%;animation:haStoneBreath 7.4s ease-in-out infinite;animation-play-state:paused;}
+  .ha-lens.on .hl-img::after{animation-play-state:running;}
+  .ha-lens:has(.hl-relief.ready) .hl-img::after{animation-play-state:paused;}
+  @keyframes haStoneBreath{0%,100%{transform:translate(0,0) rotate(-.035deg);}
+    50%{transform:translate(.7px,-1.2px) rotate(.045deg);}}
+  .hl-relief{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;
+    opacity:0;transition:opacity .65s ease;}
+  .hl-relief.ready{opacity:1;}
   .hl-grade{position:absolute;inset:0;pointer-events:none;
     background:
-      repeating-linear-gradient(0deg,rgba(0,0,0,.2) 0 1px,rgba(0,0,0,0) 1px 3px),
+      repeating-linear-gradient(0deg,rgba(0,0,0,.09) 0 1px,rgba(0,0,0,0) 1px 3px),
       radial-gradient(circle closest-side at 50% 50%,
-        rgba(47,211,255,.09) 0,rgba(47,211,255,.03) 48%,rgba(3,5,8,.3) 86%);}
+        rgba(255,210,142,.025) 0,rgba(47,211,255,.025) 48%,rgba(3,5,8,.3) 86%);}
+  .hl-grade::before{content:'';position:absolute;inset:0;mix-blend-mode:screen;
+    background:radial-gradient(ellipse at 43% 38%,rgba(255,213,146,.16),transparent 64%),
+      linear-gradient(118deg,transparent 32%,rgba(255,235,189,.08) 47%,transparent 59%);}
+  .ha-lens:has(.hl-relief.ready) .hl-grade::before{opacity:.2;}
 
-  .ha-ring{position:absolute;left:0;top:0;width:396px;height:396px;
+  .ha-ring{position:absolute;left:0;top:0;width:277.2px;height:277.2px;
     opacity:0;transition:opacity .5s ease;will-change:transform;}
   .ha-ring.on{opacity:1;}
   .ha-ring::before{content:'';position:absolute;inset:0;border-radius:50%;
-    border:1px solid rgba(126,232,255,.42);box-shadow:inset 0 0 52px rgba(47,211,255,.12),0 0 22px rgba(47,211,255,.12);}
-  .ha-ring::after{content:'';position:absolute;inset:18px;border-radius:50%;
-    border:1px dashed rgba(126,232,255,.2);animation:radSpin 26s linear infinite;}
+    border:1px solid rgba(126,232,255,.24);box-shadow:inset 0 0 28px rgba(47,211,255,.06),0 0 18px rgba(255,192,111,.08);}
+  .ha-ring::after{content:'';position:absolute;inset:12.6px;border-radius:50%;
+    background:conic-gradient(from 20deg,transparent 0deg,rgba(255,208,141,.7) 44deg,transparent 67deg,
+      transparent 180deg,rgba(126,232,255,.5) 224deg,transparent 249deg);
+    -webkit-mask-image:radial-gradient(closest-side,transparent calc(100% - 1px),#000 100%);
+            mask-image:radial-gradient(closest-side,transparent calc(100% - 1px),#000 100%);
+    animation:radSpin 38s linear infinite;}
   .ha-tag{position:absolute;left:50%;top:calc(100% + 10px);transform:translateX(-50%);
     font-family:var(--mono);font-size:9px;letter-spacing:.34em;white-space:nowrap;
     color:rgba(126,232,255,.5);}
@@ -2239,27 +2257,38 @@
 
   /* -- 档案浮层（点击节点后就地展开） -- */
   .mt-deck{position:absolute;inset:0;z-index:12;display:none;overflow:auto;overscroll-behavior:contain;
-    padding:54px 26px 26px;background:linear-gradient(180deg,rgba(2,4,7,.9),rgba(2,4,7,.96));
+    height:100%;max-height:calc(100vh - 100px);max-height:calc(100dvh - 100px);
+    padding:68px 26px 18px;background:linear-gradient(180deg,rgba(2,4,7,.9),rgba(2,4,7,.96));
     -webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);}
   .mt-deck.on{display:block;}
   .mt-deck.measure{display:block;visibility:hidden;}
   .mt-deck::-webkit-scrollbar{width:6px;}
   .mt-deck::-webkit-scrollbar-thumb{background:rgba(47,211,255,.3);}
   .mt-deck .arch{display:none;margin:0 auto;max-width:1000px;}
-  .mt-deck .arch.mt-on{display:block;}
+  .mt-deck .arch.mt-on{display:flex;flex-direction:column;height:100%;min-height:0;}
+  .mt-deck .arch-head{flex-shrink:0;}
+  .mt-deck .apbox{flex:1;min-height:0;display:flex;padding:12px 18px;}
+  .mt-deck .apbox .ap{height:100%;min-height:0;aspect-ratio:auto;}
+  .mt-deck .apbox .ap:fullscreen{width:100%;height:100%;max-width:none;}
   .mt-deck.on .arch.mt-on{animation:mtDeckIn .62s cubic-bezier(.16,.84,.3,1) both;}
   .mt-deck.measure .mt-back,.mt-deck.measure .mt-tag{display:none;}
   @keyframes mtDeckIn{from{opacity:0;transform:scale(.955) translateY(10px);filter:blur(7px);}
     to{opacity:1;transform:none;filter:none;}}
   .mt-back{position:absolute;left:22px;top:16px;z-index:14;
-    font-family:var(--mono);font-size:10px;letter-spacing:.24em;color:var(--cyan);
-    background:rgba(3,6,9,.8);border:1px solid rgba(47,211,255,.34);padding:8px 15px;cursor:pointer;transition:.3s;}
-  .mt-back:hover{background:var(--cyan);color:#05080c;box-shadow:0 0 24px rgba(47,211,255,.4);}
-  .mt-tag{position:absolute;right:22px;top:16px;z-index:14;font-family:var(--mono);font-size:9.5px;
+    font-family:var(--mono);font-size:13px;font-weight:700;letter-spacing:.18em;color:#05080c;
+    background:var(--cyan);border:1px solid var(--cyan);min-height:44px;padding:10px 20px;cursor:pointer;transition:.3s;
+    box-shadow:0 0 22px rgba(47,211,255,.3);}
+  .mt-back:hover{background:var(--cyan-soft);box-shadow:0 0 28px rgba(47,211,255,.5);}
+  .mt-back:focus-visible{outline:2px solid #fff;outline-offset:3px;}
+  .mt-tag{position:absolute;right:22px;top:29px;z-index:14;font-family:var(--mono);font-size:9.5px;
     letter-spacing:.24em;color:rgba(125,139,153,.85);pointer-events:none;}
   .mt-tag b{color:var(--cyan-soft);font-weight:400;}
   .mt-deck .ix-sep{margin:26px 0 0;}
   .mt-deck .arch.interactive{margin-top:0;}
+
+  /* 仅在档案已展开时隐藏中枢入口；底部保留占位，避免页面滚动位置跳变。 */
+  body[data-view="media"]:has(#mtDeck.on) #backBtn{display:none !important;}
+  #view-media:has(#mtDeck.on) > .page > .page-back{visibility:hidden;pointer-events:none;}
 
   @media (max-width:1100px){
     .mn-card{width:178px;}
@@ -2271,9 +2300,296 @@
     .mn-card{width:142px;padding:6px 6px 7px;}
     .mn-tx b{font-size:11px;} .mn-tx u{display:none;}
     .mt-lab i{font-size:12.5px;} .mt-lab.tr{display:none;}
-    .mt-deck{padding:50px 12px 18px;}
+    .mt-deck{padding:68px 12px 18px;}
     .mt-hint{font-size:8.5px;letter-spacing:.2em;bottom:14px;}
   }
+
+
+  /* ============================================================
+     V30 · 文明采集坐标 · 广胜寺飞虹塔 · 琉璃信标塔
+     class 前缀 fh- / fn / fb- ；JS 模块 FHT
+     ============================================================ */
+  /* -- 本页页头压扁，保证信标阵首屏完整 -- */
+  #view-intel .page{padding-top:58px;padding-bottom:74px;}
+  #view-intel .page-head{margin-bottom:12px;display:flex;align-items:flex-end;
+    gap:14px 34px;flex-wrap:wrap;}
+  #view-intel .sec-tag{margin-bottom:9px;}
+  #view-intel .title-wrap{padding:9px 26px;}
+  #view-intel .cyber-title{--ct:38px !important;}
+  #view-intel .sec-sub{margin:0 0 10px;font-size:12px;}
+  #view-intel .page-back{margin-top:34px;}
+
+  .fh{position:relative;width:100%;
+    height:min(calc(100vh - 232px),880px);min-height:460px;margin:4px 0 0;
+    border:1px solid var(--line);overflow:hidden;isolation:isolate;--dc:rgb(216,163,58);
+    background:linear-gradient(180deg,rgba(4,7,10,.96),rgba(2,4,6,.98));}
+
+  /* -- 当前坐标封面作背景：虚化 + 中心压暗，绝不抢塔 -- */
+  .fh-bgwrap{position:absolute;inset:0;z-index:0;overflow:hidden;
+    transform:translate3d(var(--px,0px),var(--py,0px),0);
+    transition:transform .55s cubic-bezier(.2,.7,.2,1);}
+  .fh-bg{position:absolute;inset:-6%;z-index:0;background:center/cover no-repeat;
+    will-change:opacity,transform;contain:paint;
+    opacity:0;transform:scale(1.14) translateZ(0);
+    filter:blur(2.5px) saturate(.86) brightness(.94) contrast(1.03);
+    transition:opacity 1.25s cubic-bezier(.22,.7,.2,1),transform 2.4s cubic-bezier(.22,.7,.2,1);}
+  .fh-bg.on{opacity:1;transform:scale(1) translateZ(0);}
+  .fh-bg.noimg{background:
+    radial-gradient(ellipse at 32% 22%,rgba(126,232,255,.30),transparent 55%),
+    radial-gradient(ellipse at 74% 70%,rgba(47,211,255,.20),transparent 58%),
+    radial-gradient(ellipse at 52% 48%,rgba(255,122,28,.14),transparent 66%),#070c11;}
+  /* 只压边和底部，中间整张照片留给观众；塔的可读性交给画布里的背衬 */
+  .fh-bgmask{position:absolute;inset:0;z-index:1;pointer-events:none;
+    background:
+      linear-gradient(180deg,rgba(2,4,6,.62),rgba(2,4,6,0) 26%,rgba(2,4,6,0) 62%,rgba(2,4,6,.72)),
+      linear-gradient(90deg,rgba(2,4,6,.58),rgba(2,4,6,0) 20%,rgba(2,4,6,0) 80%,rgba(2,4,6,.58)),
+      repeating-linear-gradient(180deg,rgba(0,0,0,.20) 0 2px,transparent 2px 4px);}
+  .fh-bgmask::after{content:'';position:absolute;inset:0;
+    background:radial-gradient(72% 60% at 50% 74%,var(--dc),transparent 72%);
+    opacity:.10;mix-blend-mode:screen;transition:background 1.1s ease;}
+
+  .fh canvas{position:absolute;inset:0;width:100%;height:100%;display:block;
+    touch-action:pan-y;cursor:grab;z-index:2;}
+  .fh canvas.drag{cursor:grabbing;}
+  .fh #fhCv2{z-index:3;pointer-events:none;}
+  .fh-fx{position:absolute;inset:0;pointer-events:none;z-index:4;
+    background:repeating-linear-gradient(180deg,rgba(255,255,255,.022) 0 1px,transparent 1px 3px),
+               radial-gradient(130% 104% at 50% 52%,transparent 62%,rgba(1,3,5,.42) 100%);
+    mix-blend-mode:screen;opacity:.5;}
+  .fh-fx::after{content:'';position:absolute;left:0;right:0;height:84px;
+    background:linear-gradient(180deg,transparent,rgba(216,163,58,.05),transparent);
+    animation:fhScan 8.4s linear infinite;}
+  @keyframes fhScan{0%{top:-84px;opacity:0}8%{opacity:1}92%{opacity:1}100%{top:100%;opacity:0}}
+  /* 切换瞬间的变焦呼吸：背景先虚后实 */
+  .fh.shifting .fh-bg.on{filter:blur(9px) saturate(1.0) brightness(1.04) contrast(1.05);
+    transform:scale(1.045) translateZ(0);
+    transition:filter .34s ease-out,transform .34s ease-out;}
+  .fh.igniting .fh-fx{opacity:.28;}
+  .fh.igniting .fh-bg.on{filter:blur(16px) saturate(.40) brightness(.40) contrast(1.1);transform:scale(1.1) translateZ(0);}
+
+  /* 跃迁闪光：切换瞬间的一次性冲击 */
+  .fh-flash{position:absolute;inset:0;z-index:4;pointer-events:none;opacity:0;}
+  .fh-flash.go{animation:fhFlash 1.05s cubic-bezier(.16,.8,.24,1) both;}
+  .fh-flash::before{content:'';position:absolute;inset:0;
+    background:radial-gradient(58% 46% at 50% 52%,var(--dc),transparent 70%);
+    mix-blend-mode:screen;opacity:.30;}
+  .fh-flash::after{content:'';position:absolute;inset:0;
+    background:repeating-linear-gradient(90deg,transparent 0 22px,rgba(255,255,255,.10) 22px 23px);
+    mix-blend-mode:screen;animation:fhStreak 1.05s cubic-bezier(.16,.8,.24,1) both;}
+  @keyframes fhFlash{0%{opacity:0;}9%{opacity:1;}100%{opacity:0;}}
+  @keyframes fhStreak{0%{transform:translateX(-4%) scaleX(1.6);opacity:.9;}
+    100%{transform:translateX(4%) scaleX(1);opacity:0;}}
+
+  /* 切换扫掠 */
+  .fh-swipe{position:absolute;inset:0;z-index:4;pointer-events:none;opacity:0;}
+  .fh-swipe.go{animation:fhSwipe 1.05s cubic-bezier(.25,.7,.2,1) both;}
+  .fh-swipe::before{content:'';position:absolute;top:0;bottom:0;width:30%;
+    background:linear-gradient(90deg,transparent,var(--dc),transparent);
+    opacity:.24;filter:blur(3px);}
+  @keyframes fhSwipe{0%{opacity:0;transform:translateX(-58%);}
+    18%{opacity:1;}82%{opacity:1;}100%{opacity:0;transform:translateX(58%);}}
+
+  .fh-cor{position:absolute;width:26px;height:26px;z-index:7;pointer-events:none;}
+  .fh-cor::before,.fh-cor::after{content:'';position:absolute;background:rgba(216,163,58,.72);}
+  .fh-cor::before{width:100%;height:1px;} .fh-cor::after{width:1px;height:100%;}
+  .fh-cor.tl{top:12px;left:12px;} .fh-cor.tr{top:12px;right:12px;}
+  .fh-cor.tr::before{right:0;} .fh-cor.tr::after{right:0;}
+  .fh-cor.bl{bottom:12px;left:12px;} .fh-cor.bl::before{bottom:0;} .fh-cor.bl::after{bottom:0;}
+  .fh-cor.br{bottom:12px;right:12px;} .fh-cor.br::before{bottom:0;right:0;} .fh-cor.br::after{bottom:0;right:0;}
+
+  .fh-lab{position:absolute;z-index:7;pointer-events:none;display:flex;flex-direction:column;gap:3px;}
+  .fh-lab.tl{top:24px;left:26px;} .fh-lab.tr{top:24px;right:26px;text-align:right;}
+  .fh-lab b{font-family:var(--mono);font-size:9.5px;font-weight:400;letter-spacing:.24em;color:rgba(216,163,58,.95);}
+  .fh-lab i{font-family:var(--display);font-size:16px;font-weight:900;font-style:normal;letter-spacing:.14em;color:#eaf3fa;}
+  .fh-lab span{font-family:var(--mono);font-size:9px;letter-spacing:.14em;color:var(--muted);}
+
+  /* -- 当前坐标速览面板 -- */
+  .fh-brief{position:absolute;left:26px;bottom:74px;z-index:7;width:330px;
+    background:linear-gradient(160deg,rgba(6,12,17,.90),rgba(4,8,12,.74));
+    border:1px solid rgba(216,163,58,.24);padding:16px 18px 15px;}
+  .fh-brief::before{content:'';position:absolute;left:-1px;top:-1px;width:12px;height:12px;
+    border-left:1px solid var(--dc);border-top:1px solid var(--dc);}
+  .fh-brief::after{content:'';position:absolute;right:-1px;bottom:-1px;width:12px;height:12px;
+    border-right:1px solid var(--dc);border-bottom:1px solid var(--dc);}
+  .fh-brief.in{animation:fbIn .78s cubic-bezier(.16,.84,.24,1) both;}
+  @keyframes fbIn{0%{opacity:0;transform:translateX(-30px) skewX(4deg);filter:blur(5px);}
+    46%{opacity:1;filter:blur(0);}100%{opacity:1;transform:none;filter:none;}}
+  .fh-brief.in .fb-day{animation:fbPop .5s .06s cubic-bezier(.2,.9,.2,1) both;}
+  .fh-brief.in .fb-hd{animation:fbPop .55s .13s cubic-bezier(.2,.9,.2,1) both;}
+  .fh-brief.in p{animation:fbPop .6s .21s cubic-bezier(.2,.9,.2,1) both;}
+  .fh-brief.in .fb-go{animation:fbPop .6s .3s cubic-bezier(.2,.9,.2,1) both;}
+  @keyframes fbPop{0%{opacity:0;transform:translateY(12px);}100%{opacity:1;transform:none;}}
+  .fb-line{position:absolute;left:0;right:0;top:0;height:1px;
+    background:linear-gradient(90deg,transparent,var(--dc),transparent);opacity:0;}
+  .fh-brief.in .fb-line{animation:fbLine .95s cubic-bezier(.3,.7,.2,1) both;}
+  @keyframes fbLine{0%{opacity:0;transform:translateY(0);}10%{opacity:.95;}
+    100%{opacity:0;transform:translateY(var(--fbh,150px));}}
+  .fh.igniting .fh-brief{opacity:0 !important;transform:translateX(-26px);transition:opacity .5s,transform .5s;}
+  .fh.igniting .fn{opacity:0 !important;transition:opacity .45s;}
+  .fh.igniting .fh-rail,.fh.igniting .fh-arw{opacity:0;transition:opacity .45s;}
+  .fb-day{display:inline-block;font-family:var(--mono);font-size:9px;letter-spacing:.22em;
+    color:var(--c);border:1px solid var(--c);padding:3px 9px;margin-bottom:11px;opacity:.9;}
+  .fb-hd{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;}
+  .fb-hd b{font-family:var(--mono);font-size:11px;font-weight:400;letter-spacing:.2em;color:var(--dc);}
+  .fb-hd h5{font-family:var(--display);font-size:20px;font-weight:900;letter-spacing:.06em;color:#eef6fc;}
+  .fb-hd i{font-family:var(--mono);font-size:8.5px;font-style:normal;letter-spacing:.18em;color:var(--muted);
+    flex-basis:100%;margin-top:3px;}
+  .fh-brief p{font-family:var(--sans);font-size:12px;line-height:1.85;color:#9fb0bd;margin-top:11px;
+    display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
+  .fb-go{margin-top:13px;display:inline-flex;align-items:center;gap:9px;cursor:pointer;
+    font-family:var(--mono);font-size:10px;letter-spacing:.22em;color:#06131a;
+    background:var(--dc);border:0;padding:8px 16px;transition:.25s;}
+  .fb-go span{transition:transform .25s;}
+  .fb-go:hover{filter:brightness(1.14);box-shadow:0 0 22px rgba(216,163,58,.35);}
+  .fb-go:hover span{transform:translateX(4px);}
+
+  /* -- 浮动节点标签 -- */
+  .fh-nodes{position:absolute;inset:0;z-index:5;pointer-events:none;}
+  .fn{position:absolute;transform:translate(-50%,-50%);pointer-events:auto;cursor:pointer;
+    width:138px;padding:6px 9px 7px;background:rgba(4,8,12,.80);
+    border:1px solid rgba(216,163,58,.26);
+    transition:border-color .3s,box-shadow .3s,background .3s,width .35s;}
+  .fn::before{content:'';position:absolute;left:-1px;top:-1px;width:8px;height:8px;
+    border-left:1px solid var(--c);border-top:1px solid var(--c);}
+  .fn::after{content:'';position:absolute;right:-1px;bottom:-1px;width:8px;height:8px;
+    border-right:1px solid var(--c);border-bottom:1px solid var(--c);}
+  .fn:hover{border-color:var(--c);background:rgba(8,14,20,.94);
+    box-shadow:0 0 24px rgba(0,0,0,.7),0 0 18px var(--cg);}
+  .fn u{display:block;font-family:var(--mono);font-size:8.5px;letter-spacing:.2em;color:var(--c);text-decoration:none;}
+  .fn b{display:block;font-family:var(--display);font-size:13px;font-weight:900;letter-spacing:.05em;
+    color:#eef6fc;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .fn s{display:none;}
+  .fn em{display:none;}
+  .fn.cur{width:152px;background:rgba(5,11,16,.95);border-color:var(--c);
+    box-shadow:0 8px 34px rgba(0,0,0,.66),0 0 24px var(--cg);}
+  .fn.cur u{color:var(--c);}
+  .fn.flash{animation:fnFlash .82s cubic-bezier(.2,.75,.2,1) both;}
+  @keyframes fnFlash{0%{box-shadow:0 0 0 0 var(--c),0 8px 34px rgba(0,0,0,.66);}
+    30%{box-shadow:0 0 0 3px var(--cg),0 8px 34px rgba(0,0,0,.66),0 0 34px var(--c);}
+    100%{box-shadow:0 8px 34px rgba(0,0,0,.66),0 0 24px var(--cg);}}
+  .fn.cur b{font-size:14px;}
+
+  /* -- 左右切换 -- */
+  .fh-arw{position:absolute;top:42%;transform:translateY(-50%);z-index:8;
+    width:46px;height:46px;cursor:pointer;background:rgba(4,9,13,.72);
+    border:1px solid rgba(216,163,58,.30);color:rgba(216,163,58,.95);
+    font-family:var(--hud);font-size:20px;line-height:1;
+    display:flex;align-items:center;justify-content:center;transition:.28s;}
+  .fh-arw:hover{background:rgba(216,163,58,.92);color:#06131a;border-color:rgba(216,163,58,.9);
+    box-shadow:0 0 26px rgba(216,163,58,.4);}
+  .fh-arw.prev{left:22px;} .fh-arw.next{right:22px;}
+  .fh-arw::after{content:'';position:absolute;inset:-1px;border:1px solid var(--dc);
+    opacity:0;animation:arwPulse 3.6s ease-in-out infinite;}
+  @keyframes arwPulse{0%,72%{opacity:0;transform:scale(1);}
+    82%{opacity:.5;transform:scale(1.16);}100%{opacity:0;transform:scale(1.3);}}
+  .fh-arw:hover::after{animation:none;opacity:0;}
+  .fh-arw::before{content:'';position:absolute;inset:4px;border:1px solid rgba(255,255,255,.06);}
+
+  /* -- 底部索引轨 -- */
+  .fh-rail{position:absolute;left:50%;transform:translateX(-50%);bottom:16px;z-index:8;
+    display:flex;gap:5px;align-items:flex-end;
+    background:rgba(3,6,9,.82);border:1px solid rgba(216,163,58,.14);padding:8px 12px;}
+  .fh-rail i{position:relative;display:flex;flex-direction:column;align-items:center;gap:5px;
+    cursor:pointer;padding:2px 5px;opacity:.42;transition:opacity .3s;}
+  .fh-rail i:hover{opacity:.85;}
+  .fh-rail i.on{opacity:1;}
+  .fh-rail i b{display:block;width:26px;height:2px;background:var(--c);transition:height .3s,width .3s;}
+  .fh-rail i.on b{height:4px;width:38px;box-shadow:0 0 12px var(--c);}
+  .fh-rail i u{font-family:var(--mono);font-size:7.5px;letter-spacing:.12em;color:var(--muted);text-decoration:none;}
+  .fh-rail i::after{content:attr(data-n);position:absolute;bottom:calc(100% + 10px);left:50%;
+    transform:translateX(-50%) translateY(4px);white-space:nowrap;
+    font-family:var(--display);font-size:12px;font-weight:700;letter-spacing:.06em;color:#eef6fc;
+    background:rgba(4,9,13,.94);border:1px solid var(--c);padding:5px 10px;
+    opacity:0;pointer-events:none;transition:opacity .22s,transform .22s;}
+  .fh-rail i:hover::after{opacity:1;transform:translateX(-50%) translateY(0);}
+  .fh-rail i.on u{color:var(--c);}
+
+  .fh-hint{position:absolute;right:26px;bottom:24px;z-index:7;pointer-events:none;
+    font-family:var(--mono);font-size:9px;letter-spacing:.2em;color:rgba(125,139,153,.72);
+    text-align:right;line-height:1.9;}
+  .fh-hint em{font-style:normal;color:rgba(216,163,58,.9);}
+  .fh-split{display:flex;align-items:center;gap:20px;margin:38px 0 24px;}
+  .fh-split span{flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(47,211,255,.28),transparent);}
+  .fh-split b{font-family:var(--mono);font-size:10.5px;font-weight:400;letter-spacing:.34em;
+    color:var(--cyan-soft);white-space:nowrap;border:1px solid var(--line);padding:6px 16px;background:rgba(47,211,255,.05);}
+  @media (max-width:1420px){
+    .fh-arw{top:34%;}
+    .fh-brief{width:290px;bottom:70px;}
+    .fh-lab.tr{display:none;}
+    .fn{width:124px;} .fn.cur{width:160px;}
+    .fh-hint{display:none;}
+  }
+
+  /* ============================================================
+     V34 · 影像档案 · 页头压扁 + 树后星光
+     ============================================================ */
+  #view-media .page{padding-top:58px;padding-bottom:74px;}
+  #view-media .page-head{margin-bottom:12px;display:flex;align-items:flex-end;
+    gap:14px 34px;flex-wrap:wrap;}
+  #view-media .sec-tag{margin-bottom:9px;}
+  #view-media .title-wrap{padding:9px 26px;}
+  #view-media .cyber-title{--ct:38px !important;}
+  #view-media .sec-sub{margin:0 0 10px;font-size:12px;max-width:none;}
+  #view-media .page-back{margin-top:30px;}
+  .mtree{height:min(calc(100vh - 232px),880px) !important;min-height:460px !important;
+    margin:4px 0 0 !important;}
+
+  /* 树后星光：六层各自呼吸，中间留空不干扰点云 */
+  .mt-stars{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden;}
+  .mt-stars i{position:absolute;inset:0;display:block;background-repeat:no-repeat;
+    animation-name:mtTwinkle;animation-timing-function:ease-in-out;
+    animation-iteration-count:infinite;}
+  @keyframes mtTwinkle{0%,100%{opacity:.34;}50%{opacity:1;}}
+  .mt-stars i:nth-child(1){background-image:
+      radial-gradient(circle at 70.42% 47.65%,rgba(228,245,255,0.72) 0,rgba(228,245,255,0.72) 0.70px,rgba(152,216,247,0.24) 1.54px,rgba(120,198,240,0) 2.52px),
+      radial-gradient(circle at 87.36% 12.16%,rgba(228,245,255,0.72) 0,rgba(228,245,255,0.72) 0.70px,rgba(152,216,247,0.24) 1.54px,rgba(120,198,240,0) 2.52px),
+      radial-gradient(circle at 71.97% 22.84%,rgba(228,245,255,0.72) 0,rgba(228,245,255,0.72) 0.70px,rgba(152,216,247,0.24) 1.54px,rgba(120,198,240,0) 2.52px),
+      radial-gradient(circle at 31.02% 83.17%,rgba(228,245,255,0.72) 0,rgba(228,245,255,0.72) 0.70px,rgba(152,216,247,0.24) 1.54px,rgba(120,198,240,0) 2.52px),
+      radial-gradient(circle at 14.94% 52.06%,rgba(228,245,255,0.72) 0,rgba(228,245,255,0.72) 0.70px,rgba(152,216,247,0.24) 1.54px,rgba(120,198,240,0) 2.52px),
+      radial-gradient(circle at 6.65% 3.51%,rgba(228,245,255,0.72) 0,rgba(228,245,255,0.72) 0.70px,rgba(152,216,247,0.24) 1.54px,rgba(120,198,240,0) 2.52px),
+      radial-gradient(circle at 88.23% 21.97%,rgba(228,245,255,0.72) 0,rgba(228,245,255,0.72) 0.70px,rgba(152,216,247,0.24) 1.54px,rgba(120,198,240,0) 2.52px);
+    animation-duration:4.3s;animation-delay:-0.4s;}
+  .mt-stars i:nth-child(2){background-image:
+      radial-gradient(circle at 67.62% 17.33%,rgba(228,245,255,0.80) 0,rgba(228,245,255,0.80) 0.85px,rgba(152,216,247,0.27) 1.87px,rgba(120,198,240,0) 3.06px),
+      radial-gradient(circle at 96.02% 58.80%,rgba(228,245,255,0.80) 0,rgba(228,245,255,0.80) 0.85px,rgba(152,216,247,0.27) 1.87px,rgba(120,198,240,0) 3.06px),
+      radial-gradient(circle at 82.48% 84.02%,rgba(228,245,255,0.80) 0,rgba(228,245,255,0.80) 0.85px,rgba(152,216,247,0.27) 1.87px,rgba(120,198,240,0) 3.06px),
+      radial-gradient(circle at 57.39% 11.47%,rgba(228,245,255,0.80) 0,rgba(228,245,255,0.80) 0.85px,rgba(152,216,247,0.27) 1.87px,rgba(120,198,240,0) 3.06px),
+      radial-gradient(circle at 71.40% 60.89%,rgba(228,245,255,0.80) 0,rgba(228,245,255,0.80) 0.85px,rgba(152,216,247,0.27) 1.87px,rgba(120,198,240,0) 3.06px),
+      radial-gradient(circle at 14.61% 54.17%,rgba(228,245,255,0.80) 0,rgba(228,245,255,0.80) 0.85px,rgba(152,216,247,0.27) 1.87px,rgba(120,198,240,0) 3.06px),
+      radial-gradient(circle at 20.07% 20.57%,rgba(228,245,255,0.80) 0,rgba(228,245,255,0.80) 0.85px,rgba(152,216,247,0.27) 1.87px,rgba(120,198,240,0) 3.06px);
+    animation-duration:5.1s;animation-delay:-2.1s;}
+  .mt-stars i:nth-child(3){background-image:
+      radial-gradient(circle at 9.18% 22.99%,rgba(228,245,255,0.86) 0,rgba(228,245,255,0.86) 1.00px,rgba(152,216,247,0.29) 2.20px,rgba(120,198,240,0) 3.60px),
+      radial-gradient(circle at 84.93% 70.27%,rgba(228,245,255,0.86) 0,rgba(228,245,255,0.86) 1.00px,rgba(152,216,247,0.29) 2.20px,rgba(120,198,240,0) 3.60px),
+      radial-gradient(circle at 71.99% 37.54%,rgba(228,245,255,0.86) 0,rgba(228,245,255,0.86) 1.00px,rgba(152,216,247,0.29) 2.20px,rgba(120,198,240,0) 3.60px),
+      radial-gradient(circle at 6.42% 11.24%,rgba(228,245,255,0.86) 0,rgba(228,245,255,0.86) 1.00px,rgba(152,216,247,0.29) 2.20px,rgba(120,198,240,0) 3.60px),
+      radial-gradient(circle at 22.25% 74.13%,rgba(228,245,255,0.86) 0,rgba(228,245,255,0.86) 1.00px,rgba(152,216,247,0.29) 2.20px,rgba(120,198,240,0) 3.60px),
+      radial-gradient(circle at 95.30% 27.39%,rgba(228,245,255,0.86) 0,rgba(228,245,255,0.86) 1.00px,rgba(152,216,247,0.29) 2.20px,rgba(120,198,240,0) 3.60px);
+    animation-duration:6.2s;animation-delay:-3.6s;}
+  .mt-stars i:nth-child(4){background-image:
+      radial-gradient(circle at 18.11% 76.01%,rgba(228,245,255,0.92) 0,rgba(228,245,255,0.92) 1.20px,rgba(152,216,247,0.31) 2.64px,rgba(120,198,240,0) 4.32px),
+      radial-gradient(circle at 96.81% 76.16%,rgba(228,245,255,0.92) 0,rgba(228,245,255,0.92) 1.20px,rgba(152,216,247,0.31) 2.64px,rgba(120,198,240,0) 4.32px),
+      radial-gradient(circle at 81.07% 37.38%,rgba(228,245,255,0.92) 0,rgba(228,245,255,0.92) 1.20px,rgba(152,216,247,0.31) 2.64px,rgba(120,198,240,0) 4.32px),
+      radial-gradient(circle at 5.55% 75.03%,rgba(228,245,255,0.92) 0,rgba(228,245,255,0.92) 1.20px,rgba(152,216,247,0.31) 2.64px,rgba(120,198,240,0) 4.32px),
+      radial-gradient(circle at 38.76% 10.97%,rgba(228,245,255,0.92) 0,rgba(228,245,255,0.92) 1.20px,rgba(152,216,247,0.31) 2.64px,rgba(120,198,240,0) 4.32px),
+      radial-gradient(circle at 63.73% 28.26%,rgba(228,245,255,0.92) 0,rgba(228,245,255,0.92) 1.20px,rgba(152,216,247,0.31) 2.64px,rgba(120,198,240,0) 4.32px);
+    animation-duration:7.4s;animation-delay:-1.2s;}
+  .mt-stars i:nth-child(5){background-image:
+      radial-gradient(circle at 91.22% 88.46%,rgba(228,245,255,0.96) 0,rgba(228,245,255,0.96) 1.45px,rgba(152,216,247,0.33) 3.19px,rgba(120,198,240,0) 5.22px),
+      radial-gradient(circle at 22.29% 12.65%,rgba(228,245,255,0.96) 0,rgba(228,245,255,0.96) 1.45px,rgba(152,216,247,0.33) 3.19px,rgba(120,198,240,0) 5.22px),
+      radial-gradient(circle at 83.56% 7.51%,rgba(228,245,255,0.96) 0,rgba(228,245,255,0.96) 1.45px,rgba(152,216,247,0.33) 3.19px,rgba(120,198,240,0) 5.22px),
+      radial-gradient(circle at 79.91% 27.56%,rgba(228,245,255,0.96) 0,rgba(228,245,255,0.96) 1.45px,rgba(152,216,247,0.33) 3.19px,rgba(120,198,240,0) 5.22px),
+      radial-gradient(circle at 92.94% 13.63%,rgba(228,245,255,0.96) 0,rgba(228,245,255,0.96) 1.45px,rgba(152,216,247,0.33) 3.19px,rgba(120,198,240,0) 5.22px);
+    animation-duration:8.6s;animation-delay:-5.0s;}
+  .mt-stars i:nth-child(6){background-image:
+      radial-gradient(circle at 26.84% 84.01%,rgba(228,245,255,1.00) 0,rgba(228,245,255,1.00) 1.55px,rgba(152,216,247,0.34) 3.41px,rgba(120,198,240,0) 5.58px),
+      radial-gradient(circle at 84.41% 27.69%,rgba(228,245,255,1.00) 0,rgba(228,245,255,1.00) 1.55px,rgba(152,216,247,0.34) 3.41px,rgba(120,198,240,0) 5.58px),
+      radial-gradient(circle at 92.95% 62.58%,rgba(228,245,255,1.00) 0,rgba(228,245,255,1.00) 1.55px,rgba(152,216,247,0.34) 3.41px,rgba(120,198,240,0) 5.58px),
+      radial-gradient(circle at 28.37% 27.78%,rgba(228,245,255,1.00) 0,rgba(228,245,255,1.00) 1.55px,rgba(152,216,247,0.34) 3.41px,rgba(120,198,240,0) 5.58px);
+    animation-duration:9.9s;animation-delay:-6.7s;}
+  .mt-stars::after{content:'';position:absolute;inset:0;
+    background:radial-gradient(58% 42% at 76% 14%,rgba(47,211,255,.05),transparent 70%),
+               radial-gradient(50% 38% at 18% 78%,rgba(126,232,255,.04),transparent 72%);}
 
   </style>
 </head>
@@ -2543,6 +2859,7 @@
     <div class="ha-scan" id="haScan" aria-hidden="true">
       <div class="ha-lens" id="haLens">
         <div class="hl-img" id="haLensImg"></div>
+        <canvas class="hl-relief" id="haRelief"></canvas>
         <div class="hl-grade"></div>
       </div>
       <div class="ha-ring" id="haRing"><span class="ha-tag">SCAN · 锚区影像回溯</span></div>
@@ -2736,11 +3053,45 @@
   <div class="page-bg" style="background-image:url('assets/intel_xiaoxitian.webp');background-position:center 30%;"></div>
   <div class="page">
     <div class="page-head reveal">
-      <div class="sec-tag"><span>04</span> // COLLECTION COORDS</div>
-      <div class="title-wrap"><span class="corner tl"></span><span class="corner br"></span><h2 class="cyber-title" data-text="文明采集坐标" style="--ct:56px;">文明采集坐标</h2></div>
-      <div class="sec-sub">文明火种散落坐标 · 按行动时序分组 · 点按任一坐标展开介绍与影像槽位</div>
+      <div class="ph-l">
+        <div class="sec-tag"><span>04</span> // COLLECTION COORDS</div>
+        <div class="title-wrap"><span class="corner tl"></span><span class="corner br"></span><h2 class="cyber-title" data-text="文明采集坐标">文明采集坐标</h2></div>
+      </div>
+      <div class="sec-sub">8 处火种坐标 · 以广胜寺飞虹塔为锚点信标 · 沿 D-01 → D-03 时序绕塔升旋</div>
     </div>
-    <div class="panel-lead reveal">回收计划第一顺位锚区的火种分布图鉴。<b>8 处坐标</b>，沿 D-01 → D-03 的行动路径排布；每处坐标预留 5 个影像回传槽位。</div>
+
+    <div class="fh reveal" id="fh">
+      <div class="fh-bgwrap" id="fhBgWrap">
+        <div class="fh-bg" id="fhBgA"></div>
+        <div class="fh-bg" id="fhBgB"></div>
+      </div>
+      <div class="fh-bgmask"></div>
+      <canvas id="fhCv"></canvas>
+      <canvas id="fhCv2"></canvas>
+      <div class="fh-flash" id="fhFlash"></div>
+      <div class="fh-swipe" id="fhSwipe"></div>
+      <div class="fh-fx"></div>
+      <span class="fh-cor tl"></span><span class="fh-cor tr"></span>
+      <span class="fh-cor bl"></span><span class="fh-cor br"></span>
+      <div class="fh-lab tl">
+        <b>ANCHOR BEACON · SX-07 / FEIHONG</b>
+        <i>广胜寺 · 飞虹塔</i>
+        <span>八角十三级楼阁式琉璃塔 · 通高 47.31m · 明</span>
+      </div>
+      <div class="fh-lab tr">
+        <b id="fhFaces">SURFACES · ----</b>
+        <i>COLLECTION BEACON ARRAY</i>
+        <span id="fhState">STATE · 待机</span>
+      </div>
+      <div class="fh-brief" id="fhBrief"></div>
+      <div class="fh-nodes" id="fhNodes"></div>
+      <button class="fh-arw prev" id="fhPrev" title="上一坐标 (←)">‹</button>
+      <button class="fh-arw next" id="fhNext" title="下一坐标 (→)">›</button>
+      <div class="fh-rail" id="fhRail"></div>
+      <div class="fh-hint">拖动旋转 · 点击节点锁定<br>← → 切换坐标 &nbsp;·&nbsp; <em>Enter 接入</em></div>
+    </div>
+
+    <div class="fh-split reveal"><span></span><b>全部坐标 · 分日清单</b><span></span></div>
     <div id="intelGrid"></div>
     <div class="page-back reveal"><button class="btn-hud" onclick="goHome()">← 返回指挥中枢</button></div>
   </div>
@@ -2750,13 +3101,14 @@
   <div class="page-bg" style="background-image:url('assets/intel_gucheng.webp');background-position:center 55%;"></div>
   <div class="page">
     <div class="page-head reveal">
-      <div class="sec-tag"><span>05</span> // MEDIA ARCHIVE</div>
-      <div class="title-wrap"><span class="corner tl"></span><span class="corner br"></span><h2 class="cyber-title" data-text="影像档案" style="--ct:56px;">影像档案</h2></div>
-      <div class="sec-sub">ACTION FOOTAGE · 山西锚区影像专区</div>
+      <div class="ph-l">
+        <div class="sec-tag"><span>05</span> // MEDIA ARCHIVE</div>
+        <div class="title-wrap"><span class="corner tl"></span><span class="corner br"></span><h2 class="cyber-title" data-text="影像档案">影像档案</h2></div>
+      </div>
+      <div class="sec-sub">ACTION FOOTAGE · 山西锚区影像专区 · 以三千年晋祠周柏的三维点云为载体，档案挂在枝头</div>
     </div>
-    <div class="panel-lead reveal">本次行动全部回传影像，以<b>晋祠周柏</b>的三维点云为载体归档——三千年古柏是山西锚区唯一活着的时间证物，档案便挂在它的枝头。<b>拖动可旋转标本</b>，点击枝头任一档案接入。</div>
-
     <div class="mtree reveal" id="mtree">
+      <div class="mt-stars"><i></i><i></i><i></i><i></i><i></i><i></i></div>
       <canvas id="mtCv"></canvas>
       <canvas id="mtCv2"></canvas>
       <div class="mt-fx"></div>
@@ -2829,7 +3181,7 @@
       </div>
       <div class="apbox">
         <div class="ap iv" onclick="if(event.target===this||event.target.classList.contains('ap-vid'))toggleArch(2)">
-          <video class="ap-vid" preload="none" playsinline poster="assets/intel_pingyao.webp" src="https://mrtq-1474571196.cos.ap-shanghai.myqcloud.com/video/hudong.MP4"></video>
+          <video class="ap-vid" preload="none" playsinline poster="assets/互动影游封面.webp" src="https://mrtq-1474571196.cos.ap-shanghai.myqcloud.com/video/hudong.MP4"></video>
           <div class="ap-mask"><span class="ap-go">▶</span><span class="ap-msg">载入互动影游 · 晋地神崩</span></div>
           <div class="ap-ui">
             <button class="ab ab-p" onclick="event.stopPropagation();toggleArch(2)">▶</button>
@@ -6533,6 +6885,7 @@ function restartAll(){
     revealIn(el);
     if(id==="map"){ try{ tlxMount(); }catch(e){} }
     if(id==="media"){ try{ mtMount(); }catch(e){} } else { try{ mtSleep(); }catch(e){} }
+    if(id==="intel"){ try{ fhMount(); }catch(e){} } else { try{ fhSleep(); }catch(e){} }
   }
 
   function go(id){
@@ -7207,6 +7560,915 @@ var coordDays=[
     setTimeout(function(){ cSlotTidy(true); },45000);
   }
   buildCoords();
+
+  /* ============ V30 · 飞虹塔锚点信标（文明采集坐标） ============ */
+  function fhMount(){ try{ FHT.mount(); }catch(e){} }
+  function fhSleep(){ try{ FHT.unmount(); }catch(e){} }
+
+var FHT=(function(){
+"use strict";
+/* ================= 数据 ================= */
+var DAYC=[[216,163,58],[53,176,136],[74,143,208]];   /* D-01 琥珀黄 / D-02 孔雀绿 / D-03 钴蓝 */
+var LVMAP=[1,2,3,5,6,8,10,12];                       /* 光索挂点层（随时序升高） */
+var HMAP =[0.32,1.42,2.62,3.92,5.28,6.72,8.20,9.72];  /* 节点高度：一路旋到塔顶 */
+var RMAP =[5.85,5.62,5.36,5.06,4.72,4.34,3.92,3.46];  /* 半径随高度收拢，成锥形螺旋 */
+/* 每个坐标一套机位：yaw/pitch/dist/ty 决定看塔的角度，zoom 决定景别，
+   ax/ay 是该坐标节点应落在画面上的锚点（0-1），VX/VY 由它反解，保证节点永远在位。 */
+var CAMP=[
+ /* bx/by 装得下时的落位；fx/fy 装不下时保留画面的哪一端（0=保留上/左）；ov 允许溢出 */
+ {yaw: 0.00,pitch:0.175,dist:17.0,zoom:1.00,bx:0.56,by:0.50,fx:.5,fy:.5,ov:0.00,n:"标准全景"},
+ {yaw: 0.68,pitch:0.022,dist:13.4,zoom:0.98,bx:0.70,by:0.72,fx:.5,fy:.62,ov:0.12,n:"贴地仰视"},
+ {yaw:-0.88,pitch:0.500,dist:14.5,zoom:1.02,bx:0.30,by:0.42,fx:.5,fy:.4,ov:0.02,n:"高空俯瞰"},
+ {yaw: 1.28,pitch:0.185,dist:10.0,zoom:1.34,bx:0.72,by:0.52,fx:.62,fy:.52,ov:0.34,n:"塔身特写"},
+ {yaw:-1.50,pitch:0.290,dist:27.0,zoom:1.42,bx:0.40,by:0.44,fx:.5,fy:.5,ov:0.00,n:"极远全景"},
+ {yaw: 2.02,pitch:0.075,dist:9.6,zoom:1.30,bx:0.28,by:0.28,fx:.34,fy:.04,ov:0.38,n:"塔顶迫近"},
+ {yaw: 0.30,pitch:0.135,dist:13.2,zoom:1.06,bx:0.50,by:0.52,fx:.5,fy:.5,ov:0.06,n:"本塔正襟"},
+ {yaw:-2.26,pitch:0.400,dist:19.5,zoom:1.16,bx:0.64,by:0.38,fx:.5,fy:.44,ov:0.02,n:"侧向大角"}
+];
+var CO=[];
+function buildCO(){
+  CO=[];var gi,ci,k=0;
+  for(gi=0;gi<coordDays.length;gi++){
+    for(ci=0;ci<coordDays[gi].coords.length;ci++){
+      var c=coordDays[gi].coords[ci];
+      CO.push({c:c.code,n:c.n,e:c.en,x:c.x||"",img:c.img||"",blank:!!c.blank,
+               ph:c.ph||"",
+               bg:(c.ph? INTEL_COS+c.ph+"/0.jpg" : ""),        /* 云存储首页图 */
+               bgAlt:(c.img? "assets/"+c.img : ""),   /* 本地兜底 */
+               d:Math.min(gi,2),gi:gi,ci:ci,dg:coordDays[gi],
+               lv:LVMAP[k]||6, hy:HMAP[k]||1, rr:RMAP[k]||5.3,
+               cam:CAMP[k]||CAMP[0], self:(c.code==="SX-07")});
+      k++;
+    }
+  }
+}
+
+/* ================= 数学 ================= */
+function nrm(a){var m=Math.sqrt(a[0]*a[0]+a[1]*a[1]+a[2]*a[2])||1;return[a[0]/m,a[1]/m,a[2]/m];}
+function crs(a,b){return[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]];}
+function dot(a,b){return a[0]*b[0]+a[1]*b[1]+a[2]*b[2];}
+function sub(a,b){return[a[0]-b[0],a[1]-b[1],a[2]-b[2]];}
+function ease(x){return 1-Math.pow(1-x,3);}
+
+/* ================= 材质（琉璃三彩） ================= */
+var MAT={
+  body :{c:[210,160,88] ,sp:.44,gl:.66},
+  bandY:{c:[228,180,72] ,sp:.78,gl:1.00},
+  bandB:{c:[44,100,158] ,sp:.70,gl:.95},
+  roof :{c:[34,140,106] ,sp:.88,gl:1.00},
+  eave :{c:[52,158,120] ,sp:.98,gl:1.00},
+  cor  :{c:[52,132,112] ,sp:.55,gl:.70},
+  plat :{c:[86,98,100]  ,sp:.24,gl:.24},
+  base :{c:[62,70,76]   ,sp:.20,gl:.18},
+  col  :{c:[142,58,44]  ,sp:.34,gl:.40},
+  sha  :{c:[232,192,98] ,sp:.95,gl:1.00}
+};
+
+/* ================= 几何 ================= */
+var SIDES=8, LVL=13, A0=Math.PI/8, TAU=Math.PI*2;
+var QUAL=1, RC=3, RR=2;
+var F=[], BELL=[], EAVE=[], DUST=[], TOPY=0, SILH=[];
+
+function pt(r,a,y){return[r*Math.cos(a),y,r*Math.sin(a)];}
+function pushF(p,m,kind,ro,extra){
+  var n=nrm(crs(sub(p[1],p[0]),sub(p[2],p[0])));
+  if(dot(n,ro)<0){n=[-n[0],-n[1],-n[2]];p=p.slice().reverse();}
+  var c=[0,0,0],i,L=p.length;
+  for(i=0;i<L;i++){c[0]+=p[i][0];c[1]+=p[i][1];c[2]+=p[i][2];}
+  c[0]/=L;c[1]/=L;c[2]/=L;
+  var f={p:p,n:n,c:c,m:m,k:kind||0};
+  if(extra)for(var q in extra)f[q]=extra[q];
+  F.push(f);return f;
+}
+function prism(r0,r1,y0,y1,m,extra){
+  for(var k=0;k<SIDES;k++){
+    var a=A0+k*TAU/SIDES,b=A0+(k+1)*TAU/SIDES,mid=(a+b)/2;
+    pushF([pt(r0,a,y0),pt(r1,a,y1),pt(r1,b,y1),pt(r0,b,y0)],m,0,
+      [Math.cos(mid),0,Math.sin(mid)],extra);
+  }
+}
+/* 八角攒尖顶：v=0 檐口 → v=1 脊顶 */
+function roof(rIn,rOut,yBot,yTop,lift,m,cols,rows,fh){
+  cols=cols||RC;rows=rows||RR;fh=fh||0.030;
+  function P(k,u,v){
+    var a=A0+(k+u)*TAU/SIDES;
+    var e=Math.pow(Math.abs(2*u-1),2.3), w=Math.pow(1-v,1.9);
+    var rr=(rOut+(rIn-rOut)*v)*(1+.055*e*w);
+    var yy=yBot+(yTop-yBot)*Math.pow(v,1.55)+lift*e*w;
+    return pt(rr,a,yy);
+  }
+  for(var k=0;k<SIDES;k++){
+    for(var i=0;i<cols;i++)for(var j=0;j<rows;j++){
+      var u0=i/cols,u1=(i+1)/cols,v0=j/rows,v1=(j+1)/rows;
+      var mid=A0+(k+(u0+u1)/2)*TAU/SIDES;
+      pushF([P(k,u0,v0),P(k,u1,v0),P(k,u1,v1),P(k,u0,v1)],m,1,
+        nrm([Math.cos(mid)*.55,.84,Math.sin(mid)*.55]),{tile:1,ridge:(i===0)});
+    }
+    var cp=P(k,0,0);
+    if(QUAL>=1||k%2===0) BELL.push({p:[cp[0]*1.03,cp[1]-.02,cp[2]*1.03],f:Math.random()*6.28});
+    for(var w2=0;w2<cols;w2++){
+      var ua=w2/cols,ub=(w2+1)/cols;
+      var A=P(k,ua,0),B=P(k,ub,0);
+      var Ad=[A[0]*1.012,A[1]-fh,A[2]*1.012],Bd=[B[0]*1.012,B[1]-fh,B[2]*1.012];
+      var mm=A0+(k+(ua+ub)/2)*TAU/SIDES;
+      pushF([A,Ad,Bd,B],MAT.eave,2,[Math.cos(mm),0,Math.sin(mm)],{drip:1});
+    }
+  }
+  SILH.push([rOut*1.06,yBot]);
+}
+
+function build(){
+  var hc=(navigator.hardwareConcurrency||8);
+  QUAL=(hc<=4)?0.6:1;RC=(QUAL<1)?2:3;RR=(QUAL<1)?1:2;
+  F=[];BELL=[];EAVE=[];SILH=[];DUST=[];
+  prism(1.92,1.86,-0.34,-0.04,MAT.base);
+  prism(1.10,1.08,-0.04,1.44,MAT.body,{lvl:0});
+  for(var k=0;k<SIDES;k++){                       /* 副阶檐柱 */
+    var a=A0+(k+.5)*TAU/SIDES;
+    var cx=1.58*Math.cos(a),cz=1.58*Math.sin(a),ro=[Math.cos(a),0,Math.sin(a)];
+    for(var s=0;s<4;s++){
+      var aa=s*TAU/4+.4,bb=(s+1)*TAU/4+.4,w=.058;
+      pushF([[cx+w*Math.cos(aa),-0.04,cz+w*Math.sin(aa)],
+             [cx+w*Math.cos(aa), 0.82,cz+w*Math.sin(aa)],
+             [cx+w*Math.cos(bb), 0.82,cz+w*Math.sin(bb)],
+             [cx+w*Math.cos(bb),-0.04,cz+w*Math.sin(bb)]],MAT.col,0,ro);
+    }
+  }
+  prism(1.66,1.70,0.82,0.92,MAT.cor);
+  roof(1.14,1.86,0.92,1.32,0.125,MAT.roof,RC+1,RR,0.050);
+  prism(1.06,1.04,1.44,1.53,MAT.bandY);
+  prism(1.04,1.12,1.53,1.60,MAT.cor);
+  roof(0.94,1.50,1.60,1.92,0.090,MAT.roof,RC,RR,0.040);
+  EAVE.push({y:1.70,r:1.46});
+  var y=1.82;
+  for(var i=1;i<LVL;i++){
+    var f=(i-1)/(LVL-2);
+    var r=1.06*(1-0.545*Math.pow(f,0.94));
+    var hb=0.560*(1-0.30*f);
+    var yb0=y,yb1=y+hb;
+    prism(r*1.13,r*1.13,yb0,yb0+0.06,MAT.plat);
+    prism(r,r*0.985,yb0+0.06,yb1-0.075,MAT.body,{lvl:i});
+    prism(r*0.982,r*0.965,yb1-0.075,yb1-0.028,(i%2?MAT.bandB:MAT.bandY));
+    prism(r*0.965,r*1.06,yb1-0.028,yb1,MAT.cor);
+    var eo=r*1.34,eh=0.215*(1-0.24*f),lf=0.068*(1-0.20*f);
+    roof(r*0.90,eo,yb1,yb1+eh,lf,MAT.roof);
+    EAVE.push({y:yb1+eh*0.30,r:eo*1.02});
+    y=yb1+eh*0.72;
+  }
+  var sy=y;
+  prism(0.32,0.26,sy,sy+0.11,MAT.plat);
+  for(var s2=0;s2<6;s2++){
+    var t0=s2/6,t1=(s2+1)/6;
+    var r0=0.255*Math.cos(t0*Math.PI/2*0.94),r1=0.255*Math.cos(t1*Math.PI/2*0.94);
+    prism(Math.max(r0,.02),Math.max(r1,.02),sy+0.11+t0*0.26,sy+0.11+t1*0.26,MAT.sha);
+  }
+  var ry=sy+0.38;
+  for(var q=0;q<7;q++){
+    var rr2=0.125-q*0.012;
+    prism(rr2,rr2,ry,ry+0.032,MAT.sha);
+    prism(rr2*0.5,rr2*0.5,ry+0.032,ry+0.060,MAT.bandY);
+    ry+=0.060;
+  }
+  for(var s3=0;s3<5;s3++){
+    var u0=s3/5,u1=(s3+1)/5;
+    var b0=0.082*Math.sin(Math.PI*(0.14+u0*0.74)),b1=0.082*Math.sin(Math.PI*(0.14+u1*0.74));
+    prism(b0,b1,ry+u0*0.17,ry+u1*0.17,MAT.sha);
+  }
+  TOPY=ry+0.30;
+  SILH.push([0.10,TOPY]);
+  SILH.sort(function(a,b){return a[1]-b[1];});
+  /* 浮尘：给空间一个体积感 */
+  var nd=(QUAL<1)?70:150;
+  for(var d=0;d<nd;d++){
+    var aa2=Math.random()*TAU, rr3=1.6+Math.random()*6.2;
+    DUST.push({p:[rr3*Math.cos(aa2),-0.2+Math.random()*(TOPY+1.2),rr3*Math.sin(aa2)],
+               f:Math.random()*6.28, s:0.5+Math.random()*1.3});
+  }
+}
+
+/* ================= 相机 / 投影 ================= */
+var CAM={yaw:0,pitch:0.175,dist:17.0,ty:3.60};
+var CAMA={yaw:0,pitch:0.175,dist:17.0,ty:3.60,zoom:1,vx:0,vy:0};   /* 当前 */
+var CAMB={yaw:0,pitch:0.175,dist:17.0,ty:3.60,zoom:1,vx:0,vy:0};   /* 起点 */
+var CAMZ={yaw:0,pitch:0.175,dist:17.0,ty:3.60,zoom:1,vx:0,vy:0};   /* 目标 */
+var camT0=-1e9, CAMDUR=1750, camMove=0;
+function easeIO(x){return x<0.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;}
+var cs=1,sn=0,cp=1,sp=0,VX=0,VY=0,SC=1;
+function syncCam(){cs=Math.cos(CAM.yaw);sn=Math.sin(CAM.yaw);cp=Math.cos(CAM.pitch);sp=Math.sin(CAM.pitch);}
+function toView(p){
+  var x=p[0],y=p[1]-CAM.ty,z=p[2];
+  var x1=x*cs+z*sn,z1=-x*sn+z*cs;
+  return[x1,y*cp+z1*sp,-y*sp+z1*cp+CAM.dist];
+}
+function prj(v){var k=SC/Math.max(v[2],.05);return[VX+v[0]*k,VY-v[1]*k,v[2],k];}
+
+var DISC_R=5.90, RING_R=5.35, SC0=1, VX0=0, VY0=0;
+function fit(){
+  var P=[],i,a;P.push([0,TOPY,0]);
+  for(i=0;i<16;i++){a=i*TAU/16;
+    P.push([5.9*Math.cos(a),0.1,5.9*Math.sin(a)]);
+    P.push([3.4*Math.cos(a),9.8,3.4*Math.sin(a)]);
+    P.push([2.14*Math.cos(a),1.40,2.14*Math.sin(a)]);}
+  var mnx=1e9,mxx=-1e9,mny=1e9,mxy=-1e9;
+  for(i=0;i<P.length;i++){
+    var v=toView(P[i]),k=1/Math.max(v[2],.05);
+    var sx=v[0]*k,sy=-v[1]*k;
+    if(sx<mnx)mnx=sx;if(sx>mxx)mxx=sx;if(sy<mny)mny=sy;if(sy>mxy)mxy=sy;
+  }
+  SC0=Math.min(W*0.86/(mxx-mnx),H*0.95/(mxy-mny));
+  VX0=W/2-(mnx+mxx)/2*SC0;
+  VY0=H/2-(mny+mxy)/2*SC0;
+  SC=SC0;VX=VX0;VY=VY0;
+}
+/* 机位求解：算出「塔轮廓 + 当前坐标节点」的屏幕包围盒，再按 bias 落位。
+   ty 由包围盒决定，不再手写；这样任何角度下塔和节点都不会被切掉。 */
+function solveCam(i,out){
+  var P=CAMP[((i%8)+8)%8]||CAMP[0];
+  out.yaw=P.yaw;out.pitch=P.pitch;out.dist=P.dist;out.zoom=P.zoom;out.ty=0;
+  var sy=Math.sin(P.yaw),cy=Math.cos(P.yaw),sp2=Math.sin(P.pitch),cp2=Math.cos(P.pitch);
+  var sc=SC0*P.zoom;
+  function f(p){                                  /* ty=0 的归一化投影 */
+    var x=p[0],y=p[1],z=p[2];
+    var x1=x*cy+z*sy,z1=-x*sy+z*cy;
+    var vy2=y*cp2+z1*sp2, vz=-y*sp2+z1*cp2+P.dist;
+    vz=Math.max(vz,.6);
+    return[x1/vz*sc,-vy2/vz*sc];
+  }
+  var pts=[],k,q,ang=[0,Math.PI/2,Math.PI,-Math.PI/2];
+  for(k=0;k<SILH.length;k++){
+    for(q=0;q<4;q++) pts.push([SILH[k][0]*Math.cos(ang[q]),SILH[k][1],SILH[k][0]*Math.sin(ang[q])]);
+  }
+  pts.push([0,TOPY+0.25,0]);pts.push([0,-0.34,0]);
+  var a=P.yaw-Math.PI/2, R=(CO[i]&&CO[i].rr)||RING_R, hy=(CO[i]&&CO[i].hy)||1;
+  pts.push([R*Math.cos(a),hy,R*Math.sin(a)]);
+  pts.push([R*Math.cos(a),-0.32,R*Math.sin(a)]);
+  var mnx=1e9,mxx=-1e9,mny=1e9,mxy=-1e9;
+  for(k=0;k<pts.length;k++){
+    var s=f(pts[k]);
+    if(s[0]<mnx)mnx=s[0];if(s[0]>mxx)mxx=s[0];
+    if(s[1]<mny)mny=s[1];if(s[1]>mxy)mxy=s[1];
+  }
+  var bw=mxx-mnx, bh=mxy-mny;
+  var padX=W*(0.055-P.ov*0.5), padY=H*(0.045-P.ov*0.5);
+  var freeX=(W-2*padX)-bw, freeY=(H-2*padY)-bh;
+  var bx=(freeX>0)?P.bx:(P.fx!==undefined?P.fx:0.5);
+  var by=(freeY>0)?P.by:(P.fy!==undefined?P.fy:0.5);
+  out.vx=padX+bx*freeX-mnx;
+  out.vy=padY+by*freeY-mny;
+}
+
+/* ================= 状态 ================= */
+var host,cv,ctx,cv2,x2,W=0,H=0,DPR=1,raf=null,T=0,alive=false;
+var nodesEl,railEl,briefEl,bgWrap,bgEls=[],bgTurn=0;
+var LIGHT=nrm([-0.44,0.60,-0.67]);
+var drag=false,dragX=0,moved=0,hoverIdx=-1;
+var ringPhase=0, phTarget=0, curIdx=0, switchT=0;
+var pYaw=0,pPitch=0,tYaw=0,tPitch=0;                 /* 鼠标视差 */
+var IGNITE=0,igniteT=0,chosen=-1,SELF=false,DIST0=17.0,_busy=false,SWEEP=0;
+var _LIST=[],_shiftT=null;
+
+function camYaw(i){return (CAMP[((i%8)+8)%8]||CAMP[0]).yaw;}
+function phaseFor(i){return camYaw(i)-Math.PI/2-i*TAU/8;}
+function idxFromPhase(p){                       /* 找与当前相位最接近的档位 */
+  var best=0,bd=1e9;
+  for(var i=0;i<8;i++){
+    var d=Math.abs(((phaseFor(i)-p+Math.PI)%TAU+TAU)%TAU-Math.PI);
+    if(d<bd){bd=d;best=i;}
+  }
+  return best;
+}
+function rgba(c,a){return"rgba("+c[0]+","+c[1]+","+c[2]+","+a+")";}
+
+/* ================= 着色 ================= */
+function shade(m,n,depth,sheen,fy){
+  var L=dot(n,LIGHT),lam;
+  if(L>=0)lam=0.22+0.78*L;else lam=0.22+0.15*(1+L);
+  var env=0.5+0.5*n[1];
+  var band=Math.pow(Math.max(0,Math.sin(n[0]*1.6+n[1]*2.4+sheen)),9);
+  var g=lam*(0.60+0.40*m.gl)+m.sp*(0.20*env+0.92*band);
+  if(IGNITE>0){
+    var front=IGNITE*(TOPY+2.2)-1.1, d=Math.abs(fy-front);
+    g+=Math.max(0,1-d/1.05)*1.05*Math.min(1,IGNITE*3);
+    if(fy<front)g*=1.11;
+  }
+  if(SWEEP>0){                                   /* 切换时一道自上而下的釉光 */
+    var sf=(1-SWEEP)*(TOPY+2.4)-1.2, sd=Math.abs(fy-(TOPY+1.2-sf));
+    g+=Math.max(0,1-sd/1.35)*0.62*SWEEP;
+  }
+  var fog=Math.max(0,Math.min(1,(depth-16.5)/16));
+  var c=m.c,r=c[0]*g,gg=c[1]*g,b=c[2]*g;
+  r=r*(1-fog)+14*fog;gg=gg*(1-fog)+28*fog;b=b*(1-fog)+40*fog;
+  return[r>255?255:r|0,gg>255?255:gg|0,b>255?255:b|0];
+}
+
+/* ================= 主循环 ================= */
+function frame(ts){
+  if(!alive)return;
+  if(!T)T=ts;var t=(ts-T)/1000;
+
+  if(!drag){                                        /* 缓动到目标档位 */
+    var dp=phTarget-ringPhase;
+    if(Math.abs(dp)>0.0002) ringPhase+=dp*0.085;
+    else ringPhase=phTarget;
+  }
+  pYaw  += (tYaw  - pYaw )*0.055;
+  pPitch+= (tPitch- pPitch)*0.055;
+  var ct=Math.min(1,(ts-camT0)/CAMDUR), ce=easeIO(ct);
+  camMove=(ct<1)?(1-Math.abs(ct*2-1)):0;                 /* 0→1→0，中途最快 */
+  CAMA.yaw =CAMB.yaw +(CAMZ.yaw -CAMB.yaw )*ce;
+  CAMA.pitch=CAMB.pitch+(CAMZ.pitch-CAMB.pitch)*ce;
+  CAMA.dist=CAMB.dist+(CAMZ.dist-CAMB.dist)*ce;
+  CAMA.ty  =CAMB.ty  +(CAMZ.ty  -CAMB.ty  )*ce;
+  CAMA.zoom=CAMB.zoom+(CAMZ.zoom-CAMB.zoom)*ce;
+  CAMA.vx  =CAMB.vx  +(CAMZ.vx  -CAMB.vx  )*ce;
+  CAMA.vy  =CAMB.vy  +(CAMZ.vy  -CAMB.vy  )*ce;
+  CAM.yaw = CAMA.yaw + pYaw + Math.sin(t*0.075)*0.028;
+  CAM.pitch = CAMA.pitch + pPitch;
+  CAM.ty = 0;
+  SC=SC0*CAMA.zoom; VX=CAMA.vx; VY=CAMA.vy;
+  SWEEP=Math.max(0,1-(ts-switchT)/1150);
+  syncCam();
+  if(igniteT){IGNITE=Math.min(1,(ts-igniteT)/1150);}else IGNITE=0;
+  CAM.dist=CAMA.dist-(SELF?3.6:1.8)*IGNITE*IGNITE;
+
+
+  ctx.clearRect(0,0,W,H);x2.clearRect(0,0,W,H);
+  drawBackdrop();
+  drawGround(t);
+
+  var sheen=t*0.52,i,j,list=_LIST;list.length=0;
+  for(i=0;i<F.length;i++){
+    var f=F[i],vc=toView(f.c);
+    if(vc[2]<1.0)continue;
+    var nz1=-f.n[0]*sn+f.n[2]*cs;
+    var nv=[f.n[0]*cs+f.n[2]*sn,f.n[1]*cp+nz1*sp,-f.n[1]*sp+nz1*cp];
+    if(dot(nv,vc)>=0)continue;
+    list.push({z:vc[2],t:0,f:f,n:nv});
+  }
+  var nodes=buildNodes();
+  for(i=0;i<nodes.length;i++){
+    var nd=nodes[i];
+    for(j=0;j<nd.seg.length;j++)list.push({z:nd.seg[j].z,t:1,s:nd.seg[j],nd:nd});
+    for(j=0;j<nd.path.length;j++)list.push({z:nd.path[j].z,t:3,s:nd.path[j],nd:nd});
+    list.push({z:nd.v[2],t:2,nd:nd});
+  }
+  for(i=0;i<DUST.length;i++){
+    var du=DUST[i],dv=toView(du.p);
+    if(dv[2]<1)continue;
+    list.push({z:dv[2],t:4,d:du,v:dv});
+  }
+  list.sort(function(a,b){return b.z-a.z;});
+  for(i=0;i<list.length;i++){
+    var it=list[i];
+    if(it.t===0)paintFace(it.f,it.n,it.z,sheen);
+    else if(it.t===1)paintSeg(it.s,it.nd,t);
+    else if(it.t===3)paintPath(it.s,it.nd);
+    else if(it.t===4)paintDust(it,t);
+    else paintNode(it.nd,t);
+  }
+  drawBells(t);
+  if(IGNITE>0)drawCore();
+  syncLabels(nodes,t);
+  raf=requestAnimationFrame(frame);
+}
+
+function paintFace(f,nv,z,sheen){
+  var p=f.p,L=p.length,i,sx=[],sy=[];
+  for(i=0;i<L;i++){var q=prj(toView(p[i]));sx.push(q[0]);sy.push(q[1]);}
+  var c=shade(f.m,nv,z,sheen,f.c[1]);
+  ctx.beginPath();ctx.moveTo(sx[0],sy[0]);
+  for(i=1;i<L;i++)ctx.lineTo(sx[i],sy[i]);
+  ctx.closePath();
+  ctx.fillStyle="rgb("+c[0]+","+c[1]+","+c[2]+")";ctx.fill();
+  var bw=Math.abs(sx[0]-sx[2])+Math.abs(sx[1]-sx[3]),
+      bh=Math.abs(sy[0]-sy[2])+Math.abs(sy[1]-sy[3]);
+  var tiny=(bw+bh)<9;
+  if(!tiny&&f.tile&&L===4){
+    var l0=Math.min(255,c[0]*1.42+20)|0,l1=Math.min(255,c[1]*1.38+26)|0,l2=Math.min(255,c[2]*1.34+22)|0;
+    var lw=Math.max(.45,SC/z*0.011);
+    ctx.strokeStyle="rgba("+l0+","+l1+","+l2+",.72)";ctx.lineWidth=lw;
+    ctx.beginPath();
+    for(var s=1;s<4;s++){var u=s/4;
+      ctx.moveTo(sx[0]+(sx[1]-sx[0])*u,sy[0]+(sy[1]-sy[0])*u);
+      ctx.lineTo(sx[3]+(sx[2]-sx[3])*u,sy[3]+(sy[2]-sy[3])*u);}
+    ctx.stroke();
+    if(f.ridge){
+      ctx.strokeStyle="rgba("+l0+","+l1+","+l2+",.92)";ctx.lineWidth=lw*2.1;
+      ctx.beginPath();ctx.moveTo(sx[0],sy[0]);ctx.lineTo(sx[3],sy[3]);ctx.stroke();
+    }
+  }
+  if(!tiny&&f.lvl!==undefined&&L===4){
+    var mx=(sx[0]+sx[1]+sx[2]+sx[3])/4,my=(sy[0]+sy[1]+sy[2]+sy[3])/4;
+    var w=Math.abs((sx[3]+sx[2])/2-(sx[0]+sx[1])/2)*0.28;
+    var h=Math.abs((sy[1]+sy[2])/2-(sy[0]+sy[3])/2)*0.40;
+    if(w>1.8&&h>2.6){
+      ctx.beginPath();
+      ctx.moveTo(mx-w,my+h);ctx.lineTo(mx-w,my-h*0.10);
+      ctx.quadraticCurveTo(mx,my-h*1.35,mx+w,my-h*0.10);
+      ctx.lineTo(mx+w,my+h);ctx.closePath();
+      ctx.fillStyle="rgba(12,24,28,.52)";ctx.fill();
+      ctx.strokeStyle="rgba(236,196,104,"+(0.24+0.35*IGNITE)+")";ctx.lineWidth=.75;ctx.stroke();
+      if(h>7){
+        ctx.beginPath();ctx.arc(mx,my-h*0.10,w*0.30,0,TAU);
+        ctx.moveTo(mx-w*0.52,my+h*0.72);
+        ctx.quadraticCurveTo(mx,my-h*0.05,mx+w*0.52,my+h*0.72);
+        ctx.fillStyle="rgba(232,190,110,"+(0.20+0.30*IGNITE)+")";ctx.fill();
+      }
+    }
+  }
+  if(!tiny&&(!f.tile||f.ridge)){ctx.strokeStyle="rgba(0,0,0,.22)";ctx.lineWidth=.5;ctx.stroke();}
+}
+
+/* ================= 节点 / 光索 / 时序螺旋 ================= */
+var NSEG=22;
+function nodeWorld(i,phase){
+  var a=phase+i*TAU/8, R=CO[i].rr||RING_R;
+  return[R*Math.cos(a),CO[i].hy,R*Math.sin(a)];
+}
+function buildNodes(){
+  var out=[],i;
+  for(i=0;i<CO.length;i++){
+    var a=ringPhase+i*TAU/8, RR2=CO[i].rr||RING_R;
+    var np=nodeWorld(i,ringPhase);
+    var ev=EAVE[Math.min(CO[i].lv,EAVE.length-1)];
+    var ap=[ev.r*1.06*Math.cos(a),ev.y,ev.r*1.06*Math.sin(a)];
+    var ctl=[(ap[0]*0.40+np[0]*0.60)*1.02,ap[1]*0.52+np[1]*0.48+0.16,(ap[2]*0.40+np[2]*0.60)*1.02];
+    var seg=[],prev=null,s,u,iu,wp;
+    for(s=0;s<=NSEG;s++){
+      u=s/NSEG;iu=1-u;
+      wp=[iu*iu*ap[0]+2*iu*u*ctl[0]+u*u*np[0],
+          iu*iu*ap[1]+2*iu*u*ctl[1]+u*u*np[1],
+          iu*iu*ap[2]+2*iu*u*ctl[2]+u*u*np[2]];
+      var pp=prj(toView(wp));
+      if(prev)seg.push({a:prev,b:pp,z:(prev[2]+pp[2])/2,u:u});
+      prev=pp;
+    }
+    /* 时序螺旋：本节点 → 下一节点（末节点不闭合） */
+    var path=[];
+    if(i<CO.length-1){
+      var pv=null,PS=(QUAL<1)?7:11;
+      for(s=0;s<=PS;s++){
+        u=s/PS;
+        var aa=ringPhase+(i+u)*TAU/8;
+        var yy=CO[i].hy+(CO[i+1].hy-CO[i].hy)*u;
+        var rq=(CO[i].rr||RING_R)+((CO[i+1].rr||RING_R)-(CO[i].rr||RING_R))*u;
+        var q2=prj(toView([rq*Math.cos(aa),yy,rq*Math.sin(aa)]));
+        if(pv)path.push({a:pv,b:q2,z:(pv[2]+q2[2])/2,d0:CO[i].d,d1:CO[i+1].d,u:u});
+        pv=q2;
+      }
+    }
+    var vN=toView(np),foot=prj(toView([np[0],-0.32,np[2]]));
+    out.push({i:i,a:a,seg:seg,path:path,v:vN,s:prj(vN),foot:foot,
+      col:DAYC[CO[i].d],co:CO[i],cur:(i===curIdx)});
+  }
+  return out;
+}
+function paintSeg(s,nd,t){
+  var c=nd.col,hi=(hoverIdx===nd.i||chosen===nd.i||nd.cur);
+  var dep=Math.max(0,Math.min(1,(s.z-11)/13));
+  var al=(nd.cur?1:(hi?.85:.42))*(1-dep*0.52);
+  if(IGNITE>0&&chosen>=0)al*=(nd.i===chosen?1+1.2*IGNITE:1-0.88*IGNITE);
+  var flow=(IGNITE>0&&nd.i===chosen)?Math.min(1,IGNITE*1.25):(t*(nd.cur?0.62:0.34)+nd.i*0.13)%1;
+  var d=Math.abs(((s.u-flow)+1)%1);
+  var pulse=Math.pow(Math.max(0,1-d*7),2.2);
+  var w=(nd.cur?2.4:(hi?1.9:1.05))*(1-dep*.35);
+  ctx.beginPath();ctx.moveTo(s.a[0],s.a[1]);ctx.lineTo(s.b[0],s.b[1]);
+  ctx.strokeStyle=rgba(c,al*(0.12+0.30*pulse));ctx.lineWidth=w*3.4;ctx.stroke();
+  ctx.strokeStyle=rgba(c,al*(0.55+0.45*pulse));ctx.lineWidth=w*(1+1.3*pulse);ctx.stroke();
+}
+function paintPath(s,nd){
+  var dep=Math.max(0,Math.min(1,(s.z-11)/13));
+  var c0=DAYC[s.d0],c1=DAYC[s.d1],u=s.u;
+  var c=[c0[0]+(c1[0]-c0[0])*u|0,c0[1]+(c1[1]-c0[1])*u|0,c0[2]+(c1[2]-c0[2])*u|0];
+  ctx.strokeStyle=rgba(c,0.46*(1-dep*0.62));
+  ctx.lineWidth=Math.max(.7,2.0*(1-dep*.5));
+  ctx.beginPath();ctx.moveTo(s.a[0],s.a[1]);ctx.lineTo(s.b[0],s.b[1]);ctx.stroke();
+}
+function paintDust(it,t){
+  var p=prj(it.v),d=it.d;
+  var tw=0.25+0.35*Math.sin(t*0.9+d.f);
+  var r=Math.max(.4,d.s*p[3]/95);
+  var al=tw*Math.min(1,p[3]/60);
+  if(camMove>0.06){                              /* 镜头移动时拉成流光 */
+    var L=camMove*camMove*72*Math.min(1.8,p[3]/60);
+    ctx.strokeStyle="rgba(198,226,240,"+(Math.min(1,al*1.5)).toFixed(3)+")";
+    ctx.lineWidth=Math.max(.5,r);
+    ctx.beginPath();ctx.moveTo(p[0]-L,p[1]);ctx.lineTo(p[0]+L*0.15,p[1]);ctx.stroke();
+    return;
+  }
+  ctx.fillStyle="rgba(196,222,236,"+al.toFixed(3)+")";
+  ctx.fillRect(p[0],p[1],r,r);
+}
+function paintNode(nd,t){
+  var p=nd.s,c=nd.col,cur=nd.cur,hi=(hoverIdx===nd.i||chosen===nd.i);
+  var dep=Math.max(0,Math.min(1,(nd.v[2]-11)/13));
+  var R=Math.max(7,Math.min(SC*0.052,(cur?38:24)*p[3]/70));
+  var al=(cur?1:(hi?.92:.72))*(1-dep*0.46);
+  var br=0.55+0.45*Math.sin(t*1.5+nd.i);
+  var fl=0.62;
+  /* 垂线 + 地面足迹（空间锚定） */
+  ctx.strokeStyle=rgba(c,(cur?0.42:0.16)*(1-dep*0.6));
+  ctx.lineWidth=cur?1.3:0.7;
+  ctx.setLineDash(cur?[]:[3,4]);
+  ctx.beginPath();ctx.moveTo(p[0],p[1]);ctx.lineTo(nd.foot[0],nd.foot[1]);ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.strokeStyle=rgba(c,(cur?0.40:0.14)*(1-dep*0.6));ctx.lineWidth=1;
+  ctx.beginPath();ctx.ellipse(nd.foot[0],nd.foot[1],R*0.85,R*0.85*0.34,0,0,TAU);ctx.stroke();
+
+  ctx.save();ctx.translate(p[0],p[1]);
+  var g=ctx.createRadialGradient(0,0,0,0,0,R*3.2);
+  g.addColorStop(0,rgba(c,(cur?0.52:0.30)*al));g.addColorStop(1,rgba(c,0));
+  ctx.fillStyle=g;ctx.beginPath();ctx.arc(0,0,R*3.2,0,TAU);ctx.fill();
+  /* 当前项：切换脉冲环 + 缓转外环 */
+  if(cur){
+    var age=(performance.now()-switchT)/900;
+    if(age<1){
+      var e=ease(Math.min(1,age));
+      ctx.strokeStyle=rgba(c,(1-e)*0.75);ctx.lineWidth=2.2*(1-e)+0.5;
+      ctx.beginPath();ctx.ellipse(0,0,R*(1+2.4*e),R*(1+2.4*e)*fl,0,0,TAU);ctx.stroke();
+    }
+    ctx.save();ctx.rotate(t*0.5);
+    ctx.strokeStyle=rgba(c,0.40);ctx.lineWidth=1;
+    for(var m=0;m<8;m++){
+      var a1=m*TAU/8,a2=a1+TAU/16;
+      ctx.beginPath();
+      ctx.ellipse(0,0,R*1.42,R*1.42*fl,0,a1,a2);ctx.stroke();
+    }
+    ctx.restore();
+  }
+  ctx.beginPath();
+  for(var k=0;k<8;k++){var a=A0+k*TAU/8,rr=R*(k%2?1:1.07);
+    ctx[k?"lineTo":"moveTo"](rr*Math.cos(a),rr*Math.sin(a)*fl);}
+  ctx.closePath();
+  ctx.fillStyle=cur?"rgba(6,13,18,.94)":"rgba(5,10,14,.90)";ctx.fill();
+  ctx.strokeStyle=rgba(c,al);ctx.lineWidth=cur?2.4:1.2;ctx.stroke();
+  ctx.strokeStyle=rgba(c,al*(0.28+0.32*br));ctx.lineWidth=1;
+  for(var q=0;q<8;q++){var aa=A0+q*TAU/8;
+    ctx.beginPath();
+    ctx.moveTo(R*0.26*Math.cos(aa),R*0.26*Math.sin(aa)*fl);
+    ctx.lineTo(R*0.78*Math.cos(aa),R*0.78*Math.sin(aa)*fl);ctx.stroke();}
+  ctx.beginPath();ctx.ellipse(0,0,R*0.24,R*0.24*fl,0,0,TAU);
+  ctx.fillStyle=rgba(c,0.55+0.45*br);ctx.fill();
+  ctx.restore();
+}
+function drawBells(t){
+  for(var i=0;i<BELL.length;i++){
+    var b=BELL[i],v=toView(b.p);
+    if(v[2]<1)continue;
+    var p=prj(v),r=Math.max(.55,2.1*p[3]/70);
+    if(r<.8)continue;
+    var sw=Math.sin(t*1.3+b.f)*r*0.5;
+    ctx.strokeStyle="rgba(232,196,116,.34)";ctx.lineWidth=.6;
+    ctx.beginPath();ctx.moveTo(p[0],p[1]);ctx.lineTo(p[0]+sw,p[1]+r*2.6);ctx.stroke();
+    ctx.fillStyle="rgba(240,206,128,"+(0.55+0.35*IGNITE)+")";
+    ctx.beginPath();ctx.arc(p[0]+sw,p[1]+r*3.0,r,0,TAU);ctx.fill();
+  }
+}
+function drawCore(){
+  var a=prj(toView([0,-0.30,0])),b=prj(toView([0,TOPY+1.6*IGNITE,0]));
+  var w=Math.max(1.5,SC*0.0055)*(0.4+IGNITE);
+  ctx.save();ctx.globalCompositeOperation="lighter";
+  var g=ctx.createLinearGradient(a[0],a[1],b[0],b[1]);
+  g.addColorStop(0,"rgba(255,226,150,0)");
+  g.addColorStop(0.18,"rgba(226,180,96,"+(0.26*IGNITE)+")");
+  g.addColorStop(0.82,"rgba(150,225,245,"+(0.34*IGNITE)+")");
+  g.addColorStop(1,"rgba(255,255,255,0)");
+  ctx.strokeStyle=g;ctx.lineWidth=w*4.5;
+  ctx.beginPath();ctx.moveTo(a[0],a[1]);ctx.lineTo(b[0],b[1]);ctx.stroke();
+  ctx.strokeStyle="rgba(255,244,206,"+(0.50*IGNITE)+")";ctx.lineWidth=w;
+  ctx.beginPath();ctx.moveTo(a[0],a[1]);ctx.lineTo(b[0],b[1]);ctx.stroke();
+  var R=SC*0.018*(0.4+2.6*IGNITE);
+  var rg=ctx.createRadialGradient(b[0],b[1],0,b[0],b[1],R);
+  rg.addColorStop(0,"rgba(255,252,232,"+(0.85*IGNITE)+")");
+  rg.addColorStop(0.35,"rgba(255,214,132,"+(0.34*IGNITE)+")");
+  rg.addColorStop(1,"rgba(255,200,110,0)");
+  ctx.fillStyle=rg;ctx.beginPath();ctx.arc(b[0],b[1],R,0,TAU);ctx.fill();
+  ctx.restore();
+}
+
+/* 塔的柔和背衬：跟着相机走，让背景照片可以完全显示而塔仍然读得出来 */
+function drawBackdrop(){
+  var b=prj(toView([0,-0.34,0])), tp=prj(toView([0,TOPY,0]));
+  var cx=(b[0]+tp[0])/2, cy=(b[1]+tp[1])/2;
+  var hh=Math.abs(b[1]-tp[1])*0.62+SC*0.05, ww=SC*0.185;
+  ctx.save();ctx.translate(cx,cy);ctx.scale(1,Math.max(.2,hh/ww));
+  var g=ctx.createRadialGradient(0,0,0,0,0,ww);
+  g.addColorStop(0,"rgba(2,4,6,.80)");
+  g.addColorStop(0.5,"rgba(2,4,6,.46)");
+  g.addColorStop(1,"rgba(2,4,6,0)");
+  ctx.fillStyle=g;ctx.beginPath();ctx.arc(0,0,ww,0,TAU);ctx.fill();
+  ctx.restore();
+}
+
+/* ================= 地面锚盘 ================= */
+function ringPts(r,y,n){var a=[],i;
+  for(i=0;i<=n;i++){var t=i/n*TAU;a.push(prj(toView([r*Math.cos(t),y,r*Math.sin(t)])));}return a;}
+function poly(c,p,cl){c.beginPath();c.moveTo(p[0][0],p[0][1]);
+  for(var i=1;i<p.length;i++)c.lineTo(p[i][0],p[i][1]);if(cl)c.closePath();}
+function drawGround(t){
+  var c=x2,k;
+  var oc=[];
+  for(k=0;k<=8;k++){var a=A0+k*TAU/8;oc.push(prj(toView([DISC_R*Math.cos(a),-0.34,DISC_R*Math.sin(a)])));}
+  poly(c,oc,true);
+  var g=c.createLinearGradient(0,VY-H*0.05,0,VY+H*0.45);
+  g.addColorStop(0,"rgba(22,38,44,.36)");g.addColorStop(1,"rgba(9,15,19,.06)");
+  c.fillStyle=g;c.fill();
+  c.strokeStyle="rgba(216,163,58,.30)";c.lineWidth=1;c.stroke();
+  /* 塔脚光池 */
+  var bp=prj(toView([0,-0.33,0]));
+  var pg=c.createRadialGradient(bp[0],bp[1],0,bp[0],bp[1],SC*0.20);
+  pg.addColorStop(0,"rgba(96,200,180,.16)");pg.addColorStop(1,"rgba(96,200,180,0)");
+  c.fillStyle=pg;c.beginPath();c.ellipse(bp[0],bp[1],SC*0.20,SC*0.20*0.34,0,0,TAU);c.fill();
+  [3.30,RING_R,5.86].forEach(function(r,i){
+    poly(c,ringPts(r,-0.33,84),true);
+    c.strokeStyle=i===1?"rgba(216,163,58,.34)":"rgba(47,211,255,.15)";
+    c.lineWidth=i===1?1.1:.7;c.stroke();});
+  for(k=0;k<72;k++){
+    var a2=k/72*TAU,big=(k%9===0);
+    var p1=prj(toView([(big?5.56:5.72)*Math.cos(a2),-0.33,(big?5.56:5.72)*Math.sin(a2)]));
+    var p2=prj(toView([5.86*Math.cos(a2),-0.33,5.86*Math.sin(a2)]));
+    c.strokeStyle=big?"rgba(216,163,58,.48)":"rgba(126,232,255,.17)";
+    c.lineWidth=big?1:.6;
+    c.beginPath();c.moveTo(p1[0],p1[1]);c.lineTo(p2[0],p2[1]);c.stroke();}
+  var age=(performance.now()-switchT)/1000;
+  if(age<1.15){                                  /* 切换冲击波 */
+    var e2=Math.min(1,age/1.15), rr4=0.6+e2*6.0;
+    poly(c,ringPts(rr4,-0.32,72),true);
+    c.strokeStyle="rgba(216,163,58,"+(0.55*(1-e2)).toFixed(3)+")";
+    c.lineWidth=2.4*(1-e2)+0.4;c.stroke();
+    poly(c,ringPts(rr4*0.62,-0.32,60),true);
+    c.strokeStyle="rgba(126,232,255,"+(0.32*(1-e2)).toFixed(3)+")";
+    c.lineWidth=1.4*(1-e2)+0.3;c.stroke();
+  }
+  var sa=(t*0.28)%TAU;
+  var s0=prj(toView([0,-0.33,0])),s1=prj(toView([DISC_R*Math.cos(sa),-0.33,DISC_R*Math.sin(sa)]));
+  var lg=c.createLinearGradient(s0[0],s0[1],s1[0],s1[1]);
+  lg.addColorStop(0,"rgba(126,232,255,0)");lg.addColorStop(1,"rgba(126,232,255,.30)");
+  c.strokeStyle=lg;c.lineWidth=1.4;
+  c.beginPath();c.moveTo(s0[0],s0[1]);c.lineTo(s1[0],s1[1]);c.stroke();
+}
+
+/* ================= 标签 ================= */
+var _lp=[];
+function syncLabels(nodes,t){
+  var LW=W/DPR,LH=H/DPR,i;
+  var cx=VX,cy=prj(toView([0,1.6,0]))[1];
+  _lp.length=0;
+  for(i=0;i<nodes.length;i++){
+    var nd=nodes[i];
+    var behind=nd.v[2]>CAM.dist+0.4;
+    var sc=Math.max(.62,Math.min(1,nd.s[3]/76));
+    var dx=nd.s[0]-cx,dy=nd.s[1]-cy,dl=Math.hypot(dx,dy)||1;
+    var mag=(nd.cur?86:62)*sc*DPR;
+    var px=(nd.s[0]+dx/dl*mag*1.25)/DPR;
+    var py=(nd.s[1]+dy/dl*mag*0.55)/DPR+(behind?-12*sc:20*sc);
+    _lp.push({i:i,x:px,y:py,sc:sc,behind:behind,side:(dx<0?-1:1),cur:nd.cur,z:nd.v[2]});
+  }
+  /* 同侧竖向去重叠 */
+  [-1,1].forEach(function(sd){
+    var g=_lp.filter(function(o){return o.side===sd&&!o.behind;}).sort(function(a,b){return a.y-b.y;});
+    for(var k=1;k<g.length;k++){
+      var gap=g[k].y-g[k-1].y;
+      if(gap<52) g[k].y=g[k-1].y+52;
+    }
+    for(var k2=g.length-1;k2>=0;k2--) if(g[k2].y>LH-118) g[k2].y=LH-118-(g.length-1-k2)*52;
+  });
+  for(i=0;i<_lp.length;i++){
+    var o=_lp[i],el=nodesEl.children[o.i];
+    if(!el)continue;
+    var lx=Math.max(92,Math.min(LW-92,o.x)), ly=Math.max(78,Math.min(LH-104,o.y));
+    if(!o.behind&&lx<430&&ly>LH-330) lx=430;      /* 让开左下速览面板 */
+    if(!o.behind&&ly<128&&(lx<420||lx>LW-380)) ly=128;   /* 让开顶部 HUD */
+    el.style.left=lx+"px";
+    el.style.top=ly+"px";
+    el.style.opacity=o.behind?0.16:(o.cur?1:0.72);
+    el.style.transform="translate(-50%,-50%) scale("+(o.cur?1:o.sc*0.9).toFixed(3)+")";
+    el.style.pointerEvents=o.behind?"none":"auto";
+    el.style.zIndex=o.behind?1:(o.cur?320:(300-((o.z*10)|0)));
+    if(o.cur)el.classList.add("cur");else el.classList.remove("cur");
+  }
+}
+function mkLabels(){
+  var h="",i;
+  for(i=0;i<CO.length;i++){
+    var c=DAYC[CO[i].d];
+    h+='<div class="fn" style="--c:rgb('+c+');--cg:rgba('+c+',.45)" data-i="'+i+'">'+
+       '<u>'+CO[i].c+(CO[i].self?' · 本塔':'')+'</u>'+
+       '<b>'+CO[i].n+'</b>'+
+       '<s>'+CO[i].e+'</s>'+
+       '<em>接入档案 →</em></div>';
+  }
+  nodesEl.innerHTML=h;
+  Array.prototype.forEach.call(nodesEl.children,function(el){
+    var i=+el.getAttribute("data-i");
+    el.addEventListener("mouseenter",function(){hoverIdx=i;try{sfx("hover");}catch(e){}});
+    el.addEventListener("mouseleave",function(){hoverIdx=-1;});
+    el.addEventListener("click",function(e){e.stopPropagation();pick(i);});
+  });
+  /* 底部索引轨 */
+  var r="";
+  for(i=0;i<CO.length;i++){
+    var c2=DAYC[CO[i].d];
+    r+='<i data-i="'+i+'" data-n="'+CO[i].n+'" style="--c:rgb('+c2+')"><b></b><u>'+CO[i].c+'</u></i>';
+  }
+  railEl.innerHTML=r;
+  Array.prototype.forEach.call(railEl.children,function(el){
+    el.addEventListener("click",function(){goTo(+el.getAttribute("data-i"));});
+  });
+}
+
+/* ================= 切换 / 背景 ================= */
+/* 每个坐标的首页图 = 云存储 <ph>/0.jpg；没传上去的自动退回本地封面，
+   传上去之后不用改代码，下次加载就直接用云图。 */
+var BGRES=[], _bgShown=-1;
+function resolveBg(i){
+  var c=CO[i], cands=[];
+  if(c.bg) cands.push(c.bg);
+  if(c.bgAlt) cands.push(c.bgAlt);
+  (function next(k){
+    if(k>=cands.length){ BGRES[i]=null; if(i===curIdx)applyBg(i,true); return; }
+    var im=new Image();
+    im.onload=function(){ BGRES[i]=cands[k]; if(i===curIdx)applyBg(i,true); };
+    im.onerror=function(){ next(k+1); };
+    im.src=cands[k];
+  })(0);
+}
+function applyBg(i,force){
+  if(!bgEls.length)return;
+  var url=BGRES[i];
+  if(url===undefined) url=null;                 /* 还没解析出来：先留暗场 */
+  var cur=bgEls[bgTurn];
+  if(!force&&_bgShown===i&&cur&&cur.classList.contains("on"))return;
+  if(_bgShown===i&&cur&&cur.getAttribute("data-u")===(url||"")) return;
+  bgTurn^=1;
+  var el=bgEls[bgTurn],other=bgEls[bgTurn^1];
+  el.setAttribute("data-u",url||"");
+  if(url){el.style.backgroundImage="url('"+url+"')";el.classList.remove("noimg");}
+  else{el.style.backgroundImage="none";el.classList.add("noimg");}
+  el.classList.add("on");other.classList.remove("on");
+  _bgShown=i;
+}
+function onSwitch(){
+  switchT=performance.now();
+  /* 相机换机位 */
+  CAMB.yaw=CAMA.yaw;CAMB.pitch=CAMA.pitch;CAMB.dist=CAMA.dist;CAMB.ty=CAMA.ty;
+  CAMB.zoom=CAMA.zoom;CAMB.vx=CAMA.vx;CAMB.vy=CAMA.vy;
+  solveCam(curIdx,CAMZ);
+  camT0=performance.now();
+  var fl=document.getElementById("fhFlash");
+  if(fl){fl.classList.remove("go");void fl.offsetWidth;fl.classList.add("go");}
+  host.classList.add("shifting");
+  clearTimeout(_shiftT);_shiftT=setTimeout(function(){host.classList.remove("shifting");},950);
+  var sw=document.getElementById("fhSwipe");
+  if(sw){sw.classList.remove("go");void sw.offsetWidth;sw.classList.add("go");}
+  var c=CO[curIdx];
+  applyBg(curIdx);
+  host.style.setProperty("--dc","rgb("+DAYC[c.d]+")");
+  /* 档案速览面板 */
+  if(briefEl){
+    briefEl.classList.remove("in");void briefEl.offsetWidth;
+    var x=c.x||"环境补给 · 集体记忆点位。本坐标以在地体验为主，无固定影像载体。";
+    briefEl.style.setProperty("--c",'rgb('+DAYC[c.d]+')');
+    briefEl.innerHTML=
+      '<span class="fb-line"></span>'+
+      '<span class="fb-day" style="--c:rgb('+DAYC[c.d]+')">'+c.dg.d+' · '+c.dg.en+'</span>'+
+      '<div class="fb-hd"><b>'+c.c+'</b><h5>'+c.n+'</h5><i>'+c.e+'</i></div>'+
+      '<p>'+x+'</p>'+
+      '<button class="fb-go" onclick="FHT.ignite('+curIdx+')">接入档案 <span>→</span></button>';
+    briefEl.classList.add("in");
+  }
+  /* 索引轨 */
+  if(railEl)for(var i=0;i<railEl.children.length;i++)
+    railEl.children[i].className=(i===curIdx)?"on":"";
+  var el2=nodesEl&&nodesEl.children[curIdx];
+  if(el2){el2.classList.remove("flash");void el2.offsetWidth;el2.classList.add("flash");}
+  var st=document.getElementById("fhState");
+  if(st)st.textContent="STATE · 锁定 "+c.c+"  ("+("0"+(curIdx+1)).slice(-2)+"/08)";
+  try{sfx("node");}catch(e){}
+}
+function goTo(i,silent){
+  i=((i%8)+8)%8;
+  var cur=ringPhase, want=phaseFor(i);
+  while(want-cur>Math.PI)want-=TAU;      /* 走最短路径 */
+  while(cur-want>Math.PI)want+=TAU;
+  phTarget=want;
+  if(silent)ringPhase=want;
+  if(i!==curIdx){curIdx=i;onSwitch();}   /* 立即提交，避免逐档闪烁 */
+}
+function step(d){goTo(curIdx+d);}
+function pick(i){ if(i===curIdx) ignite(i); else goTo(i); }
+
+/* ================= 点火 ================= */
+var OPEN=null;
+function ignite(i){
+  if(_busy)return;
+  if(i!==curIdx){goTo(i);return;}
+  _busy=true;chosen=i;SELF=!!CO[i].self;igniteT=performance.now();
+  var st=document.getElementById("fhState");
+  if(st)st.textContent="STATE · 釉光点火 · 接入 "+CO[i].c;
+  host.classList.add("igniting");
+  try{sfx("jump");}catch(e){}
+  setTimeout(function(){try{if(typeof OPEN==="function")OPEN(CO[i]);}catch(e){}},1180);
+  setTimeout(function(){
+    igniteT=0;chosen=-1;SELF=false;_busy=false;CAM.dist=DIST0;
+    host.classList.remove("igniting");
+    if(st)st.textContent="STATE · 锁定 "+CO[curIdx].c+"  ("+("0"+(curIdx+1)).slice(-2)+"/08)";
+  },1750);
+}
+
+/* ================= 生命周期 ================= */
+function size(){
+  var r=host.getBoundingClientRect();
+  DPR=Math.min(2,window.devicePixelRatio||1);
+  W=Math.round(r.width*DPR);H=Math.round(r.height*DPR);
+  if(!W||!H)return;
+  cv.width=W;cv.height=H;cv2.width=W;cv2.height=H;
+  syncCam();fit();
+  if(CO.length){solveCam(curIdx,CAMZ);solveCam(curIdx,CAMB);
+    CAMA.vx=CAMZ.vx;CAMA.vy=CAMZ.vy;CAMA.zoom=CAMZ.zoom;}
+  ctx.lineJoin="round";x2.lineJoin="round";
+}
+function hitNode(mx,my){
+  var best=-1,bd=1e9;
+  for(var i=0;i<CO.length;i++){
+    var p=prj(toView(nodeWorld(i,ringPhase)));
+    if(p[2]>CAM.dist+0.4)continue;
+    var d=Math.hypot(p[0]-mx,p[1]-my);
+    var R=Math.max(10,Math.min(SC*0.052,(i===curIdx?38:24)*p[3]/70))*1.5;
+    if(d<R&&d<bd){bd=d;best=i;}
+  }
+  return best;
+}
+var _mounted=false;
+function mount(){
+  host=document.getElementById("fh");
+  if(!host)return;
+  if(_mounted){size();if(!alive){alive=true;T=0;raf=requestAnimationFrame(frame);}return;}
+  _mounted=true;
+  buildCO();
+  cv=document.getElementById("fhCv");ctx=cv.getContext("2d");
+  cv2=document.getElementById("fhCv2");x2=cv2.getContext("2d");
+  nodesEl=document.getElementById("fhNodes");
+  railEl=document.getElementById("fhRail");
+  briefEl=document.getElementById("fhBrief");
+  bgEls=[document.getElementById("fhBgA"),document.getElementById("fhBgB")];
+  bgWrap=document.getElementById("fhBgWrap");
+  build();mkLabels();size();
+  var fe=document.getElementById("fhFaces");
+  if(fe)fe.textContent="SURFACES · "+F.length;
+  resolveBg(0);                                   /* 当前这张先解析，其余错开，避免一次性打八张大图 */
+  for(var bi=1;bi<CO.length;bi++)(function(k){setTimeout(function(){resolveBg(k);},140*k);})(bi);
+  solveCam(0,CAMA);solveCam(0,CAMB);solveCam(0,CAMZ);
+  ringPhase=phTarget=phaseFor(0);curIdx=0;camT0=-1e9;onSwitch();  /* 默认停在 SX-01 */
+  window.addEventListener("resize",size);
+
+  var pv=document.getElementById("fhPrev"),nx=document.getElementById("fhNext");
+  if(pv)pv.addEventListener("click",function(){step(-1);});
+  if(nx)nx.addEventListener("click",function(){step(1);});
+
+  cv.addEventListener("pointerdown",function(e){
+    drag=true;moved=0;dragX=e.clientX;cv.classList.add("drag");
+    try{cv.setPointerCapture(e.pointerId);}catch(_){}
+  });
+  cv.addEventListener("pointermove",function(e){
+    var r=host.getBoundingClientRect();
+    var nx=(e.clientX-r.left)/r.width-0.5, ny=(e.clientY-r.top)/r.height-0.5;
+    tYaw=nx*0.16;tPitch=ny*-0.05;
+    if(bgWrap){bgWrap.style.setProperty("--px",(-nx*26).toFixed(1)+"px");
+               bgWrap.style.setProperty("--py",(-ny*18).toFixed(1)+"px");}
+    if(!drag)return;
+    var d=(e.clientX-dragX)/230;dragX=e.clientX;moved+=Math.abs(d);
+    ringPhase-=d;
+  });
+  host.addEventListener("pointerleave",function(){tYaw=0;tPitch=0;hoverIdx=-1;
+    if(bgWrap){bgWrap.style.setProperty("--px","0px");bgWrap.style.setProperty("--py","0px");}});
+  function endDrag(e){
+    if(!drag)return;
+    drag=false;cv.classList.remove("drag");
+    if(moved<0.02&&e){                                  /* 视为点击：命中节点 */
+      var r=cv.getBoundingClientRect();
+      var hit=hitNode((e.clientX-r.left)*DPR,(e.clientY-r.top)*DPR);
+      if(hit>=0){pick(hit);return;}
+    }
+    goTo(idxFromPhase(ringPhase));                      /* 松手吸附到最近档位 */
+  }
+  cv.addEventListener("pointerup",endDrag);
+  cv.addEventListener("pointercancel",function(){drag=false;cv.classList.remove("drag");goTo(idxFromPhase(ringPhase));});
+  document.addEventListener("keydown",function(e){
+    if(document.body.getAttribute("data-view")!=="intel")return;
+    if(document.getElementById("dpage").classList.contains("show"))return;
+    if(e.key==="ArrowLeft"){e.preventDefault();step(-1);}
+    else if(e.key==="ArrowRight"){e.preventDefault();step(1);}
+    else if(e.key==="Enter"){e.preventDefault();ignite(curIdx);}
+  });
+  alive=true;T=0;raf=requestAnimationFrame(frame);
+}
+function unmount(){alive=false;if(raf){cancelAnimationFrame(raf);raf=null;}}
+return{mount:mount,unmount:unmount,ignite:ignite,step:step,goTo:goTo,
+       onOpen:function(f){OPEN=f;},cur:function(){return curIdx;},count:function(){return F.length;}};
+})();
+
+  FHT.onOpen(function(c){ openCoord(c.gi,c.ci); });
   /* 视图切换/滚动时补触发封面加载（IntersectionObserver 在 display:none 容器里不会回调） */
   (function(){
     if(typeof ccObserve!=="function") return;
@@ -7663,13 +8925,136 @@ var coordDays=[
   function paintSpot(){
     var el=document.getElementById("spotlight");
     if(!el) return;
+    if(_haActive){
+      el.style.background='radial-gradient(circle 150.5px at '+Math.round(_cx)+'px '+Math.round(_cy)+'px,'+
+        'rgba(255,227,181,.12) 0%,rgba(255,203,127,.055) 26%,rgba(126,232,255,.025) 48%,transparent 70%)';
+      return;
+    }
     el.style.background='radial-gradient(circle 215px at '+Math.round(_cx)+'px '+Math.round(_cy)+'px,'+
       'rgba(205,246,255,.6) 0%,rgba(140,228,255,.28) 26%,rgba(47,211,255,.12) 48%,rgba(47,211,255,0) 70%)';
   }
 
+  /* ---------- 光照回溯：原图局部浮雕光照与佛像微动，GPU 不可用时保留静态显影 ---------- */
+  function haReliefCreate(){
+    var canvas=document.getElementById("haRelief"), gl;
+    if(!canvas) return null;
+    try{ gl=canvas.getContext("webgl",{alpha:false,antialias:false,depth:false,stencil:false,preserveDrawingBuffer:false}); }
+    catch(e){ return null; }
+    if(!gl) return null;
+    var ready=false, program=null, loc={}, picture=new Image(), born=0, lost=false;
+    var vertex='attribute vec2 a; varying mediump vec2 v; void main(){v=a*.5+.5;gl_Position=vec4(a,0.,1.);}';
+    var fragment=`
+      precision highp float;
+      varying mediump vec2 v;
+      uniform sampler2D uTex;
+      uniform vec2 uStage, uImage, uCenter;
+      uniform float uLens, uTime, uSettle;
+      float lum(vec3 c){return dot(c,vec3(.299,.587,.114));}
+      float noise(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
+      float awake(vec2 focus,vec2 c){
+        vec2 d=(focus-c)*vec2(1.,uImage.y/uImage.x);
+        return exp(-dot(d,d)*90.)*uSettle;
+      }
+      vec2 breathe(vec2 uv,vec2 focus,vec2 c,vec2 r,float phase){
+        vec2 d=(uv-c)/r;
+        float w=exp(-dot(d,d)*2.)*awake(focus,c);
+        return vec2(sin(uTime*.64+phase)*.0008,sin(uTime*.9+phase)*.0012)*w;
+      }
+      void main(){
+        vec2 local=vec2(v.x,1.-v.y)*uLens;
+        vec2 p=local+uCenter-uLens*.5;
+        float scale=max(uStage.x/uImage.x,uStage.y/uImage.y);
+        vec2 cover=uImage*scale, inset=(cover-uStage)*.5;
+        vec2 uv=(p+inset)/cover, focus=(uCenter+inset)/cover;
+        // 仅佛像所在的柔边区域微动；建筑线条保持原位。
+        vec2 shift=breathe(uv,focus,vec2(.501,.865),vec2(.092,.19),0.);
+        shift+=breathe(uv,focus,vec2(.365,.90),vec2(.062,.16),1.8);
+        shift+=breathe(uv,focus,vec2(.644,.90),vec2(.062,.16),3.4);
+        vec2 head=uv-vec2(.501,.713), hd=head/vec2(.032,.059);
+        shift+=vec2(-head.y,head.x)*sin(uTime*.53)*.014*exp(-dot(hd,hd)*1.8)*awake(focus,vec2(.501,.713));
+        uv-=shift;
+        vec3 base=texture2D(uTex,uv).rgb;
+        // 从原图明暗估算表面法线，使金饰高光随光源掠过，而非整体提亮。
+        vec2 texel=1.5/uImage;
+        float l=lum(texture2D(uTex,uv-vec2(texel.x,0.)).rgb);
+        float r=lum(texture2D(uTex,uv+vec2(texel.x,0.)).rgb);
+        float t=lum(texture2D(uTex,uv-vec2(0.,texel.y)).rgb);
+        float b=lum(texture2D(uTex,uv+vec2(0.,texel.y)).rgb);
+        vec3 normal=normalize(vec3((l-r)*2.6,(t-b)*2.6,.75));
+        vec2 delta=(local-uLens*.5)/(uLens*.5);
+        vec3 light=normalize(vec3(-delta.x+.15,-delta.y-.2,.8));
+        float diffuse=max(dot(normal,light),0.);
+        float cone=exp(-dot(delta,delta)*2.1);
+        float gold=smoothstep(.035,.23,base.r-base.b)*smoothstep(.14,.6,base.r);
+        vec3 halfLight=normalize(light+vec3(0.,0.,1.));
+        float spec=pow(max(dot(normal,halfLight),0.),28.)*gold*cone;
+        vec3 color=base*(.67+.48*diffuse)+base*vec3(.18,.095,.025)*cone;
+        color+=vec3(1.,.73,.36)*spec*.37;
+        float rim=pow(1.-max(normal.z,0.),2.)*(1.-cone);
+        color+=vec3(.13,.35,.4)*rim*.13;
+        // 暗处极少量的浮尘；位置固定在场景中，只在光束内可见。
+        vec2 dustP=p/48.+vec2(uTime*.009,-uTime*.021);
+        vec2 cell=floor(dustP), f=fract(dustP);
+        float seed=noise(cell), seed2=noise(cell+17.);
+        vec2 mote=vec2(.18+.64*seed,.18+.64*seed2);
+        float dist=length((f-mote)*48.);
+        float dust=(1.-smoothstep(.25,1.45,dist))*step(.82,seed);
+        dust*=.25+.35*pow(sin(uTime*.65+seed2*6.28),2.);
+        color+=vec3(1.,.82,.53)*dust*cone;
+        gl_FragColor=vec4(color,1.);
+      }`;
+    function build(){
+      var shaders=[];
+      try{
+        var precision=gl.getShaderPrecisionFormat(gl.FRAGMENT_SHADER,gl.HIGH_FLOAT);
+        var source=precision&&precision.precision?fragment:fragment.replace('highp','mediump');
+        [vertex,source].forEach(function(src,i){
+          var shader=gl.createShader(i?gl.FRAGMENT_SHADER:gl.VERTEX_SHADER); shaders.push(shader);
+          gl.shaderSource(shader,src); gl.compileShader(shader);
+          if(!gl.getShaderParameter(shader,gl.COMPILE_STATUS)) throw new Error('ha shader');
+        });
+        program=gl.createProgram(); shaders.forEach(function(s){gl.attachShader(program,s);});
+        gl.linkProgram(program);
+        if(!gl.getProgramParameter(program,gl.LINK_STATUS)) throw new Error('ha program');
+        gl.useProgram(program);
+        var buffer=gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER,buffer);
+        gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,1,1]),gl.STATIC_DRAW);
+        var a=gl.getAttribLocation(program,'a'); gl.enableVertexAttribArray(a); gl.vertexAttribPointer(a,2,gl.FLOAT,false,0,0);
+        ['uTex','uStage','uImage','uCenter','uLens','uTime','uSettle'].forEach(function(n){loc[n]=gl.getUniformLocation(program,n);});
+        var texture=gl.createTexture(); gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D,texture);
+        gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.LINEAR);
+        gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAG_FILTER,gl.LINEAR);
+        gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE);
+        gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);
+        gl.texImage2D(gl.TEXTURE_2D,0,gl.RGB,gl.RGB,gl.UNSIGNED_BYTE,picture);
+        gl.uniform1i(loc.uTex,0); gl.uniform2f(loc.uImage,picture.naturalWidth,picture.naturalHeight);
+        ready=true;
+      }catch(e){ ready=false; canvas.classList.remove('ready'); }
+      shaders.forEach(function(s){gl.deleteShader(s);});
+    }
+    canvas.addEventListener('webglcontextlost',function(e){e.preventDefault();lost=true;ready=false;canvas.classList.remove('ready');});
+    canvas.addEventListener('webglcontextrestored',function(){lost=false;if(picture.naturalWidth) build();});
+    picture.onload=function(){if(!lost) build();};
+    picture.onerror=function(){ready=false;};
+    picture.src='assets/sector_bg.webp';
+    return {
+      draw:function(x,y,w,h,size,now){
+        if(!ready||lost) return;
+        if(!born) born=now;
+        var pixels=Math.round(size*Math.min(window.devicePixelRatio||1,1.5));
+        if(canvas.width!==pixels){canvas.width=pixels;canvas.height=pixels;}
+        gl.viewport(0,0,pixels,pixels); gl.useProgram(program);
+        gl.uniform2f(loc.uStage,w,h); gl.uniform2f(loc.uCenter,x,y); gl.uniform1f(loc.uLens,size);
+        gl.uniform1f(loc.uTime,(now-born)/1000); gl.uniform1f(loc.uSettle,Math.min(1,(now-born)/1400));
+        gl.drawArrays(gl.TRIANGLE_STRIP,0,4); canvas.classList.add('ready');
+      }
+    };
+  }
+
   /* ---------- 板块页光圈扫描背景 + 星野鼠标视差 ---------- */
   var _haScan=null,_haLens=null,_haImg=null,_haRing=null,_haHint=null,
-      _haRect=null,_haW=0,_haH=0,_haSeen=false;
+      _haRect=null,_haW=0,_haH=0,_haSeen=false,_haActive=false,
+      _haRadius=231,_haRingRadius=138.6,_haGPU=null,_haTried=false;
   function haSize(){
     _haScan=document.getElementById("haScan");
     if(!_haScan) return;
@@ -7678,22 +9063,37 @@ var coordDays=[
     _haRing=document.getElementById("haRing");
     _haHint=document.getElementById("haHint");
     _haW=_haScan.clientWidth; _haH=_haScan.clientHeight;
-    if(_haImg){ _haImg.style.width=_haW+"px"; _haImg.style.height=_haH+"px"; }
+    if(_haLens) _haRadius=_haLens.offsetWidth/2;
+    if(_haRing) _haRingRadius=_haRing.offsetWidth/2;
+    if(_haImg){
+      _haImg.style.width=_haW+"px"; _haImg.style.height=_haH+"px";
+      /* CSS 微动后备层同样按 background-size:cover 对齐三尊佛像。 */
+      var scale=Math.max(_haW/1504,_haH/846), iw=1504*scale, ih=846*scale,
+          ox=(_haW-iw)/2, oy=(_haH-ih)/2;
+      var masks=[[.501,.82,.082,.2],[.365,.90,.059,.16],[.644,.90,.059,.16]].map(function(p){
+        return 'radial-gradient(ellipse '+(p[2]*iw).toFixed(1)+'px '+(p[3]*ih).toFixed(1)+'px at '+
+          (ox+p[0]*iw).toFixed(1)+'px '+(oy+p[1]*ih).toFixed(1)+'px,#000 18%,transparent 94%)';
+      });
+      _haImg.style.setProperty('--ha-sculpture',masks.join(','));
+    }
     haMeasure();
   }
   function haMeasure(){ if(_haScan) _haRect=_haScan.getBoundingClientRect(); }
   function haFrame(){
     if(!_haScan||!_haRect) return;
     var home=document.getElementById("view-home");
-    var live=home&&home.classList.contains("active");
+    var live=home&&home.classList.contains("active")&&!document.hidden&&!document.body.classList.contains("ingame")&&!LOWFX;
+    _haActive=false;
     if(!live){
       if(_haLens&&_haLens.classList.contains("on")){
         _haLens.classList.remove("on"); if(_haRing) _haRing.classList.remove("on");
       }
       return;
     }
+    haMeasure(); // 包含板块入场时的位移动画，保持光圈与鼠标对齐。
     var x=_cx-_haRect.left, y=_cy-_haRect.top;
-    var near=(x>-330&&x<_haRect.width+330&&y>-330&&y<_haRect.height+330);
+    var near=(x>-_haRadius&&x<_haRect.width+_haRadius&&y>-_haRadius&&y<_haRect.height+_haRadius);
+    _haActive=near;
     if(_haLens){
       if(near!==_haLens.classList.contains("on")){
         _haLens.classList.toggle("on",near);
@@ -7703,9 +9103,13 @@ var coordDays=[
         _haSeen=true;
         if(_haHint) setTimeout(function(){ _haHint.classList.add("gone"); },2800);
       }
-      _haLens.style.transform="translate3d("+(x-330).toFixed(1)+"px,"+(y-330).toFixed(1)+"px,0)";
-      if(_haImg) _haImg.style.transform="translate3d("+(330-x).toFixed(1)+"px,"+(330-y).toFixed(1)+"px,0)";
-      if(_haRing) _haRing.style.transform="translate3d("+(x-198).toFixed(1)+"px,"+(y-198).toFixed(1)+"px,0)";
+      _haLens.style.transform="translate3d("+(x-_haRadius).toFixed(1)+"px,"+(y-_haRadius).toFixed(1)+"px,0)";
+      if(_haImg) _haImg.style.transform="translate3d("+(_haRadius-x).toFixed(1)+"px,"+(_haRadius-y).toFixed(1)+"px,0)";
+      if(_haRing) _haRing.style.transform="translate3d("+(x-_haRingRadius).toFixed(1)+"px,"+(y-_haRingRadius).toFixed(1)+"px,0)";
+      if(near){
+        if(!_haTried){_haTried=true;_haGPU=haReliefCreate();}
+        if(_haGPU) _haGPU.draw(x,y,_haW,_haH,_haRadius*2,performance.now());
+      }
     }
     /* 星野视差：越靠前的层跟得越多 */
     var pw=(x/(_haRect.width||1)-0.5), ph=(y/(_haRect.height||1)-0.5);
@@ -7806,7 +9210,7 @@ var coordDays=[
     var CFG=[
       {no:"01",tt:"全程行动记录",     img:"assets/vlog封面.webp",        amb:0, side:-1},
       {no:"02",tt:"文明火种 · 风物短片",img:"", amb:0, side: 1},
-      {no:"03",tt:"互动影游 · 晋地神崩",img:"", amb:1, side: 1}
+      {no:"03",tt:"互动影游 · 晋地神崩",img:"assets/互动影游封面.webp", amb:1, side: 1}
     ];
 
     var stage,cv,cv2,ctx,ctx2,deck,nodesWrap,elPts,elState,archEls=[],nodeEls=[],cards=[];
@@ -8072,9 +9476,9 @@ var coordDays=[
     }
     function fit(){
       var mw=(HB.x1-HB.x0)||1, mh=(HB.y1-HB.y0)||1;
-      SC=Math.min(W*.86/mw, H*.88/mh);
+      SC=Math.min(W*.86/mw, H*.84/mh);
       CX=W*.52-((HB.x0+HB.x1)*.5)*SC;
-      CY=H*.90-((HB.y1-HB.y0)*.5)*SC;
+      CY=H*.92-((HB.y1-HB.y0)*.5)*SC;
     }
 
     /* ---------- 尺寸 ---------- */
@@ -8347,6 +9751,13 @@ var coordDays=[
       try{ sfx("jump"); }catch(e){}
       var no=document.getElementById("mtDeckNo"); if(no) no.textContent=CFG[i].no;
       for(var k=0;k<archEls.length;k++) archEls[k].classList.toggle("mt-on",k===i);
+
+      /* 先将浮层定位到导航栏下，再量取转场目标；保持影像树与画布尺寸不变。 */
+      var de=document.documentElement, sb=de.style.scrollBehavior;
+      de.style.scrollBehavior="auto";
+      window.scrollTo(0,Math.max(0,stage.getBoundingClientRect().top+(window.pageYOffset||0)-82));
+      de.style.scrollBehavior=sb;
+      deck.scrollTop=0;
 
       if(LOWFX){ reveal(); stage.classList.add("hidecv"); FX.busy=false; return; }
 
