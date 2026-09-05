@@ -63,6 +63,64 @@
   .title-wrap .corner.tl{top:-1px;left:-1px;border-right:none;border-bottom:none;}
   .title-wrap .corner.br{bottom:-1px;right:-1px;border-left:none;border-top:none;}
 
+  /* ---------- 文字 LOGO（加载页 / 首页）· 赛博故障动效 ---------- */
+  .wordmark{--wm:520px;--wmsrc:url('assets/logo_wordmark.webp');
+    position:relative;display:block;width:var(--wm);max-width:88vw;margin:0 auto;line-height:0;
+    filter:drop-shadow(0 0 12px rgba(47,211,255,.30)) drop-shadow(0 0 46px rgba(47,211,255,.13));}
+  .wordmark .wm-stack{position:relative;display:block;isolation:isolate;
+    animation:wmFlicker 9s steps(1) infinite;}
+  .wordmark img{display:block;width:100%;height:auto;}
+  .wordmark .wm-base{position:relative;z-index:2;animation:wmShift 6.5s steps(1) infinite;}
+  .wordmark .wm-g{position:absolute;left:0;top:0;z-index:3;opacity:0;mix-blend-mode:screen;pointer-events:none;}
+  .wordmark .wm-g.a{animation:wmSliceA 6.5s steps(1) infinite;}
+  .wordmark .wm-g.b{animation:wmSliceB 6.5s steps(1) infinite;}
+  .wordmark .wm-scan,.wordmark .wm-lines{content:'';position:absolute;inset:0;pointer-events:none;
+    -webkit-mask:var(--wmsrc) center/100% 100% no-repeat;mask:var(--wmsrc) center/100% 100% no-repeat;}
+  .wordmark .wm-scan{z-index:4;mix-blend-mode:screen;opacity:.85;
+    background:linear-gradient(100deg,transparent 40%,rgba(47,211,255,.5) 46.5%,rgba(214,247,255,.95) 50%,rgba(47,211,255,.5) 53.5%,transparent 60%) no-repeat;
+    background-size:280% 100%;background-position:130% 0;
+    animation:wmSweep 5.2s cubic-bezier(.55,0,.45,1) infinite;}
+  .wordmark .wm-lines{z-index:5;mix-blend-mode:multiply;opacity:.2;
+    background:repeating-linear-gradient(180deg,rgba(2,10,18,.75) 0 1px,transparent 1px 5px);
+    animation:wmLines 3.4s linear infinite;}
+  @keyframes wmSweep{0%{background-position:130% 0;}56%,100%{background-position:-40% 0;}}
+  @keyframes wmLines{to{background-position:0 -12px;}}
+  @keyframes wmShift{0%,90%,100%{transform:translate(0,0);}
+    91%{transform:translate(-4px,1px);}92%{transform:translate(3px,-1px);}93%{transform:translate(-1px,0);}}
+  @keyframes wmSliceA{0%,90%,100%{opacity:0;}
+    91%{opacity:.9;transform:translate(-10px,-2px);clip-path:inset(8% 0 64% 0);}
+    92%{opacity:.9;transform:translate(8px,1px);clip-path:inset(34% 0 42% 0);}
+    93%{opacity:0;}}
+  @keyframes wmSliceB{0%,90%,100%{opacity:0;}
+    91%{opacity:.85;transform:translate(9px,2px);clip-path:inset(56% 0 14% 0);}
+    92%{opacity:.85;transform:translate(-7px,-1px);clip-path:inset(72% 0 8% 0);}
+    93%{opacity:0;}}
+  @keyframes wmFlicker{0%,92%,100%{opacity:1;filter:none;}
+    93%{opacity:.6;filter:brightness(1.3) contrast(1.08);}
+    94%{opacity:1;filter:brightness(.86);}
+    95%{opacity:.82;}96%{opacity:1;filter:none;}}
+  /* 加载页：信号锁定入场 */
+  .boot-inner .wordmark{--wm:430px;}
+  .boot-inner .wordmark .wm-stack{
+    animation:wmBoot 1.6s cubic-bezier(.2,.75,.25,1) both,wmFlicker 9s steps(1) 1.7s infinite;}
+  @keyframes wmBoot{
+    0%{opacity:0;transform:scaleX(1.4) skewX(-16deg);filter:blur(10px) brightness(2.4);}
+    18%{opacity:.8;transform:scaleX(1.08) skewX(4deg);filter:blur(2.5px) brightness(1.6);}
+    28%{opacity:.2;transform:translateX(-12px) scaleX(1.03);filter:blur(0) brightness(2);}
+    38%{opacity:1;transform:translateX(7px);filter:none;}
+    48%{opacity:.45;transform:translateX(-4px);}
+    60%,100%{opacity:1;transform:none;filter:none;}}
+  .hero-inner .wordmark{--wm:560px;}
+  @media (max-height:880px){.hero-inner .wordmark{--wm:470px;}}
+  @media (max-height:820px){.boot-inner .wordmark{--wm:360px;}}
+  @media (max-width:900px){
+    .boot-inner .wordmark{--wm:min(80vw,360px);}
+    .hero-inner .wordmark{--wm:min(86vw,420px);}}
+  @media (prefers-reduced-motion:reduce){
+    .wordmark .wm-stack,.wordmark .wm-base,.wordmark .wm-g,
+    .wordmark .wm-scan,.wordmark .wm-lines{animation:none!important;}
+    .wordmark .wm-g{opacity:0;}}
+
   .cyber-title{
     position:relative;display:inline-block;
     font-family:var(--hud);font-weight:700;
@@ -1514,6 +1572,25 @@
     .pt-go{align-items:center;padding:0 34px 30px;}
   }
 
+  /* 文明碎片入口下方的隐藏星宝：仅在现有探照灯光圈内显影 */
+  .xb-hunt{position:absolute;left:60px;right:60px;bottom:22px;height:145px;z-index:2;
+    max-width:1500px;margin:0 auto;pointer-events:none;overflow:visible;}
+  .xb-hunt-track{--xb-light-x:-500px;--xb-light-y:-500px;position:absolute;inset:0;
+    display:flex;align-items:flex-start;justify-content:space-between;opacity:0;
+    -webkit-mask-image:radial-gradient(circle 151px at var(--xb-light-x) var(--xb-light-y),
+      #000 0%,#000 62%,rgba(0,0,0,.72) 76%,rgba(0,0,0,.25) 89%,transparent 100%);
+            mask-image:radial-gradient(circle 151px at var(--xb-light-x) var(--xb-light-y),
+      #000 0%,#000 62%,rgba(0,0,0,.72) 76%,rgba(0,0,0,.25) 89%,transparent 100%);
+    transition:opacity .18s ease;will-change:mask-image,-webkit-mask-image;}
+  .xb-hunt-track.lit{opacity:1;}
+  .xb-hunt img{display:block;width:clamp(48px,7.2vw,108px);height:auto;object-fit:contain;
+    transform:translateY(var(--xb-y,0)) rotate(var(--xb-r,0deg));transform-origin:50% 80%;
+    filter:drop-shadow(0 0 9px rgba(255,206,120,.28)) drop-shadow(0 8px 13px rgba(0,0,0,.7));}
+  @media (max-width:720px){
+    .xb-hunt{left:18px;right:18px;height:116px;bottom:18px;}
+    .xb-hunt img{width:clamp(32px,10.4vw,52px);}
+  }
+
   /* ============================================================
      V25 · 证件照官方相框（在编人员工牌 / 档案）
      ============================================================ */
@@ -2621,7 +2698,15 @@
   <div class="boot-inner">
     <div class="title-wrap">
       <span class="corner tl"></span><span class="corner br"></span>
-      <div class="cyber-title" data-text="末日特情处">末日特情处</div>
+      <div class="wordmark">
+        <span class="wm-stack">
+          <img class="wm-base" src="assets/logo_wordmark.webp" alt="末日特情处">
+          <img class="wm-g a" src="assets/logo_wordmark.webp" alt="" aria-hidden="true">
+          <img class="wm-g b" src="assets/logo_wordmark.webp" alt="" aria-hidden="true">
+          <span class="wm-scan" aria-hidden="true"></span>
+          <span class="wm-lines" aria-hidden="true"></span>
+        </span>
+      </div>
     </div>
     <div class="boot-en">DOOMSDAY SPECIAL AFFAIRS BUREAU · OPERATION TERMINAL</div>
 
@@ -2823,7 +2908,15 @@
 
       <div class="title-wrap" style="margin-top:18px;">
         <span class="corner tl"></span><span class="corner br"></span>
-        <h1 class="cyber-title" data-text="末 日 特 情 处" style="--ct:58px;">末 日 特 情 处</h1>
+        <h1 class="wordmark">
+          <span class="wm-stack">
+            <img class="wm-base" src="assets/logo_wordmark.webp" alt="末日特情处">
+            <img class="wm-g a" src="assets/logo_wordmark.webp" alt="" aria-hidden="true">
+            <img class="wm-g b" src="assets/logo_wordmark.webp" alt="" aria-hidden="true">
+            <span class="wm-scan" aria-hidden="true"></span>
+            <span class="wm-lines" aria-hidden="true"></span>
+          </span>
+        </h1>
       </div>
       <div class="hero-sub">星元 2323<em>→</em>公元 2026.09.03 · 华夏 山西锚区</div>
 
@@ -2921,6 +3014,18 @@
         <div class="pt-btn"><span>接 入 副 本</span><i></i></div>
         <div class="pt-bar"><i></i></div>
         <div class="pt-ready"><u></u>SANDBOX READY</div>
+      </div>
+    </div>
+    <div class="xb-hunt" id="xbHunt" aria-hidden="true">
+      <div class="xb-hunt-track" id="xbHuntTrack">
+        <img src="assets/xingbao1.webp" alt="" loading="lazy" style="--xb-y:11px;--xb-r:-5deg">
+        <img src="assets/xingbao2.webp" alt="" loading="lazy" style="--xb-y:27px;--xb-r:3deg">
+        <img src="assets/xingbao3.webp" alt="" loading="lazy" style="--xb-y:3px;--xb-r:-2deg">
+        <img src="assets/xingbao4.webp" alt="" loading="lazy" style="--xb-y:22px;--xb-r:4deg">
+        <img src="assets/xingbao5.webp" alt="" loading="lazy" style="--xb-y:8px;--xb-r:-3deg">
+        <img src="assets/xingbao6.webp" alt="" loading="lazy" style="--xb-y:30px;--xb-r:5deg">
+        <img src="assets/xingbao7.webp" alt="" loading="lazy" style="--xb-y:5px;--xb-r:-4deg">
+        <img src="assets/xingbao8.webp" alt="" loading="lazy" style="--xb-y:24px;--xb-r:2deg">
       </div>
     </div>
 </section>
@@ -9123,10 +9228,28 @@ return{mount:mount,unmount:unmount,ignite:ignite,step:step,goTo:goTo,
   window.addEventListener("resize",function(){ haSize(); });
   haSize();
 
+  /* 与现有探照灯同步的星宝显影，仅作用于入口卡下方区域。 */
+  var _xbHuntTrack=document.getElementById("xbHuntTrack");
+  function xbHuntFrame(){
+    if(!_xbHuntTrack) return;
+    var home=document.getElementById("view-home");
+    var live=home&&home.classList.contains("active")&&!document.hidden&&!document.body.classList.contains("ingame");
+    if(!live){ _xbHuntTrack.classList.remove("lit"); return; }
+    var rect=_xbHuntTrack.getBoundingClientRect();
+    var x=_cx-rect.left, y=_cy-rect.top, radius=151;
+    var near=x>-radius&&x<rect.width+radius&&y>-radius&&y<rect.height+radius;
+    _xbHuntTrack.classList.toggle("lit",near);
+    if(near){
+      _xbHuntTrack.style.setProperty("--xb-light-x",x.toFixed(1)+"px");
+      _xbHuntTrack.style.setProperty("--xb-light-y",y.toFixed(1)+"px");
+    }
+  }
+
   function spotLoop(){
     _cx+=(_slx-_cx)*0.13; _cy+=(_sly-_cy)*0.13;
     paintSpot();
     haFrame();
+    xbHuntFrame();
     requestAnimationFrame(spotLoop);
   }
   (function initSpot(){ var sp=document.getElementById("spotlight"); if(sp){ paintSpot(); requestAnimationFrame(spotLoop); } })();
