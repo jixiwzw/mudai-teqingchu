@@ -2134,6 +2134,147 @@
     .tlx-xb{width:76px;}
   }
 
+
+  /* ===================================================================
+     V29 · 影像档案 · 晋祠周柏 · 三维点云影像树
+     枯木本色（骨白/灰褐）躯干 + 青蓝数据流树冠；三组档案挂于枝头
+     =================================================================== */
+  .mtree{position:relative;width:100%;height:min(76vh,760px);min-height:540px;margin:6px 0 20px;
+    border:1px solid var(--line);overflow:hidden;isolation:isolate;
+    background:
+      radial-gradient(130% 86% at 50% 104%, rgba(24,52,64,.34), rgba(6,12,17,.0) 62%),
+      radial-gradient(80% 60% at 78% 8%, rgba(47,211,255,.07), transparent 60%),
+      linear-gradient(180deg,rgba(3,6,9,.94),rgba(2,4,6,.97));}
+  .mtree canvas{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:pan-y;cursor:grab;
+    z-index:1;transition:opacity .38s ease;}
+  .mtree canvas.drag{cursor:grabbing;}
+  .mtree #mtCv2{z-index:2;pointer-events:none;}
+  .mtree.hidecv canvas{opacity:0;}
+  .mtree.hidecv .mt-fx,.mtree.hidecv .mt-hint{opacity:0;transition:opacity .38s ease;}
+  .mt-fx{position:absolute;inset:0;pointer-events:none;z-index:4;
+    background:
+      repeating-linear-gradient(180deg,rgba(255,255,255,.028) 0 1px,transparent 1px 3px),
+      radial-gradient(120% 100% at 50% 50%,transparent 46%,rgba(1,3,5,.72) 100%);
+    mix-blend-mode:screen;opacity:.5;}
+  .mt-fx::after{content:'';position:absolute;left:0;right:0;height:90px;
+    background:linear-gradient(180deg,transparent,rgba(47,211,255,.055),transparent);
+    animation:mtScan 7.5s linear infinite;}
+  @keyframes mtScan{0%{top:-90px;opacity:0}8%{opacity:1}92%{opacity:1}100%{top:100%;opacity:0}}
+  .mt-cor{position:absolute;width:26px;height:26px;z-index:5;pointer-events:none;}
+  .mt-cor.tl{top:12px;left:12px;border-top:2px solid var(--cyan);border-left:2px solid var(--cyan);}
+  .mt-cor.tr{top:12px;right:12px;border-top:2px solid rgba(47,211,255,.42);border-right:2px solid rgba(47,211,255,.42);}
+  .mt-cor.bl{bottom:12px;left:12px;border-bottom:2px solid rgba(47,211,255,.42);border-left:2px solid rgba(47,211,255,.42);}
+  .mt-cor.br{bottom:12px;right:12px;border-bottom:2px solid var(--amber);border-right:2px solid var(--amber);}
+  .mt-lab{position:absolute;z-index:5;pointer-events:none;font-family:var(--mono);line-height:1.5;}
+  .mt-lab b{display:block;font-weight:400;font-size:10.5px;letter-spacing:.26em;color:var(--cyan);}
+  .mt-lab i{display:block;font-style:normal;font-family:var(--display);font-size:15px;font-weight:900;
+    letter-spacing:.14em;color:#dfe9f0;margin:5px 0 4px;text-shadow:0 0 18px rgba(47,211,255,.25);}
+  .mt-lab span{display:block;font-size:9.5px;letter-spacing:.18em;color:rgba(125,139,153,.92);}
+  .mt-lab.tl{left:30px;top:30px;}
+  .mt-lab.tr{right:30px;top:30px;text-align:right;}
+  .mt-lab.tr b{color:var(--amber-soft);}
+  .mt-lab.tr i{font-family:var(--mono);font-size:10.5px;font-weight:400;letter-spacing:.22em;color:rgba(125,139,153,.8);margin:6px 0 3px;text-shadow:none;}
+  .mt-lab.tr span{color:var(--cyan-soft);letter-spacing:.22em;}
+  .mt-hint{position:absolute;left:50%;bottom:20px;transform:translateX(-50%);z-index:5;pointer-events:none;
+    font-family:var(--mono);font-size:9.5px;letter-spacing:.3em;color:rgba(125,139,153,.75);white-space:nowrap;
+    transition:opacity .4s;}
+  .mtree.busy .mt-hint{opacity:0;}
+  .mt-hint em{font-style:normal;color:var(--cyan-soft);}
+
+  /* -- 枝头档案节点 -- */
+  .mt-nodes{position:absolute;inset:0;z-index:6;pointer-events:none;}
+  .mt-node{position:absolute;left:0;top:0;width:0;height:0;pointer-events:none;
+    transition:opacity .35s ease;}
+  .mtree.busy .mt-node{opacity:0 !important;pointer-events:none !important;}
+  .mt-node{will-change:transform;}
+  .mn-card{position:absolute;left:0;top:0;width:214px;pointer-events:auto;cursor:pointer;
+    -webkit-appearance:none;appearance:none;color:var(--text);font-size:12px;
+    padding:8px 8px 9px;background:rgba(4,9,13,.8);border:1px solid rgba(47,211,255,.3);
+    box-shadow:0 12px 34px rgba(0,0,0,.6),0 0 0 1px rgba(0,0,0,.45),0 0 30px rgba(47,211,255,.08);
+    transition:border-color .3s,box-shadow .3s,background .3s;
+    -webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);
+    font-family:var(--mono);text-align:left;display:block;}
+  .mn-card::before{content:'';position:absolute;inset:-1px;pointer-events:none;
+    background:linear-gradient(180deg,rgba(47,211,255,.12),transparent 38%);opacity:0;transition:.3s;}
+  .mn-card:hover{border-color:var(--cyan);background:rgba(6,14,20,.9);
+    box-shadow:0 16px 44px rgba(0,0,0,.68),0 0 0 1px rgba(47,211,255,.28),0 0 46px rgba(47,211,255,.24);}
+  .mn-card:hover::before{opacity:1;}
+  .mt-node.amb .mn-card{border-color:rgba(255,122,28,.4);box-shadow:0 12px 34px rgba(0,0,0,.6),0 0 30px rgba(255,122,28,.1);}
+  .mt-node.amb .mn-card:hover{border-color:var(--amber);box-shadow:0 16px 44px rgba(0,0,0,.68),0 0 46px rgba(255,122,28,.26);}
+  .mn-thumb{position:relative;display:block;width:100%;aspect-ratio:16/9;overflow:hidden;background:#04080b;}
+  .mn-thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+    filter:grayscale(.4) contrast(1.08) brightness(.82) saturate(.85);transition:filter .45s,transform .45s;}
+  .mn-card:hover .mn-thumb img{filter:grayscale(0) contrast(1.05) brightness(.98);transform:scale(1.06);}
+  .mn-ph{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;
+    background:repeating-linear-gradient(135deg,rgba(47,211,255,.05) 0 7px,transparent 7px 14px),
+      linear-gradient(180deg,rgba(10,26,34,.9),rgba(4,10,14,.95));}
+  .mn-ph b{font-family:var(--sans);font-size:11px;font-weight:700;letter-spacing:.16em;color:rgba(126,232,255,.8);}
+  .mn-ph i{font-style:normal;font-size:8px;letter-spacing:.24em;color:rgba(125,139,153,.75);}
+  .mt-node.amb .mn-ph b{color:rgba(255,178,125,.85);}
+  .mn-thumb::after{content:'';position:absolute;inset:0;pointer-events:none;
+    background:repeating-linear-gradient(180deg,rgba(0,0,0,.22) 0 1px,transparent 1px 3px),
+      linear-gradient(180deg,rgba(47,211,255,.08),transparent 55%);}
+  .mn-play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) scale(.86);z-index:2;
+    width:34px;height:34px;border-radius:50%;border:1px solid var(--cyan);color:var(--cyan);
+    display:flex;align-items:center;justify-content:center;font-size:11px;background:rgba(3,6,9,.55);
+    opacity:0;transition:.35s;box-shadow:0 0 20px rgba(47,211,255,.5);}
+  .mn-card:hover .mn-play{opacity:1;transform:translate(-50%,-50%) scale(1);}
+  .mt-node.amb .mn-play{border-color:var(--amber);color:var(--amber);box-shadow:0 0 20px rgba(255,122,28,.5);}
+  .mn-no{position:absolute;left:0;top:0;z-index:2;font-size:8.5px;letter-spacing:.22em;padding:3px 7px;
+    background:rgba(2,4,6,.82);color:var(--cyan-soft);border-right:1px solid rgba(47,211,255,.3);
+    border-bottom:1px solid rgba(47,211,255,.3);}
+  .mt-node.amb .mn-no{color:var(--amber-soft);border-color:rgba(255,122,28,.35);}
+  .mn-tx{display:flex;align-items:center;gap:8px;margin-top:8px;}
+  .mn-tx b{font-family:var(--display);font-size:13px;font-weight:900;letter-spacing:.08em;color:#e6eef4;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .mn-tx u{margin-left:auto;text-decoration:none;font-size:8.5px;letter-spacing:.2em;color:rgba(125,139,153,.85);white-space:nowrap;}
+  .mn-card:hover .mn-tx u{color:var(--cyan-soft);}
+  .mn-k{position:absolute;width:9px;height:9px;pointer-events:none;transition:.3s;}
+  .mn-k.a{left:-1px;top:-1px;border-top:1px solid var(--cyan);border-left:1px solid var(--cyan);}
+  .mn-k.b{right:-1px;top:-1px;border-top:1px solid var(--cyan);border-right:1px solid var(--cyan);}
+  .mn-k.c{left:-1px;bottom:-1px;border-bottom:1px solid var(--cyan);border-left:1px solid var(--cyan);}
+  .mn-k.d{right:-1px;bottom:-1px;border-bottom:1px solid var(--cyan);border-right:1px solid var(--cyan);}
+  .mn-card:hover .mn-k{width:15px;height:15px;}
+  .mt-node.amb .mn-k{border-color:var(--amber) !important;}
+
+  /* -- 档案浮层（点击节点后就地展开） -- */
+  .mt-deck{position:absolute;inset:0;z-index:12;display:none;overflow:auto;overscroll-behavior:contain;
+    padding:54px 26px 26px;background:linear-gradient(180deg,rgba(2,4,7,.9),rgba(2,4,7,.96));
+    -webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);}
+  .mt-deck.on{display:block;}
+  .mt-deck.measure{display:block;visibility:hidden;}
+  .mt-deck::-webkit-scrollbar{width:6px;}
+  .mt-deck::-webkit-scrollbar-thumb{background:rgba(47,211,255,.3);}
+  .mt-deck .arch{display:none;margin:0 auto;max-width:1000px;}
+  .mt-deck .arch.mt-on{display:block;}
+  .mt-deck.on .arch.mt-on{animation:mtDeckIn .62s cubic-bezier(.16,.84,.3,1) both;}
+  .mt-deck.measure .mt-back,.mt-deck.measure .mt-tag{display:none;}
+  @keyframes mtDeckIn{from{opacity:0;transform:scale(.955) translateY(10px);filter:blur(7px);}
+    to{opacity:1;transform:none;filter:none;}}
+  .mt-back{position:absolute;left:22px;top:16px;z-index:14;
+    font-family:var(--mono);font-size:10px;letter-spacing:.24em;color:var(--cyan);
+    background:rgba(3,6,9,.8);border:1px solid rgba(47,211,255,.34);padding:8px 15px;cursor:pointer;transition:.3s;}
+  .mt-back:hover{background:var(--cyan);color:#05080c;box-shadow:0 0 24px rgba(47,211,255,.4);}
+  .mt-tag{position:absolute;right:22px;top:16px;z-index:14;font-family:var(--mono);font-size:9.5px;
+    letter-spacing:.24em;color:rgba(125,139,153,.85);pointer-events:none;}
+  .mt-tag b{color:var(--cyan-soft);font-weight:400;}
+  .mt-deck .ix-sep{margin:26px 0 0;}
+  .mt-deck .arch.interactive{margin-top:0;}
+
+  @media (max-width:1100px){
+    .mn-card{width:178px;}
+    .mt-lab.tl,.mt-lab.tr{top:22px;}
+    .mt-lab.tl{left:22px;} .mt-lab.tr{right:22px;}
+  }
+  @media (max-width:820px){
+    .mtree{height:min(66vh,560px);min-height:430px;}
+    .mn-card{width:142px;padding:6px 6px 7px;}
+    .mn-tx b{font-size:11px;} .mn-tx u{display:none;}
+    .mt-lab i{font-size:12.5px;} .mt-lab.tr{display:none;}
+    .mt-deck{padding:50px 12px 18px;}
+    .mt-hint{font-size:8.5px;letter-spacing:.2em;bottom:14px;}
+  }
+
   </style>
 </head>
 <body data-page-node-id="t1Z7rwIKurlKGXbu6jqRUy">
@@ -2241,6 +2382,13 @@
 
 <!-- site-build 素材清单：以下文件只在 JS 的 img: 字段里按文件名拼接，
      site-build.py 的 assets/ 正则扫不到，必须在这里显式列出才会被打包。
+     assets/任务简报.webp
+     assets/在编人员.webp
+     assets/行动时序.webp
+     assets/文明采集坐标.webp
+     assets/影像档案.webp
+     assets/行动铁律.webp
+
      assets/hero_bg.webp
      assets/base.webp
      assets/map.webp
@@ -2606,9 +2754,31 @@
       <div class="title-wrap"><span class="corner tl"></span><span class="corner br"></span><h2 class="cyber-title" data-text="影像档案" style="--ct:56px;">影像档案</h2></div>
       <div class="sec-sub">ACTION FOOTAGE · 山西锚区影像专区</div>
     </div>
-    <div class="panel-lead reveal">本次行动全部回传影像。三组档案，一组交互式记忆载体，构成<b>「山西锚区」专区</b>的主干。</div>
+    <div class="panel-lead reveal">本次行动全部回传影像，以<b>晋祠周柏</b>的三维点云为载体归档——三千年古柏是山西锚区唯一活着的时间证物，档案便挂在它的枝头。<b>拖动可旋转标本</b>，点击枝头任一档案接入。</div>
 
-    <div class="arch reveal">
+    <div class="mtree reveal" id="mtree">
+      <canvas id="mtCv"></canvas>
+      <canvas id="mtCv2"></canvas>
+      <div class="mt-fx"></div>
+      <span class="mt-cor tl"></span><span class="mt-cor tr"></span>
+      <span class="mt-cor bl"></span><span class="mt-cor br"></span>
+      <div class="mt-lab tl">
+        <b>SPECIMEN · SP-JC-0001</b>
+        <i>晋祠 · 周柏</i>
+        <span>ZHOU CYPRESS · 树龄 ≈ 3000 y · 倾角 40°</span>
+      </div>
+      <div class="mt-lab tr">
+        <b id="mtPts">POINTS · ----</b>
+        <i>LIDAR POINT-CLOUD RECON v2.6</i>
+        <span id="mtState">STATE · 待机</span>
+      </div>
+      <div class="mt-nodes" id="mtNodes"></div>
+      <div class="mt-hint" id="mtHint">拖动旋转标本 &nbsp;·&nbsp; 点击枝头档案 <em>接入影像</em></div>
+      <div class="mt-deck" id="mtDeck">
+        <button class="mt-back" onclick="mtClose()">← 返回影像树</button>
+        <div class="mt-tag">ARCHIVE <b id="mtDeckNo">01</b> · 已接入</div>
+
+    <div class="arch">
       <div class="arch-head">
         <span class="ah-idx">ARCHIVE 01</span>
         <div class="ah-tx"><h4>全程行动记录</h4><p>以时空锚点顺序记录 D-01 落点至 D-04 返航的四日全程：点位穿梭、采集作业与人物群像。</p></div>
@@ -2616,7 +2786,7 @@
       </div>
       <div class="apbox">
         <div class="ap" onclick="if(event.target===this||event.target.classList.contains('ap-vid'))toggleArch(0)">
-          <video class="ap-vid" preload="none" playsinline poster="assets/hero_bg.webp" src="https://mrtq-1474571196.cos.ap-shanghai.myqcloud.com/video/vlog.MP4"></video>
+          <video class="ap-vid" preload="none" playsinline poster="assets/vlog封面.webp" src="https://mrtq-1474571196.cos.ap-shanghai.myqcloud.com/video/vlog.MP4"></video>
           <div class="ap-mask"><span class="ap-go">▶</span><span class="ap-msg">点击播放影像档案</span></div>
           <div class="ap-ui">
             <button class="ab ab-p" onclick="event.stopPropagation();toggleArch(0)">▶</button>
@@ -2629,7 +2799,7 @@
       </div>
     </div>
 
-    <div class="arch reveal">
+    <div class="arch">
       <div class="arch-head">
         <span class="ah-idx">ARCHIVE 02</span>
         <div class="ah-tx"><h4>文明火种 · 风物短片</h4><p>以古建、悬塑与晋商旧事为线索的高光坐标短片，实拍 + AI 创意混剪，归档为“可被后世读懂”的风物层。</p></div>
@@ -2650,7 +2820,7 @@
       </div>
     </div>
 
-    <div class="arch interactive reveal" data-iv>
+    <div class="arch interactive" data-iv>
       <div class="ix-sep"></div>
       <div class="arch-head">
         <span class="ah-idx">ARCHIVE 03</span>
@@ -2670,11 +2840,15 @@
           </div>
         </div>
       </div>
-      
+
     </div>
-<div class="page-back reveal"><button class="btn-hud" onclick="goHome()">← 返回指挥中枢</button></div>
+      </div>
+    </div>
+
+    <div class="page-back reveal"><button class="btn-hud" onclick="goHome()">← 返回指挥中枢</button></div>
   </div>
 </section>
+
 <!-- ========== LOGISTICS / IRON LAWS ========== -->
 <section class="view" id="view-logistics">
   <div class="page-bg" style="background-image:url('assets/intel_jinci.webp');background-position:center 60%;"></div>
@@ -6358,6 +6532,7 @@ function restartAll(){
     try{ haSize(); }catch(e){}
     revealIn(el);
     if(id==="map"){ try{ tlxMount(); }catch(e){} }
+    if(id==="media"){ try{ mtMount(); }catch(e){} } else { try{ mtSleep(); }catch(e){} }
   }
 
   function go(id){
@@ -6996,7 +7171,7 @@ var coordDays=[
           cover+'<div class="cg-grad"></div>'+
           '<span class="cg-code">'+c.code+'</span>'+
           '<div class="cg-meta"><h4>'+c.n+'</h4><span class="cg-en">'+c.en+'</span></div>'+
-          '<div class="cg-foot"><span>查看坐标 →</span><span>10 SLOTS</span></div></div>');
+          '<div class="cg-foot"><span>查看坐标 →</span><span>20 SLOTS</span></div></div>');
       });
       H.push('</div></div>');
     });
@@ -7010,7 +7185,7 @@ var coordDays=[
       (c.blank?'<span class="cx-h1">STARRY NIGHT</span><span class="cx-h2">环境补给 · 集体记忆点位</span>':'')+
       '<img class="ccov" data-src="'+INTEL_COS+c.ph+'/0.jpg" alt="'+c.n+' · 封面" onclick="coordZoom(this)" onload="this.classList.add(\'ok\')" onerror="this.classList.add(\'fail\')"></div>';
     var slots=[];
-    for(var i=1;i<=10;i++){
+    for(var i=1;i<=20;i++){
       var nn=('0'+i).slice(-2);
       slots.push('<div class="slot"><img src="'+INTEL_COS+c.ph+'/'+i+'.jpg" alt="'+c.n+' · '+nn+'" onclick="coordZoom(this)" onload="cSlotOk(this)" onerror="cSlotErr(this)"></div>');
     }
@@ -7295,12 +7470,12 @@ var coordDays=[
      从第一排左侧起顺时针读，正好是 01 任务简报 → 06 行动铁律。
      sh(剪影) / no(编号) 绑在模块上，换位置不会串。 */
   var radarMods=[
-    {id:"map",       no:"03", sh:2, n:"行动时序",     en:"TIMELINE",           img:"map.webp",              tip:"D-01 → D-04 · 96 小时行动时序"},
-    {id:"intel",     no:"04", sh:3, n:"文明采集坐标", en:"COLLECTION COORDS",  img:"intel_xiaoxitian.webp", tip:"8 处坐标 · 分日采集图鉴"},
-    {id:"media",     no:"05", sh:4, n:"影像档案",     en:"MEDIA ARCHIVE",      img:"intel_gucheng.webp",    tip:"三组影像档案 · 交互记忆载体"},
-    {id:"logistics", no:"06", sh:5, n:"行动铁律",     en:"IRON LAWS",          img:"intel_jinci.webp",      tip:"伪装守则 · 铁律 · 安全屋接驳"},
-    {id:"briefing",  no:"01", sh:0, n:"任务简报",     en:"MISSION BRIEFING",   img:"hero_bg.webp",          tip:"行动源起 · 文明火种回收计划总述"},
-    {id:"personnel", no:"02", sh:1, n:"在编人员",     en:"PERSONNEL",          img:"base.webp",             tip:"在编特工档案 · 三部门工牌"}
+    {id:"map",       no:"03", sh:2, n:"行动时序",     en:"TIMELINE",           img:"行动时序.webp",              tip:"D-01 → D-04 · 96 小时行动时序"},
+    {id:"intel",     no:"04", sh:3, n:"文明采集坐标", en:"COLLECTION COORDS",  img:"文明采集坐标.webp", tip:"8 处坐标 · 分日采集图鉴"},
+    {id:"media",     no:"05", sh:4, n:"影像档案",     en:"MEDIA ARCHIVE",      img:"影像档案.webp",    tip:"三组影像档案 · 交互记忆载体"},
+    {id:"logistics", no:"06", sh:5, n:"行动铁律",     en:"IRON LAWS",          img:"行动铁律.webp",      tip:"伪装守则 · 铁律 · 安全屋接驳"},
+    {id:"briefing",  no:"01", sh:0, n:"任务简报",     en:"MISSION BRIEFING",   img:"任务简报.webp",          tip:"行动源起 · 文明火种回收计划总述"},
+    {id:"personnel", no:"02", sh:1, n:"在编人员",     en:"PERSONNEL",          img:"在编人员.webp",             tip:"在编特工档案 · 三部门工牌"}
   ];
   /* 安全剪影：底部或内容区保持足够宽度，文字永不触边 */
   var rnShapes=[
@@ -7620,6 +7795,684 @@ var coordDays=[
       if(w&&typeof w.restartAll==="function") w.restartAll();
     }catch(e){ }
   }
+
+  /* ==========================================================================
+     V29 · 影像档案 · 晋祠周柏 三维点云影像树
+     - 程序化生成周柏骨架（斜倚扁干 / 板根树瘤 / 螺旋沟壑 / 劈裂 / 双主枝 / 枯枝）
+     - 自绘三维投影 + ImageData 加色累积缓冲：2 万余点仍能满帧
+     - 三组档案挂枝头；点击 → 粒子炸散 → 重组为该片封面 → 交出真实播放器
+     ========================================================================== */
+  var MT=(function(){
+    var CFG=[
+      {no:"01",tt:"全程行动记录",     img:"assets/vlog封面.webp",        amb:0, side:-1},
+      {no:"02",tt:"文明火种 · 风物短片",img:"", amb:0, side: 1},
+      {no:"03",tt:"互动影游 · 晋地神崩",img:"", amb:1, side: 1}
+    ];
+
+    var stage,cv,cv2,ctx,ctx2,deck,nodesWrap,elPts,elState,archEls=[],nodeEls=[],cards=[];
+    var W=0,H=0,DPR=1,raf=0,alive=false,built=false,T0=0,lastT=0,_prev=0;
+    var IMD=null,D=null,P=null,NP=0,SKIP=1,_ft=0,_fn=0;
+    var BR=[],ANCH=[],MOTE=[],HB={x0:0,x1:0,y0:0,y1:0},SC=1,CX=0,CY=0;
+    var yaw=0,yawV=0,pit=.15,pitT=.15,dragging=false,lastX=0,lastY=0;
+    var CAM=250;
+    var FX={mode:"grow",t0:0,idx:-1,rect:null,busy:false};
+    var IMGS=[],glow=null;
+
+    /* ---------- 小工具 ---------- */
+    var _sd=20260905;
+    function rnd(){ _sd=(_sd*1664525+1013904223)%4294967296; return _sd/4294967296; }
+    function rr(a,b){ return a+(b-a)*rnd(); }
+    function nrm(v){ var m=Math.sqrt(v[0]*v[0]+v[1]*v[1]+v[2]*v[2])||1; return [v[0]/m,v[1]/m,v[2]/m]; }
+    function crs(a,b){ return [a[1]*b[2]-a[2]*b[1], a[2]*b[0]-a[0]*b[2], a[0]*b[1]-a[1]*b[0]]; }
+    function cl(a,b,c){ return a<b?b:(a>c?c:a); }
+    function eoc(u){ u=1-u; return 1-u*u*u; }
+
+    /* 统一的粒子工厂：保证隐藏类一致，两万多个点才跑得动 */
+    function mkP(x,y,z,nx,ny,nz,r,g,b,sz,a0){
+      return {x:x,y:y,z:z,nx:nx,ny:ny,nz:nz,r:r,g:g,b:b,sz:sz,a0:a0,
+              ph:rnd()*6.283,sw:0,g0:0,
+              fx:0,fy:0,rx:0,ry:0,vx:0,vy:0,
+              tx:0,ty:0,tr:0,tg:0,tb:0,ts:1,ts0:1,dly:0,cap:0};
+    }
+
+    /* ---------- 加色累积缓冲（Uint8Clamped 自带饱和，等于免费的 lighter） ---------- */
+    function px1(x,y,r,g,b,a){
+      var xi=x|0,yi=y|0;
+      if(xi<0||yi<0||xi>=W||yi>=H) return;
+      var i=(yi*W+xi)<<2;
+      D[i]+=r*a; D[i+1]+=g*a; D[i+2]+=b*a; D[i+3]+=255*a;
+    }
+    function pxN(x,y,s,r,g,b,a){
+      var si=(s+.5)|0; if(si<1) si=1; if(si>14) si=14;
+      var x0=x|0, y0=y|0, x1=x0+si, y1=y0+si;
+      if(x1<=0||y1<=0||x0>=W||y0>=H) return;
+      if(x0<0)x0=0; if(y0<0)y0=0; if(x1>W)x1=W; if(y1>H)y1=H;
+      var R=r*a,G=g*a,B=b*a,A=255*a,yy,xx,row,j;
+      for(yy=y0;yy<y1;yy++){
+        row=yy*W;
+        for(xx=x0;xx<x1;xx++){ j=(row+xx)<<2; D[j]+=R; D[j+1]+=G; D[j+2]+=B; D[j+3]+=A; }
+      }
+    }
+
+    /* ---------- 骨架 ---------- */
+    function grow(p0,dir,len,r0,r1,seg,bend,wob,kind){
+      var pts=[],p=[p0[0],p0[1],p0[2]],d=nrm(dir),L=len/seg,i,t;
+      for(i=0;i<=seg;i++){
+        t=i/seg;
+        pts.push([p[0],p[1],p[2], r0+(r1-r0)*t]);
+        if(i===seg) break;
+        d=nrm([d[0]+bend[0]/seg+(rnd()-.5)*wob,
+               d[1]+bend[1]/seg+(rnd()-.5)*wob*.45,
+               d[2]+bend[2]/seg+(rnd()-.5)*wob]);
+        p=[p[0]+d[0]*L,p[1]+d[1]*L,p[2]+d[2]*L];
+      }
+      var seglist=[];
+      for(i=0;i<pts.length-1;i++){
+        var a=pts[i],c=pts[i+1];
+        var ax=nrm([c[0]-a[0],c[1]-a[1],c[2]-a[2]]);
+        var up=Math.abs(ax[1])>.92?[1,0,0]:[0,1,0];
+        var e1=nrm(crs(ax,up)), e2=crs(ax,e1);
+        var fu=nrm(crs(ax,[0,0,1])), fv=crs(ax,fu);   /* 扁干基：fu 宽面 / fv 薄面 */
+        seglist.push({a:a,c:c,ax:ax,e1:e1,e2:e2,fu:fu,fv:fv});
+      }
+      var b={pts:pts,seg:seglist,kind:kind,dead:0,arch:0};
+      BR.push(b); return b;
+    }
+    function at(b,t){
+      var n=b.pts.length-1, f=cl(t,0,1)*n, k=Math.floor(f), u=f-k;
+      if(k>=n){ k=n-1; u=1; }
+      var a=b.pts[k],c=b.pts[k+1];
+      return [a[0]+(c[0]-a[0])*u, a[1]+(c[1]-a[1])*u, a[2]+(c[2]-a[2])*u, a[3]+(c[3]-a[3])*u, k];
+    }
+    function dirAt(b,t){ var p=at(b,t); return b.seg[Math.min(p[4],b.seg.length-1)].ax; }
+
+    function buildSkeleton(){
+      BR=[]; ANCH=[]; _sd=20260905;
+      /* 主干：向左倾 ~35°，扁阔如板，基部板根隆起，正面一道贯通的劈裂 */
+      var trunk=grow([0,0,0],[-.34,1,.10],44,7.0,5.3,18,[-.30,0,.04],.03,0);
+      var top=at(trunk,1);
+      /* 左主枝（生者） */
+      var LA=grow([top[0],top[1],top[2]],[-.42,1,-.12],32,4.1,1.4,13,[-.40,-.14,-.18],.07,1);
+      /* 右主枝（半枯）—— 与左主枝构成照片里的 Y 形劈裂 */
+      var LB=grow([top[0]+1.4,top[1]-3.0,top[2]+.7],[.48,1,.18],30,3.7,1.2,13,[.54,-.24,.07],.075,1);
+      /* 两根彻底枯死的横探枯枝（无叶，骨白） */
+      var DD=grow(at(trunk,.88).slice(0,3),[.66,.60,-.44],20,2.5,.45,9,[.40,-.58,-.16],.10,1);
+      DD.dead=1;
+      var DD2=grow(at(LA,.44).slice(0,3),[-.76,.46,.40],15,1.8,.3,8,[-.28,-.52,.12],.11,1);
+      DD2.dead=1;
+
+      function sub(host,ts,side,len,rad,twig){
+        for(var i=0;i<ts.length;i++){
+          var p=at(host,ts[i]), ax=dirAt(host,ts[i]);
+          var s=(i%2?1:-1)*side;
+          var d=nrm([ax[0]*.45+s*.85, ax[1]*.62+.25, ax[2]*.45+s*.55*(i%3?1:-1)]);
+          var b=grow(p.slice(0,3),d,len*rr(.78,1.18),rad,rad*.24,7,[s*.42,-.3,s*.2],.12,2);
+          if(twig) for(var j=0;j<2;j++){
+            var q=at(b,rr(.45,.82)), a2=dirAt(b,.7);
+            var d2=nrm([a2[0]+rr(-.7,.7), a2[1]+rr(-.15,.5), a2[2]+rr(-.7,.7)]);
+            grow(q.slice(0,3),d2,len*rr(.28,.5),rad*.32,.18,5,[rr(-.3,.3),-.2,rr(-.3,.3)],.16,3);
+          }
+        }
+      }
+      sub(LA,[.16,.32,.46,.60,.74,.88],-1,16,1.8,1);
+      sub(LB,[.20,.36,.52,.68,.84],1,15,1.7,1);
+      sub(trunk,[.62,.78,.90],1,12,2.0,1);
+
+      /* ——— 三根「档案枝」：末端即节点锚点 ——— */
+      function archBranch(host,t,d,len,rad){
+        var p=at(host,t);
+        var b=grow(p.slice(0,3),nrm(d),len,rad,.55,9,[d[0]*.35,-.28,d[2]*.3],.05,2);
+        b.arch=1; ANCH.push(at(b,1).slice(0,3));
+      }
+      archBranch(LA,.52,[-1,.46,.30],19,2.2);      /* 01 · 左中 */
+      archBranch(LB,.74,[.80,.62,-.22],17,1.9);    /* 02 · 右上 */
+      archBranch(trunk,.48,[.98,.16,.42],21,2.6);  /* 03 · 右下 */
+    }
+
+    /* ---------- 点云 ---------- */
+    function skin(b,n,opt,acc){
+      var i,segn=b.seg.length,NG=opt.grain?32:11,TW=opt.twist||0;
+      for(i=0;i<n;i++){
+        var t=opt.tPow?Math.pow(rnd(),opt.tPow):rnd();
+        var f=t*segn, k=Math.floor(f); if(k>=segn) k=segn-1;
+        var u=f-k, sg=b.seg[k];
+        var px=sg.a[0]+(sg.c[0]-sg.a[0])*u, py=sg.a[1]+(sg.c[1]-sg.a[1])*u, pz=sg.a[2]+(sg.c[2]-sg.a[2])*u;
+        var r=sg.a[3]+(sg.c[3]-sg.a[3])*u;
+        /* 布点偏向「纹脊」但不留空，沟底压暗 —— 老柏的螺旋沟壑 */
+        var li=(rnd()*NG)|0, span=6.2832/NG;
+        var jit=rr(-1,1);
+        var gth=li*span+jit*span*.5, th=gth+TW*t*t;
+        var gv=Math.cos(jit*3.1416), mod;
+        if(opt.grain){
+          mod=1+.085*gv;
+          mod*=1+.52*Math.exp(-t*13)*(.5+.6*Math.pow(Math.abs(Math.sin(1.5*gth+.5)),1.6))
+                +.11*Math.exp(-t*3.2)*Math.sin(2*gth-.4);
+          var dth=Math.atan2(Math.sin(gth-.30),Math.cos(gth-.30));
+          var wid=.20*(1-t*.8);
+          if(t<.76&&Math.abs(dth)<wid){ if(rnd()>.10) continue; mod*=.44; }
+        }else mod=1+.07*gv;
+
+        var deep=opt.solid&&rnd()<.10?Math.sqrt(rnd())*.78:1;
+        var rad=r*mod*deep;
+        var E1=opt.flat?sg.fu:sg.e1, E2=opt.flat?sg.fv:sg.e2;
+        var ea=opt.flat?1.28:1, eb=opt.flat?.60:1;    /* 周柏主干是「板」不是「柱」 */
+        var cs=Math.cos(th),sn=Math.sin(th);
+        var nx=cs*ea, ny=sn*eb;
+        var x=px+(E1[0]*nx+E2[0]*ny)*rad;
+        var y=py+(E1[1]*nx+E2[1]*ny)*rad;
+        var z=pz+(E1[2]*nx+E2[2]*ny)*rad;
+        var mx=cs/ea, my=sn/eb, mm=Math.sqrt(mx*mx+my*my)||1; mx/=mm; my/=mm;
+        var Nx=E1[0]*mx+E2[0]*my, Ny=E1[1]*mx+E2[1]*my, Nz=E1[2]*mx+E2[2]*my;
+        /* 连贯的风化色带（不用逐点随机，避免碎屑感） */
+        var band=.90+.10*Math.sin(t*8.7+gth*2.1)+.055*Math.sin(t*21.3-gth*3.3);
+        var ao=(.70+.30*(gv*.5+.5))*(deep<1?.34:1)*(.78+.22*t)*band;
+        var R,G,B;
+        if(rnd()<(opt.grain?.006:.016)){ R=120;G=228;B=255; ao=1.05; }
+        else{
+          var tone=band*rr(.97,1.03);
+          if(opt.dead){ R=240*tone; G=234*tone; B=220*tone; }
+          else{ R=216*tone; G=199*tone; B=174*tone; }
+          var cold=.5+.5*Math.sin((x+z)*.5+y*.28);
+          if(cold>.6){ var w=(cold-.6)/.4; R*=1-.30*w; G*=1-.18*w; B*=1-.02*w; }
+        }
+        acc.push(mkP(x,y,z,Nx,Ny,Nz,R,G,B,opt.sz||1,cl(ao,.05,1.1)));
+      }
+    }
+    function leaf(cx,cy,cz,rad,n,acc){
+      for(var i=0;i<n;i++){
+        var u=rnd()*6.283, v=Math.acos(rr(-1,1)), q=Math.pow(rnd(),.5)*rad;
+        var dx=Math.sin(v)*Math.cos(u), dy=Math.cos(v)*.62, dz=Math.sin(v)*Math.sin(u);
+        var x=cx+dx*q*1.3, y=cy+dy*q*1.2, z=cz+dz*q*1.3;
+        var m=rnd(), R,G,B;
+        if(m<.08){ R=140;G=232;B=255; }
+        else if(m<.58){ R=rr(28,50); G=rr(100,138); B=rr(86,116); }
+        else { R=rr(46,80); G=rr(138,190); B=rr(118,158); }
+        var nn=nrm([dx,dy+.4,dz]);
+        acc.push(mkP(x,y,z,nn[0],nn[1],nn[2],R,G,B,m<.08?1.6:1.25,m<.08?1.05:rr(.7,1.1)));
+      }
+    }
+
+    function buildCloud(){
+      var vw=window.innerWidth||W;
+      var q=vw<560?.28:(vw<960?.5:(W<1240?.7:1));
+      if((navigator.hardwareConcurrency||8)<=4) q*=.62;
+      buildSkeleton();
+      var acc=[],i,b,n;
+      for(i=0;i<BR.length;i++){
+        b=BR[i];
+        if(b.kind===0) n=9000;
+        else if(b.kind===1) n=b.dead?680:2500;
+        else if(b.kind===2) n=b.arch?400:230;
+        else n=58;
+        skin(b,Math.round(n*q),{grain:b.kind===0,flat:b.kind===0,solid:b.kind<=1,dead:b.dead,
+                                twist:b.kind===0?.80:.35,tPow:b.kind===0?.92:1,
+                                sz:b.kind===0?1.8:(b.kind===1?1.5:1.15)},acc);
+      }
+      /* 树冠：末梢成簇（枯枝不生叶） */
+      for(i=0;i<BR.length;i++){
+        b=BR[i];
+        if(b.dead||b.arch||b.kind<2) continue;
+        var tp=at(b,1);
+        leaf(tp[0],tp[1],tp[2],b.kind===3?2.6:4.2,Math.round((b.kind===3?70:260)*q),acc);
+        if(b.kind===2){
+          leaf.apply(null,[at(b,.72)[0],at(b,.72)[1],at(b,.72)[2],3.4,Math.round(110*q),acc]);
+          var mp=at(b,.5); leaf(mp[0],mp[1],mp[2],3.0,Math.round(80*q),acc);
+        }
+      }
+      /* 两根主枝末梢的大团树冠 */
+      for(i=0;i<BR.length;i++){
+        b=BR[i];
+        if(b.kind!==1||b.dead) continue;
+        var lt=at(b,1);   leaf(lt[0],lt[1],lt[2],5.6,Math.round(460*q),acc);
+        var l2=at(b,.84); leaf(l2[0],l2[1],l2[2],4.4,Math.round(230*q),acc);
+      }
+      /* 档案枝末端：一小簇青蓝数据叶，提示可点 */
+      for(i=0;i<ANCH.length;i++) leaf(ANCH[i][0],ANCH[i][1],ANCH[i][2],3.4,Math.round(95*q),acc);
+      /* 地面浮尘 */
+      for(i=0;i<Math.round(320*q);i++){
+        var ang=rnd()*6.283, rd=Math.pow(rnd(),.5)*26, g=rr(.25,.6);
+        acc.push(mkP(Math.cos(ang)*rd, rr(-1.5,10)*(1-rd/60), Math.sin(ang)*rd,
+                     0,1,0, 38+g*40, 90+g*120, 110+g*140, 1, rr(.3,.8)));
+      }
+      P=acc; NP=P.length;
+
+      var x0=1e9,x1=-1e9,y0=1e9,y1=-1e9,p;
+      for(i=0;i<NP;i++){ p=P[i];
+        if(p.x<x0)x0=p.x; if(p.x>x1)x1=p.x; if(p.y<y0)y0=p.y; if(p.y>y1)y1=p.y; }
+      HB={x0:x0,x1:x1,y0:y0,y1:y1};
+      var hy=(y1-y0)||1;
+      for(i=0;i<NP;i++){ p=P[i];
+        var h=(p.y-y0)/hy;
+        p.sw=Math.pow(h<0?0:h,2.1)*2.6;
+        p.g0=h*.72+rnd()*.28;
+      }
+      MOTE=[];
+      var flows=[];
+      for(i=0;i<BR.length;i++) if(BR[i].kind<=2&&!BR[i].dead) flows.push(BR[i]);
+      for(i=0;i<Math.round(30*q);i++)
+        MOTE.push({b:flows[(rnd()*flows.length)|0],t:rnd(),v:rr(.05,.15),o:rr(.35,.8)});
+      if(elPts) elPts.textContent="POINTS · "+NP.toLocaleString("en-US");
+    }
+
+    /* ---------- 投影 ---------- */
+    var _cy=1,_sy=0,_cp=1,_sp=0,_yc=0,_px=0,_py=0,_pk=1;
+    function setCam(t){
+      var y=yaw+Math.sin(t*.00012)*.20;
+      _cy=Math.cos(y); _sy=Math.sin(y);
+      pit+=(pitT-pit)*.08;
+      _cp=Math.cos(pit); _sp=Math.sin(pit);
+      _yc=(HB.y0+HB.y1)*.5;
+    }
+    function proj(x,y,z){
+      y-=_yc;
+      var x1=x*_cy+z*_sy, z1=z*_cy-x*_sy;
+      var y1=y*_cp-z1*_sp, z2=y*_sp+z1*_cp;
+      var k=CAM/(CAM+z2);
+      _px=CX+x1*k*SC; _py=CY-y1*k*SC; _pk=k;
+    }
+    function fit(){
+      var mw=(HB.x1-HB.x0)||1, mh=(HB.y1-HB.y0)||1;
+      SC=Math.min(W*.86/mw, H*.88/mh);
+      CX=W*.52-((HB.x0+HB.x1)*.5)*SC;
+      CY=H*.90-((HB.y1-HB.y0)*.5)*SC;
+    }
+
+    /* ---------- 尺寸 ---------- */
+    function resize(){
+      if(!stage) return;
+      var r=stage.getBoundingClientRect();
+      W=Math.max(320,Math.round(r.width)); H=Math.max(260,Math.round(r.height));
+      DPR=Math.min(window.devicePixelRatio||1,2);
+      cv.width=W; cv.height=H; cv.style.width=W+"px"; cv.style.height=H+"px";
+      cv2.width=Math.round(W*DPR); cv2.height=Math.round(H*DPR);
+      cv2.style.width=W+"px"; cv2.style.height=H+"px";
+      ctx=cv.getContext("2d"); ctx2=cv2.getContext("2d");
+      ctx2.setTransform(DPR,0,0,DPR,0,0);
+      IMD=ctx.createImageData(W,H); D=IMD.data;
+      fit(); cacheCards();
+    }
+    function cacheCards(){
+      for(var i=0;i<cards.length;i++){
+        var c=cards[i]; if(!c) continue;
+        c.w=c.el.offsetWidth||200; c.h=c.el.offsetHeight||150;
+      }
+    }
+    function mkGlow(){
+      glow=document.createElement("canvas"); glow.width=glow.height=32;
+      var g=glow.getContext("2d"),rg=g.createRadialGradient(16,16,0,16,16,16);
+      rg.addColorStop(0,"rgba(180,244,255,.95)"); rg.addColorStop(.35,"rgba(47,211,255,.4)");
+      rg.addColorStop(1,"rgba(47,211,255,0)");
+      g.fillStyle=rg; g.fillRect(0,0,32,32);
+    }
+
+    /* ---------- 枝头节点 ---------- */
+    function buildNodes(){
+      nodesWrap.innerHTML=""; nodeEls=[]; cards=[];
+      for(var i=0;i<CFG.length;i++){
+        var c=CFG[i];
+        var n=document.createElement("div");
+        n.className="mt-node"+(c.amb?" amb":"");
+        n.innerHTML='<button type="button" class="mn-card" data-i="'+i+'" title="接入 ARCHIVE '+c.no+' · '+c.tt+'">'+
+          '<span class="mn-k a"></span><span class="mn-k b"></span><span class="mn-k c"></span><span class="mn-k d"></span>'+
+          '<span class="mn-thumb">'+
+            (c.img?'<img src="'+c.img+'" alt="">':'<span class="mn-ph"><b>封面待定</b><i>COVER PENDING</i></span>')+
+            '<span class="mn-no">ARCHIVE '+c.no+'</span><span class="mn-play">▶</span></span>'+
+          '<span class="mn-tx"><b>'+c.tt+'</b><u>接入 →</u></span>'+
+          '</button>';
+        nodesWrap.appendChild(n);
+        var card=n.firstChild;
+        (function(idx){ card.addEventListener("click",function(e){ e.stopPropagation(); open(idx); }); })(i);
+        nodeEls.push(n); cards.push({el:card,w:200,h:150,side:c.side,x:0,y:0,ax:0,ay:0});
+      }
+      cacheCards();
+    }
+    function layoutNodes(t){
+      for(var i=0;i<ANCH.length&&i<cards.length;i++){
+        var a=ANCH[i],c=cards[i];
+        proj(a[0]+Math.sin(t*.00085+i)*.9,a[1],a[2]+Math.sin(t*.00085+i)*.4);
+        var sx=_px,sy=_py,k=_pk;
+        c.ax=sx; c.ay=sy;
+        var ox=c.side<0?-(c.w+46):46;
+        var oy=i===0?-c.h*.55:(i===1?-c.h*.92:-c.h*.08);
+        c.x=cl(sx+ox,12,W-c.w-12); c.y=cl(sy+oy,92,H-c.h-14);
+        nodeEls[i].style.transform="translate3d("+(c.x|0)+"px,"+(c.y|0)+"px,0)";
+        nodeEls[i].style.opacity=(k<.94?.66:1).toFixed(2);
+        c.el.style.transformOrigin=(c.side<0?"right":"left")+" center";
+        c.el.style.transform="scale("+cl(.86+(k-1)*1.5+.14,.82,1.08).toFixed(2)+")";
+      }
+    }
+    function drawLeads(t){
+      for(var i=0;i<cards.length;i++){
+        var c=cards[i],amb=CFG[i].amb;
+        var ex=c.side<0?c.x+c.w:c.x, ey=c.y+c.h*.5;
+        ctx2.beginPath();
+        ctx2.moveTo(c.ax,c.ay);
+        ctx2.quadraticCurveTo((c.ax+ex)*.5, c.ay+(ey-c.ay)*.12, ex,ey);
+        ctx2.strokeStyle=amb?"rgba(255,122,28,.42)":"rgba(47,211,255,.4)";
+        ctx2.lineWidth=1; ctx2.setLineDash([5,4]); ctx2.lineDashOffset=-(t*.02)%9;
+        ctx2.stroke(); ctx2.setLineDash([]);
+        var pu=.5+.5*Math.sin(t*.0028+i*2);
+        ctx2.beginPath(); ctx2.arc(c.ax,c.ay,4.5+pu*3.4,0,6.283);
+        ctx2.strokeStyle=amb?"rgba(255,159,90,"+(.78-pu*.45).toFixed(2)+")":"rgba(126,232,255,"+(.78-pu*.45).toFixed(2)+")";
+        ctx2.stroke();
+        ctx2.beginPath(); ctx2.arc(c.ax,c.ay,2.1,0,6.283);
+        ctx2.fillStyle=amb?"rgba(255,178,125,.95)":"rgba(190,246,255,.95)"; ctx2.fill();
+        if(glow){ ctx2.globalCompositeOperation="lighter";
+          ctx2.drawImage(glow,c.ax-14,c.ay-14,28,28); ctx2.globalCompositeOperation="source-over"; }
+      }
+    }
+    function drawGround(t){
+      var rings=[26,39],ri,j;
+      for(ri=0;ri<rings.length;ri++){
+        ctx2.beginPath();
+        for(j=0;j<=72;j++){
+          var a=j/72*6.283+t*.00006*(ri?-1:1);
+          proj(Math.cos(a)*rings[ri],0,Math.sin(a)*rings[ri]);
+          j?ctx2.lineTo(_px,_py):ctx2.moveTo(_px,_py);
+        }
+        ctx2.strokeStyle=ri?"rgba(47,211,255,.10)":"rgba(47,211,255,.17)";
+        ctx2.lineWidth=1; ctx2.stroke();
+      }
+      for(j=0;j<24;j++){
+        var a2=j/24*6.283+t*.00006;
+        proj(Math.cos(a2)*26,0,Math.sin(a2)*26); var x1=_px,y1=_py;
+        proj(Math.cos(a2)*(j%6?28:32),0,Math.sin(a2)*(j%6?28:32));
+        ctx2.beginPath(); ctx2.moveTo(x1,y1); ctx2.lineTo(_px,_py);
+        ctx2.strokeStyle=j%6?"rgba(47,211,255,.13)":"rgba(255,122,28,.28)";
+        ctx2.stroke();
+      }
+    }
+    function drawMotes(t){
+      if(!glow) return;
+      ctx2.globalCompositeOperation="lighter";
+      for(var i=0;i<MOTE.length;i++){
+        var m=MOTE[i];
+        m.t+=m.v*.016; if(m.t>1) m.t=0;
+        var p=at(m.b,m.t);
+        proj(p[0],p[1],p[2]);
+        var s=(6+m.o*8)*_pk;
+        ctx2.globalAlpha=m.o*(1-Math.abs(m.t-.5)*1.1)*.6;
+        ctx2.drawImage(glow,_px-s/2,_py-s/2,s,s);
+      }
+      ctx2.globalAlpha=1; ctx2.globalCompositeOperation="source-over";
+    }
+
+    /* ---------- 主循环 ---------- */
+    function frame(ts){
+      if(!alive) return;
+      raf=requestAnimationFrame(frame);
+      var t=ts-T0; lastT=t;
+      if(_prev&&_fn<100){ _ft+=t-_prev; _fn++; if(_fn===100&&_ft/100>27) SKIP=2; }
+      _prev=t;
+      var m=FX.mode;
+      if(m==="done"){ D.fill(0); ctx.putImageData(IMD,0,0); ctx2.clearRect(0,0,W,H); return; }
+
+      setCam(t);
+      if(!dragging){ yaw+=yawV; yawV*=.93; }
+      D.fill(0);
+      ctx2.clearRect(0,0,W,H);
+
+      if(m==="grow"||m==="idle"){
+        drawGround(t);
+        drawCloud(t);
+        drawMotes(t);
+        layoutNodes(t);
+        drawLeads(t);
+      }else drawFX(t);
+      ctx.putImageData(IMD,0,0);
+    }
+
+    var LX=-.44,LY=.55,LZ=.71;                    /* 视空间光向：左上前方 */
+    function drawCloud(t){
+      var i,gp=FX.mode==="grow"?cl((t-FX.t0)/1750,0,1.4):2;
+      var wob=t*.00085, mul=1.55, cy=_cy, sy=_sy;
+      for(i=0;i<NP;i+=SKIP){
+        var p=P[i];
+        if(gp<1.35&&p.g0>gp) continue;
+        var sw=Math.sin(wob+p.ph)*p.sw;
+        proj(p.x+sw,p.y,p.z+sw*.45);
+        var X=_px,Y=_py,k=_pk;
+        if(X<-8||X>W+8||Y<-8||Y>H+8) continue;
+        /* 逐帧法线光照：随旋转真实转明暗，背面压暗 —— 点云才有体积 */
+        var nxr=p.nx*cy+p.nz*sy, nzr=p.nz*cy-p.nx*sy;
+        var u=(nxr*LX+p.ny*LY+nzr*LZ)*.5+.5;
+        var sh=.15+.85*u*u;
+        if(nzr<0) sh*=.18+.34*(1+nzr);
+        var a=p.a0*sh*((k-.8)*2.4+.62)*1.14;
+        if(gp<1.35&&p.g0>gp-.05) a*=2.6;
+        if(a<=.012) continue; if(a>1.25) a=1.25;
+        var s=p.sz*k*mul;
+        if(s<1.7) px1(X,Y,p.r,p.g,p.b,a); else pxN(X-s*.5,Y-s*.5,s,p.r,p.g,p.b,a);
+      }
+      if(gp<1.2){                                 /* 重建扫描线 */
+        var yy=CY+((HB.y1-HB.y0)*.5-(HB.y1-HB.y0)*cl(gp,0,1))*SC;
+        var g=ctx2.createLinearGradient(0,yy-52,0,yy+10);
+        g.addColorStop(0,"rgba(47,211,255,0)"); g.addColorStop(.8,"rgba(47,211,255,.12)");
+        g.addColorStop(1,"rgba(126,232,255,.5)");
+        ctx2.fillStyle=g; ctx2.fillRect(0,yy-52,W,62);
+      }
+    }
+
+    /* ---------- 飞散 / 重组 ---------- */
+    var SCAT=520, DLY=280, REF=800, HOLD=2100;
+    function drawFX(t){
+      var el=t-FX.t0, i, rev=(FX.mode==="ret"), cy=_cy, sy=_sy;
+      var fade=(!rev&&el>HOLD)?cl(1-(el-HOLD)/430,0,1):1;
+      for(i=0;i<NP;i+=SKIP){
+        var p=P[i],x,y,s,R,G,B,a;
+        if(rev){
+          var u=cl((el-p.dly*.6)/900,0,1); u=eoc(u);
+          var sw=Math.sin(t*.00085+p.ph)*p.sw;
+          proj(p.x+sw,p.y,p.z+sw*.45);
+          var k=_pk;
+          x=p.fx+(_px-p.fx)*u; y=p.fy+(_py-p.fy)*u;
+          s=p.ts+(p.sz*k*1.55-p.ts)*u;
+          var nxr=p.nx*cy+p.nz*sy, nzr=p.nz*cy-p.nx*sy;
+          var q=(nxr*LX+p.ny*LY+nzr*LZ)*.5+.5, sh=.15+.85*q*q;
+          if(nzr<0) sh*=.18+.34*(1+nzr);
+          R=p.tr+(p.r-p.tr)*u; G=p.tg+(p.g-p.tg)*u; B=p.tb+(p.b-p.tb)*u;
+          a=(1-u)*.75+u*(p.a0*sh*((k-.8)*2.4+.62));
+        }else if(el<SCAT+p.dly){
+          p.vx*=.972; p.vy*=.972; p.vy+=.012;
+          p.fx+=p.vx; p.fy+=p.vy;
+          x=p.fx; y=p.fy; s=p.ts0; R=p.r; G=p.g; B=p.b; a=p.a0*.9;
+          if(a>.05){ px1(x-p.vx*.7,y-p.vy*.7,R,G,B,a*.42); px1(x-p.vx*1.5,y-p.vy*1.5,R,G,B,a*.2); }
+        }else{
+          if(!p.cap){ p.cap=1; p.rx=p.fx; p.ry=p.fy; }
+          var u2=cl((el-SCAT-p.dly)/REF,0,1), e=eoc(u2);
+          x=p.rx+(p.tx-p.rx)*e; y=p.ry+(p.ty-p.ry)*e;
+          p.fx=x; p.fy=y;
+          s=p.ts0+(p.ts-p.ts0)*e;
+          var w=cl((u2-.35)/.5,0,1);
+          R=p.r+(p.tr-p.r)*w; G=p.g+(p.tg-p.g)*w; B=p.b+(p.tb-p.b)*w;
+          a=(.5+.42*u2)*fade;
+        }
+        if(a<=.012) continue; if(a>1.3) a=1.3;
+        if(s<1.7) px1(x,y,R,G,B,a); else pxN(x-s*.5,y-s*.5,s,R,G,B,a);
+      }
+      if(!rev&&el<660){                            /* 冲击环 */
+        var u3=el/660, rad=u3*Math.max(W,H)*.62;
+        ctx2.beginPath(); ctx2.arc(W*.5,H*.5,rad,0,6.283);
+        ctx2.strokeStyle="rgba(126,232,255,"+((1-u3)*.26).toFixed(3)+")";
+        ctx2.lineWidth=2*(1-u3)+.4; ctx2.stroke();
+      }
+    }
+
+    function sampleTargets(i,rect){
+      var need=Math.ceil(NP/SKIP);
+      /* 整数像素的方格，保证重组出来的马赛克严丝合缝、不留缝也不叠亮 */
+      var cell=Math.max(3,Math.round(Math.sqrt(rect.w*rect.h/need)));
+      var cols=Math.max(24,Math.floor(rect.w/cell)), rows=Math.max(14,Math.floor(rect.h/cell));
+      var oc=document.createElement("canvas"); oc.width=cols; oc.height=rows;
+      var g=oc.getContext("2d",{willReadFrequently:true}), data=null, im=IMGS[i];
+      if(im&&im.complete&&im.naturalWidth){
+        try{ g.drawImage(im,0,0,cols,rows); data=g.getImageData(0,0,cols,rows).data; }catch(e){ data=null; }
+      }
+      FX.sampled=!!data;
+      if(!data){          /* 降级：自绘一张信号帧再取样，绝不会污染画布 */
+        var o2=document.createElement("canvas"); o2.width=cols; o2.height=rows;
+        var g2=o2.getContext("2d",{willReadFrequently:true});
+        var lg=g2.createLinearGradient(0,0,0,rows);
+        lg.addColorStop(0,"#0a2634"); lg.addColorStop(1,"#04121a");
+        g2.fillStyle=lg; g2.fillRect(0,0,cols,rows);
+        g2.strokeStyle="#2fd3ff"; g2.lineWidth=Math.max(1,rows*.03);
+        g2.strokeRect(rows*.05,rows*.05,cols-rows*.1,rows-rows*.1);
+        g2.fillStyle="rgba(126,232,255,.5)";
+        g2.fillRect(cols*.08,rows*.14,cols*.16,Math.max(1,rows*.02));
+        g2.fillRect(cols*.08,rows*.80,cols*.28,Math.max(1,rows*.02));
+        g2.fillStyle="#9beeff"; g2.beginPath();
+        g2.moveTo(cols*.45,rows*.36); g2.lineTo(cols*.60,rows*.5); g2.lineTo(cols*.45,rows*.64);
+        g2.closePath(); g2.fill();
+        try{ data=g2.getImageData(0,0,cols,rows).data; }catch(e2){ data=null; }
+      }
+      var ox=Math.round(rect.x+(rect.w-cols*cell)*.5), oy=Math.round(rect.y+(rect.h-rows*cell)*.5);
+      var list=[],x,y,idx;
+      var mcx=ox+cols*cell*.5, mcy=oy+rows*cell*.5;
+      for(y=0;y<rows;y++) for(x=0;x<cols;x++){
+        idx=(y*cols+x)*4;
+        var tx=ox+x*cell+cell*.5, ty=oy+y*cell+cell*.5;
+        list.push({x:tx,y:ty,
+                   r:data?data[idx]:60, g:data?data[idx+1]:180, b:data?data[idx+2]:220,
+                   s:cell, ang:Math.atan2(ty-mcy,tx-mcx)});
+      }
+      return list;
+    }
+
+    function open(i){
+      if(FX.busy||!built) return;
+      var arch=archEls[i]; if(!arch) return;
+      FX.busy=true; FX.idx=i;
+      stage.classList.add("busy");
+      setState("SCATTER · 解构点云");
+      try{ sfx("jump"); }catch(e){}
+      var no=document.getElementById("mtDeckNo"); if(no) no.textContent=CFG[i].no;
+      for(var k=0;k<archEls.length;k++) archEls[k].classList.toggle("mt-on",k===i);
+
+      if(LOWFX){ reveal(); stage.classList.add("hidecv"); FX.busy=false; return; }
+
+      /* 量取真实播放器位置，作为重组的目标矩形 */
+      deck.classList.add("measure"); deck.scrollTop=0;
+      var apr=arch.querySelector(".ap").getBoundingClientRect();
+      var sr=cv.getBoundingClientRect();
+      deck.classList.remove("measure");
+      var rect={x:apr.left-sr.left,y:apr.top-sr.top,w:apr.width,h:apr.height};
+      if(!(rect.w>40&&rect.h>20)) rect={x:W*.14,y:H*.2,w:W*.72,h:W*.72*9/16};
+      FX.rect=rect;
+
+      var tg=sampleTargets(i,rect), order=[],j;
+      for(j=0;j<NP;j+=SKIP){
+        var p=P[j];
+        var sw=Math.sin(lastT*.00085+p.ph)*p.sw;
+        proj(p.x+sw,p.y,p.z+sw*.45);
+        p.fx=_px; p.fy=_py; p.ts0=Math.max(1,p.sz*_pk*1.55); p.cap=0;
+        var dx=_px-W*.5, dy=_py-H*.5;
+        p.vx=dx*rr(.026,.05)+rr(-1.6,1.6);
+        p.vy=dy*rr(.026,.05)+rr(-2.2,1.2)-1.1;
+        order.push({i:j,a:Math.atan2(dy,dx)});
+      }
+      /* 角度相干映射：点云按方位有序地卷入画面，而不是一锅乱飞 */
+      order.sort(function(a,b){ return a.a-b.a; });
+      tg.sort(function(a,b){ return a.ang-b.ang; });
+      var n=tg.length, on=order.length;
+      for(j=0;j<on;j++){
+        var pt=P[order[j].i], t2=tg[Math.min(n-1,Math.floor(j/on*n))];
+        pt.tx=t2.x; pt.ty=t2.y;
+        pt.tr=t2.r; pt.tg=t2.g; pt.tb=t2.b; pt.ts=t2.s;
+        pt.dly=(j/on)*DLY*.35+rnd()*DLY*.65;
+      }
+      FX.mode="scatter"; FX.t0=lastT; wake();
+      setTimeout(function(){ setState("REBUILD · 重组影像"); },520);
+      setTimeout(function(){ reveal(); setState("LOCKED · 已接入"); stage.classList.add("hidecv"); },HOLD-130);
+      setTimeout(function(){ FX.mode="done"; FX.busy=false; sleep(); },HOLD+520);
+    }
+    function reveal(){ deck.classList.add("on"); try{ sfx("open"); }catch(e){} }
+
+    function close(){
+      if(FX.busy) return;
+      var i=FX.idx;
+      try{ if(AP&&AP[i]&&AP[i].v) AP[i].v.pause(); }catch(e){}
+      deck.classList.remove("on");
+      stage.classList.remove("hidecv");
+      try{ sfx("close"); }catch(e){}
+      if(LOWFX||FX.mode!=="done"){
+        FX.mode="idle"; FX.busy=false; stage.classList.remove("busy");
+        setState("STATE · 待机"); wake(); return;
+      }
+      FX.busy=true;
+      setState("RESTORE · 回归标本");
+      for(var j=0;j<NP;j+=SKIP){ P[j].dly=rnd()*DLY; P[j].cap=0; }
+      FX.mode="ret"; FX.t0=lastT; wake();
+      setTimeout(function(){
+        FX.mode="idle"; FX.busy=false;
+        stage.classList.remove("busy"); setState("STATE · 待机");
+      },1200);
+    }
+    function setState(s){ if(elState) elState.textContent=s; }
+
+    /* ---------- 交互 ---------- */
+    function bindDrag(){
+      cv2.style.pointerEvents="none";
+      cv.addEventListener("pointerdown",function(e){
+        if(FX.busy) return;
+        dragging=true; lastX=e.clientX; lastY=e.clientY;
+        cv.classList.add("drag");
+        try{ cv.setPointerCapture(e.pointerId); }catch(x){}
+      });
+      cv.addEventListener("pointermove",function(e){
+        if(!dragging) return;
+        var dx=e.clientX-lastX, dy=e.clientY-lastY;
+        lastX=e.clientX; lastY=e.clientY;
+        yaw+=dx*.0055; yawV=dx*.0022;
+        pitT=cl(pitT-dy*.0032,-.20,.36);
+      });
+      function up(e){ if(!dragging) return; dragging=false; cv.classList.remove("drag");
+        try{ cv.releasePointerCapture(e.pointerId); }catch(x){} }
+      cv.addEventListener("pointerup",up); cv.addEventListener("pointercancel",up);
+      stage.addEventListener("mousemove",function(e){
+        if(dragging||FX.busy) return;
+        var r=stage.getBoundingClientRect();
+        pitT=cl(.15+((e.clientY-r.top)/r.height-.5)*-.20,-.20,.36);
+      });
+    }
+    function wake(){ if(!alive){ alive=true; T0=performance.now()-lastT; _prev=0; raf=requestAnimationFrame(frame); } }
+    function sleep(){ alive=false; if(raf) cancelAnimationFrame(raf); raf=0; }
+
+    /* ---------- 装载 ---------- */
+    function mount(){
+      stage=document.getElementById("mtree");
+      if(!stage) return;
+      if(!built){
+        cv=document.getElementById("mtCv"); cv2=document.getElementById("mtCv2");
+        deck=document.getElementById("mtDeck");
+        nodesWrap=document.getElementById("mtNodes");
+        elPts=document.getElementById("mtPts"); elState=document.getElementById("mtState");
+        archEls=Array.prototype.slice.call(deck.querySelectorAll(".arch"));
+        mkGlow();
+        for(var i=0;i<CFG.length;i++){ var im=null; if(CFG[i].img){ im=new Image(); im.src=CFG[i].img; } IMGS.push(im); }
+        resize(); buildCloud(); fit(); buildNodes(); bindDrag();
+        if(window.ResizeObserver){ new ResizeObserver(function(){ resize(); }).observe(stage); }
+        else window.addEventListener("resize",resize);
+        built=true;
+        FX.mode="grow"; FX.t0=0; T0=performance.now(); lastT=0;
+        setState("SCAN · 点云重建中");
+        setTimeout(function(){ if(FX.mode==="grow"){ FX.mode="idle"; setState("STATE · 待机"); } },2050);
+        if(LOWFX){ FX.mode="idle"; setState("STATE · 待机"); alive=true; frame(performance.now()); sleep(); return; }
+      }
+      if(LOWFX||FX.mode==="done") return;
+      wake();
+    }
+    document.addEventListener("visibilitychange",function(){
+      if(document.hidden) sleep();
+      else if(document.body.getAttribute("data-view")==="media"&&FX.mode!=="done"&&built&&!LOWFX) wake();
+    });
+
+    return {mount:mount,unmount:sleep,open:open,close:close};
+  })();
+  function mtMount(){ try{ MT.mount(); }catch(e){} }
+  function mtSleep(){ try{ MT.unmount(); }catch(e){} }
+  function mtOpen(i){ try{ MT.open(i); }catch(e){} }
+  function mtClose(){ try{ MT.close(); }catch(e){} }
+
   /* ============ HERO PARALLAX ============ */
   document.addEventListener("mousemove",function(e){
     var x=(e.clientX/window.innerWidth-.5)*20;
