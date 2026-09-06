@@ -4,6 +4,7 @@
 <meta charset="UTF-8" data-page-node-id="XE29ydBj9jFcxbVSTbnjCK">
 <meta name="viewport" content="width=device-width, initial-scale=1.0" data-page-node-id="SCRIH87DT90jIdcVVCk2Xu">
 <title>末日特情处 · 晋地溯源行动</title>
+<link rel="preload" as="image" href="assets/weizhen.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com" data-page-node-id="JkWN77Q6iJBs1HlZSfZ2Ii">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin data-page-node-id="54P0Ef16M2RsMqdKr8osxH">
 <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Noto+Serif+SC:wght@500;700;900&family=Orbitron:wght@500;700;900&family=Rajdhani:wght@500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet" data-page-node-id="lgMel8QvvQ5SlyvkYJ3CWE">
@@ -1423,6 +1424,10 @@
     background:radial-gradient(ellipse at 50% 40%,rgba(8,14,20,.72),rgba(2,4,7,.96));
     opacity:0;visibility:hidden;transition:.28s;}
   .iv-ov.show{opacity:1;visibility:visible;}
+  /* 仅主片播毕的 A/B 选择阶段显示指定尾帧。 */
+  .arch[data-iv] .iv-ov.iv-choice{
+    background:linear-gradient(rgba(2,4,7,.28),rgba(2,4,7,.28)),
+      url('assets/weizhen.jpg') center/contain no-repeat #000;}
   .iv-ov-hd{font-family:var(--mono);font-size:10px;letter-spacing:.5em;color:var(--amber);}
   .iv-ov-q{font-family:var(--sans);font-size:13px;color:#cfe3f0;letter-spacing:.06em;}
   .iv-ov-btns{display:flex;gap:14px;margin-top:4px;}
@@ -3259,7 +3264,7 @@
     <div class="arch">
       <div class="arch-head">
         <span class="ah-idx">ARCHIVE 02</span>
-        <div class="ah-tx"><h4>文明火种 · 风物短片</h4><p>以古建、悬塑与晋商旧事为线索的高光坐标短片，实拍 + AI 创意混剪，归档为“可被后世读懂”的风物层。</p></div>
+        <div class="ah-tx"><h4>星宝:云海启程</h4><p>以古建、悬塑与晋商旧事为线索的高光坐标短片，实拍 + AI 创意混剪，归档为“可被后世读懂”的风物层。</p></div>
         <span class="ah-tag">主档案 · CIVILIZATION</span>
       </div>
       <div class="apbox">
@@ -8778,11 +8783,11 @@ return{mount:mount,unmount:unmount,ignite:ignite,step:step,goTo:goTo,
       '<div class="iv-ov-hd">CHOICE · 晋地服务器核心</div>'+
       '<div class="iv-ov-q">系统：「亲爱的特派员，请作出选择。」</div>'+
       '<div class="iv-ov-btns">'+
-        '<button class="iv-btn a" onclick="ivChoose('+st.i+',\'a\')"><b>A</b><span>关闭服务器 · 封印神迹</span></button>'+
-        '<button class="iv-btn b" onclick="ivChoose('+st.i+',\'b\')"><b>B</b><span>接管神数据 · 获得古神之力</span></button>'+
+        '<button class="iv-btn a" onclick="ivChoose('+st.i+',\'a\')"><b>A</b><span>将文明碎片原样带回</span></button>'+
+        '<button class="iv-btn b" onclick="ivChoose('+st.i+',\'b\')"><b>B</b><span>先用神力为返航充能</span></button>'+
       '</div>'+
       '<div class="iv-cd">未抉择倒计时 <span class="iv-cdn">'+st.ivLeft+'</span> s</div>';
-    ov.classList.add("show");
+    ov.classList.add("iv-choice","show");
     st.ivTimer=setInterval(function(){
       st.ivLeft--;
       var n=st.ap.querySelector(".iv-cdn"); if(n) n.textContent=st.ivLeft;
@@ -8792,7 +8797,7 @@ return{mount:mount,unmount:unmount,ignite:ignite,step:step,goTo:goTo,
   function ivCloseOv(st){
     if(st.ivTimer){ clearInterval(st.ivTimer); st.ivTimer=null; }
     var ov=st.ap.querySelector(".iv-ov");
-    if(ov){ ov.classList.remove("show"); ov.innerHTML=""; }
+    if(ov){ ov.classList.remove("iv-choice","show"); ov.innerHTML=""; }
     st.ap.classList.remove("ap-iv-open");
   }
   function ivChoose(i,key){
@@ -9332,7 +9337,7 @@ return{mount:mount,unmount:unmount,ignite:ignite,step:step,goTo:goTo,
   var MT=(function(){
     var CFG=[
       {no:"01",tt:"全程行动记录",     img:"assets/vlog封面.webp",        amb:0, side:-1},
-      {no:"02",tt:"文明火种 · 风物短片",img:"assets/文明火种封面.webp", amb:0, side: 1},
+      {no:"02",tt:"星宝:云海启程",img:"assets/文明火种封面.webp", amb:0, side: 1},
       {no:"03",tt:"互动影游 · 晋地神崩",img:"assets/互动影游封面.webp", amb:1, side: 1}
     ];
 
