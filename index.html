@@ -6598,7 +6598,7 @@ function restartAll(){
       var AC=window.AudioContext||window.webkitAudioContext;
       if(!AC) return null;
       try{ ctx=new AC(); }catch(e){ ctx=null; return null; }
-      master=ctx.createGain(); master.gain.value=on?1:0;
+      master=ctx.createGain(); master.gain.value=(on&&!ducked)?1:0;
       var comp=ctx.createDynamicsCompressor();
       try{ comp.threshold.value=-16; comp.ratio.value=6; }catch(e){}
       master.connect(comp); comp.connect(ctx.destination);
@@ -6759,17 +6759,17 @@ function restartAll(){
       var t=e.target; if(!t||!t.closest) return;
       if(t.closest(HOT)) sfx("click");
     },true);
-    /* 影像档案播放时，环境音让位 */
-    ["play","playing"].forEach(function(ev){
-      document.addEventListener(ev,function(e){
-        if(e.target&&e.target.tagName==="VIDEO"){ try{ SFX.duck(true); }catch(x){} }
-      },true);
+    /* 三个视频界面展开期间持续静音，不随暂停、结束或 A/B 选择切换。 */
+    var mediaView=document.getElementById("view-media"), mediaDeck=document.getElementById("mtDeck");
+    function syncArchiveAudio(){
+      var open=mediaView&&mediaView.classList.contains("active")&&mediaDeck&&mediaDeck.classList.contains("on");
+      SFX.duck(!!open||document.body.classList.contains("ingame"));
+    }
+    var archiveAudioObserver=new MutationObserver(syncArchiveAudio);
+    [mediaView,mediaDeck,document.body].forEach(function(el){
+      if(el) archiveAudioObserver.observe(el,{attributes:true,attributeFilter:["class"]});
     });
-    ["pause","ended"].forEach(function(ev){
-      document.addEventListener(ev,function(e){
-        if(e.target&&e.target.tagName==="VIDEO"){ try{ SFX.duck(false); }catch(x){} }
-      },true);
-    });
+    syncArchiveAudio();
     document.addEventListener("keydown",function(e){
       if((e.key==="m"||e.key==="M")&&!e.metaKey&&!e.ctrlKey&&!e.altKey){
         var a=document.activeElement;
